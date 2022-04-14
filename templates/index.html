@@ -2,6 +2,7 @@
 <html lang="en">
   <head>
     <title>Regulatory Documents</title>
+
     <link rel="stylesheet" type="text/css"  href="//cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.css">
 
@@ -27,40 +28,22 @@
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>   
      
+    <link rel="stylesheet" href="{{url_for('.static', filename='index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
   </head>
 <body>  
-    <nav class="navbar navbar-expand-sm navbar-ligh" style="background-color: rgb(255, 255, 255); box-shadow: 0px 2px 5px rgb(119, 119, 119);">
-        <div class="container" id="nav">
-        <a style="text-align: justify; font-size:xx-large; color: rgb(226, 95, 7);" 
-          href="#"
-          class="navbar-brand mb-0 h1">    
-          <img class="d-inline-block align-center" src="../static/logo.png" width="360" height="80"/>
-                                      Regulatory documents for Medical Device
-         </a>
-         <button 
-         type="button"
-         data-bs-toggle="collapse"
-         data-bs-target="#navbarNav"
-         class="navbar-toggler"
-         aria-controls="navbarNav"
-         aria-expanded="false"
-         aria-label="Toggle navigation"           
-         >
-         <span class="navbar-toggler-icon"></span>
-         
-        </button>
-        <div 
-          class="collapse navbar-collapse"
-          id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a href="{{url_for('home')}}" class="nav-link active">Logout</a><br>
-            </li>
-          </ul>
-        </div>
-        </div>
-    </nav>
-    <div class="container" id="my_tab" style="padding: 50px; width:1400px; height:800px;">
+  <div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
+  <nav style="box-shadow: 0px 2px 5px rgb(119, 119, 119)">
+    <ul>
+      <li><a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+      <li><a class="current" href="{{url_for('dashboard')}}"><i class="fa fa-files-o"></i> Documents</a></li>
+      <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>    
+      <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+    </ul>
+  </nav>
+    <div class="container" id="my_tab" style="width:1400px; height:800px;">
           <table id="data" class="table" style="width: 100%;">
             <thead>
                 <tr>
@@ -104,7 +87,7 @@
         // DataTable
         var table = $('#data').DataTable({ 
             "autoWidth": false,
-            scrollY: "700px",
+            scrollY: "640px",
             scrollX:true,
             'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
             'dom': 'lBfrtip',
@@ -112,7 +95,7 @@
             'processing': true,
             'serverMethod': 'post',
             'ajax': {
-                'url':'/api/data'
+                'url':'/api'
                 },
             'serverSide': true,
             'columns': [
@@ -126,6 +109,7 @@
                 {data:'Documents', orderable:false},
                 {data:'Note', orderable:false},
                 ],
+                columnDefs: [ { width: 20, targets: 0 } ] } ); new $.fn.dataTable.FixedColumns( table ); 
             });
 
         // Filter event handler

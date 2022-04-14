@@ -1,14 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <h1 style="border: blue; color:chocolate;">Hello. Welcome to the Dashboard</h1>
-    <a href="{{url_for('login')}}">Login</a><br>
+    <div class="container">
+        <div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
+        <nav style=" box-shadow: 0px 2px 5px rgb(119, 119, 119)">
+            <ul class="collapse narbar-collapse" id="mynavbar">
+                {% if not current_user.is_authenticated %}
+                <li><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+                <li><a href="{{url_for('login')}}"><i class="fa fa-sign-in"></i>Login</a></li>
+                <li><a href="{{url_for('signup')}}"><i class="fa fa-fw fa-user"></i>Signup</a></li>
+                {% endif %}
+
+                {% if current_user.is_authenticated %}
+                <li ><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+                <li><a href="{{url_for('dashboard')}}"><i class="fa fa-files-o"></i> Documents</a></li>
+                <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>
+                <li><a href="{{url_for('logout')}}"><i class="fa fa-sign-out"></i>Logout</a></li>
+                {% endif %}
+
+            </ul>
+        </nav>
+        <div class="text" id="mytext"><h1>Regulatory Documents in Medical Devices</h1><br></div>
+    <p> The MD Clinicals Database is a digital repository that has been in operation </p>
+    <p> since 2022 and acts as a search tool for employees and clients. </p>
+    <p> It contains detailed information about the documents that must be </p>
+    <p> submitted in order to begin pre- and/or post-market clinical trials of </p>
+    <p> Medical Devices.</p>
+    <p> It preserves information for the EU, Southeast Asia, and America, and we hope </p>
+    <p> to expand to all territories in the future. </p>
+    <p> One of our missions is to ensure that data is collected, stored, and used </p>
+    <p> in a fair, transparent, lawful, limited-purpose, and accurate manner.</p>
+    </div>
+</div>
 </body>
 </html>
-

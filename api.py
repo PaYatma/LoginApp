@@ -1,32 +1,39 @@
-from crypt import methods
-from distutils.command.config import config
-from flask import Flask, redirect, render_template, url_for
+import datetime
+from datetime import timedelta
+from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_wtf import FlaskForm
-import urllib3
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import InputRequired, Length, ValidationError
-import _crypt
-import pandas as pd
-from flask import Flask, render_template, request, jsonify, json
 from flask_bcrypt import Bcrypt
+from flask_mail import Mail, Message
+from flask_bootstrap import Bootstrap
+from itsdangerous import SignatureExpired, URLSafeTimedSerializer
+from myforms import RegisterForm, LoginForm
+from sqlalchemy import DateTime
 
 
 app = Flask(__name__)
-db = SQLAlchemy(app)
+app.config.from_pyfile('config.cfg')
+app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
+bootstrap = Bootstrap(app)
 bcrypt = Bcrypt(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:mdclinicals@localhost/linh'
-app.config['SECRET_KEY'] = 'khfdhjg6goi75znu6zu57'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+mail = Mail(app)
+
+app.permanent_session_lifetime = timedelta(minutes=10)
+
+
+# Create engine
 engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
 url = 'mysql://root:mdclinicals@localhost/linh'
-
 engine = db.create_engine(sa_url=url, engine_opts=engine_options)
 
+# Login settings
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
+login_manager.session_protection = "strong"
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -36,92 +43,147 @@ def load_user(user_id):
 # User creation
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
-    password = db.Column(db.String(80), nullable=False)
+    firstname = db.Column(db.String(50), nullable=False)
+    lastname = db.Column(db.String(50), nullable=False)
+    company = db.Column(db.String(50), nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(50), nullable=False, unique=True)
+    password = db.Column(db.String(120), nullable=False)
+    confirm_email = db.Column(db.Boolean, default=False)
+    created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
 
 
-# Registration
-class RegisterForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder":"Username"} )
+# Home page
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/home', methods=['GET', 'POST'])
+def home():
+     return render_template('home.html')
 
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder":"Password"} )
+# welcome page
+@app.route('/welcome', methods=['GET', 'POST'])
+def welcome():
+    return render_template('welcome.html', firstname = current_user.firstname)
 
-    submit = SubmitField("Register")
+# Profile page
+@app.route('/profile', methods=['GET', 'POST'])
+@login_required
+def profile():
 
-    def validate_username(self, username):
-        existing_user_username = User.query.filter_by(
-            username = username.data).first()
-
-        if existing_user_username:
-            raise ValidationError(
-                "That username already exists. Please, choose a different one."
+    return render_template('profile.html', 
+            firstname= current_user.firstname,
+            lastname = current_user.lastname,
+            company = current_user.company,
+            country = current_user.country,
+            email = current_user.email
             )
 
 
-# Login
-class LoginForm(FlaskForm):
-    username = StringField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder":"Username"} )
-
-    password = PasswordField(validators=[InputRequired(), Length(
-        min=4, max=20)], render_kw={"placeholder":"Password"} )
-
-    submit = SubmitField("Login")
-
-
-# routes
-@app.route('/')
-def home():
-    return render_template("home.html")
-
-
-@app.route('/login', methods=["GET", "POST"])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user:
-            if bcrypt.check_password_hash(user.password, form.password.data):
-                login_user(user)
-                return redirect(url_for('dashboard'))
-    return render_template("login.html", form=form)
-
-
-# Dashboard
-@app.route('/dash', methods=["GET", "POST"])
+@app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
-    return render_template('index.html')
+    return render_template("index.html")
 
 
-# Logout
-@app.route('/logout', methods=["GET", "POST"])
-@login_required
-def logout():
-    logout_user()
-    return render_template('home.html')
+# Function for sending email 
+def gettoken(email):
+
+    s = URLSafeTimedSerializer(app.secret_key)
+    token = s.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+    msg = Message('Confirm Email', sender='noreply.ysr@gmail.com', recipients=[email])   
+    link = url_for('confirm_link', token=token, _external=True)
+    msg.body = '''Please, click on this link to confirm your email: {}.
+    After 1 hour, this link will not be valid anymore.'''.format(link)
+    mail.send(msg)
+
+    return token
 
 
+# Function to confirm email address
+@app.route("/confirm/<token>", methods=['GET', 'POST'])
+def confirm_link(token):
+    form = RegisterForm()
+    s = URLSafeTimedSerializer(app.secret_key)
+    try:
+        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=3600*24*360) 
+        user_exist = User.query.filter_by(email=email).first()
+        if user_exist:
+            user_exist.confirm_email = True
+            db.session.commit()
+    except SignatureExpired:      
+        return render_template('expired.html')
 
-@app.route('/register', methods=["GET", "POST"])
-def register():
+    return redirect(url_for('login'))
+
+
+# Sign-up
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data) 
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+        hashed_password = bcrypt.generate_password_hash(form.password.data)
+        new_user = User(firstname=form.firstname.data,
+                        lastname=form.lastname.data,
+                        company=form.company.data,
+                        country=form.country.data,
+                        email=form.email.data, 
+                        password=hashed_password)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            gettoken(email=form.email.data)
 
-    return render_template("register.html", form=form)
+        except:
+            flash("This email address already exists. Please, login from here.", category='info')
+            return redirect(url_for('login')) 
+
+        return redirect(url_for('login')) 
+
+    return render_template('register.html', form=form)
+
+
+# Login
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+
+    session.permanent = True        
+    
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+    
+        if user:
+            if not user.confirm_email:
+                flash('Please, confirm your email. And try again.', category='warning')
+                redirect(url_for('login'))
+            elif user.confirm_email and bcrypt.check_password_hash(user.password, form.password.data):
+                isremember = True if request.form.get('remember') else False
+                print(isremember)
+                if isremember:
+                    login_user(user, remember=isremember, duration=timedelta(seconds=30), fresh=True)
+                else:
+                    login_user(user)
+                return redirect(url_for('welcome'))
+            else:
+                flash('This password is invalid. Please, try again.', category='error')
+                redirect(url_for('login'))
+        else:
+            flash('Email address unknown. Correct the email address. Or create an account.', category='warning')  
+
+    return render_template('login.html', form=form)
+    
+
+# Logout
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 
 # Add my scripts
-
-@app.route("/api/data", methods=["POST","GET"])
+@app.route("/api", methods=["POST","GET"])
+@login_required
 def ajaxfile():
     try:
         conn = engine.raw_connection()
@@ -215,7 +277,7 @@ def ajaxfile():
                 'iTotalDisplayRecords': totalRecordwithFilter,
                 'aaData': data,
             }
-            return jsonify(response)
+            return jsonify(response) 
 
     except Exception as e:
         print(e)

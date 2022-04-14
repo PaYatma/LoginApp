@@ -1,7 +1,37 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Proifile</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-{% block content %}
-<h1 class="title">
-  Welcome, Anthony!
-</h1>
-{% endblock %}
+  <link rel="stylesheet" href="{{url_for('.static', filename='profile.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body> 
+  <div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
+  <nav style="box-shadow: 0px 2px 5px rgb(119, 119, 119)">
+    <ul>
+      <li><a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+      <li><a href="{{url_for('dashboard')}}"><i class="fa fa-files-o"></i> Documents</a></li>
+      <li><a class="current" href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>    
+      <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="card">
+    <img src="https://w7.pngwing.com/pngs/247/564/png-transparent-computer-icons-user-profile-user-avatar-blue-heroes-electric-blue.png" alt="John" style="width:80%">
+    <h1>{{firstname}} {{lastname}}</h1>
+    <p> Company: {{company}}</p>
+    <p> Country: {{country}}</p>
+    <a href="#"><i class="fa fa-dribbble"></i></a>
+    <a href="#"><i class="fa fa-twitter"></i></a>
+    <a href="#"><i class="fa fa-linkedin"></i></a>
+    <a href="#"><i class="fa fa-facebook"></i></a>
+    <p class="button" title="Please contact Yatma SARR at yatma27@gmail.com"> Help ???</p>
+  </div>
+
+</body>
+</html>

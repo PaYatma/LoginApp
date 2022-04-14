@@ -1,0 +1,91 @@
+html, 
+body{
+  margin: 0;
+  padding: 0;
+}
+nav{
+  width: 100%;
+  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
+  overflow: auto;
+}
+ul{
+  padding: 0;
+  list-style: none;
+  margin-left: 750px;
+}
+
+li{
+  float:left;
+}
+.logo img{
+  position: absolute;
+  margin-top: 15px;
+}
+
+nav a{
+  width: 160px;
+  display:block;
+  padding: 10px 10px 30px;
+  text-decoration: none;
+  font-family: Arial;
+  font-size: large;
+  color: rgb(16, 16, 16);
+  margin-top: 10px;
+}
+nav a:hover{
+  background: rgb(121, 123, 123);
+  transition: 0.5s;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 15px;
+}
+
+.card {
+    box-shadow: 15px 15px 10px 0 rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+    padding: 100px;
+    background-color: aliceblue;
+  }
+
+  .button {
+    border: none;
+    outline: 0;
+    display: inline-block;
+    padding: 8px;
+    color: rgb(251, 246, 246);
+    background-color: #000;
+    text-align: center;
+    cursor: pointer;
+    width: 100%;
+    font-size: 18px;
+  }
+ 
+  .button:hover{
+    background-color: rgb(10, 240, 83);
+    text-transform: var("ssfsf");
+  }
+
+  a {
+    text-decoration: none;
+    font-size: 24px;
+    color: black;
+  }
+
+  h1{
+    font-size: 36px;
+  }
+  p{
+      font-size: 24px;
+  }
+
+  
+.current {
+  color: #F8F8F8;
+  background-color: rgb(30, 139, 167);;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 10px 10px 10px rgb(60, 59, 59);
+}
+  

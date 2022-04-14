@@ -1,0 +1,45 @@
+.alert-success {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border: 2px solid rgb(102, 203, 210);
+    background-color:yellowgreen;
+    color: white;
+    box-shadow: 5px 5px 5px rgb(110, 110, 110);
+  }
+  
+  .alert-warning {
+    width: 250px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border: 2px solid rgb(241, 187, 87);
+    background-color:khaki;
+    color: black;
+    box-shadow: 5px 5px 5px rgb(110, 110, 110);
+  }
+
+  .alert-error {
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border: 2px solid rgb(232, 136, 136);
+    background-color:lightpink;
+    color: white;
+    box-shadow: 5px 5px 5px rgb(110, 110, 110);
+  }
+
+  .alert-info {
+    width: 250px;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    border: 2px rgb(15, 171, 233) ;
+    background-color:deepskyblue;
+    color: black;
+    box-shadow: 5px 5px 5px rgb(110, 110, 110);
+  }
