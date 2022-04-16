@@ -1,4 +1,5 @@
 import datetime
+from logging.config import listen
 import waitress
 from datetime import timedelta
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
@@ -289,4 +290,5 @@ def ajaxfile():
 
 if __name__=='__main__':
     #app.run(debug=True)
-    waitress.serve(app, port=5000)
+    app.debug = False
+    waitress.serve(app, listen='0.0.0.0:5000')
