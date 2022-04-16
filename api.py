@@ -1,4 +1,5 @@
 import datetime
+import waitress
 from datetime import timedelta
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
@@ -287,4 +288,5 @@ def ajaxfile():
 
 
 if __name__=='__main__':
-    app.run(debug=True)
+    #app.run(debug=True)
+    waitress.serve(app, port=5000)
