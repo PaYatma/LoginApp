@@ -9,6 +9,7 @@ psycopg2 = "*"
 gunicorn = "==20.0.4"
 flask-login = "*"
 flask-bcrypt = "*"
+flask-mail = "*"
 
 [dev-packages]
 
