@@ -11,7 +11,11 @@ from flask_bootstrap import Bootstrap
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from myforms import RegisterForm, LoginForm
 from sqlalchemy import DateTime
+import psycopg2
+import os
 
+
+#DATABASE_URI = os.environ.get("DATABASE_URI")
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
