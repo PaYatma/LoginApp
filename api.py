@@ -293,6 +293,5 @@ def ajaxfile():
 
 
 if __name__=='__main__':
-    #app.run(debug=True)
-    app.debug = False
-    waitress.serve(app, listen='0.0.0.0:5000')
+    app.run(debug=False)
+   

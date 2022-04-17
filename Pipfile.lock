@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "4def0fa8e5e2605616e3195e102d9657b5e4812cf5612f696c950e80b54597b3"
+            "sha256": "ee7f415a321e0231caeeccbdee432cf70401c9de41d40cc7775437b6fadadf8e"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -109,6 +109,14 @@
             "markers": "python_version >= '3' and platform_machine == 'aarch64' or (platform_machine == 'ppc64le' or (platform_machine == 'x86_64' or (platform_machine == 'amd64' or (platform_machine == 'AMD64' or (platform_machine == 'win32' or platform_machine == 'WIN32')))))",
             "version": "==1.1.2"
         },
+        "gunicorn": {
+            "hashes": [
+                "sha256:1904bb2b8a43658807108d59c3f3d56c2b6121a701161de0ddf9ad140073c626",
+                "sha256:cd4a810dd51bf497552cf3f863b575dabd73d6ad6a91075b65936b151cbf4f9c"
+            ],
+            "index": "pypi",
+            "version": "==20.0.4"
+        },
         "importlib-metadata": {
             "hashes": [
                 "sha256:1208431ca90a8cca1a6b8af391bb53c1a2db74e5d1cef6ddced95d4b2062edc6",
@@ -195,6 +203,14 @@
             ],
             "index": "pypi",
             "version": "==2.9.3"
+        },
+        "setuptools": {
+            "hashes": [
+                "sha256:26ead7d1f93efc0f8c804d9fafafbe4a44b179580a7105754b245155f9af05a8",
+                "sha256:47c7b0c0f8fc10eec4cf1e71c6fdadf8decaa74ffa087e68cd1c20db7ad6a592"
+            ],
+            "markers": "python_version >= '3.7'",
+            "version": "==62.1.0"
         },
         "sqlalchemy": {
             "hashes": [
