@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
-from flask_bootstrap import Bootstrap
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from myforms import RegisterForm, LoginForm
 from sqlalchemy import DateTime
@@ -20,7 +19,6 @@ app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
-bootstrap = Bootstrap(app)
 bcrypt = Bcrypt(app)
 
 db = SQLAlchemy(app)
