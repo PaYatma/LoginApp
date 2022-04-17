@@ -1,6 +1,7 @@
 import datetime
 from logging.config import listen
 from datetime import timedelta
+import sqlite3
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -13,11 +14,10 @@ import psycopg2
 import os
 
 
-#DATABASE_URI = os.environ.get("DATABASE_URI")
-
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
 bcrypt = Bcrypt(app)
 
@@ -29,7 +29,7 @@ app.permanent_session_lifetime = timedelta(minutes=10)
 
 # Create engine
 engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
-url = 'mysql://root:mdclinicals@localhost/linh'
+url = os.environ.get('DATABASE_URL')
 engine = db.create_engine(sa_url=url, engine_opts=engine_options)
 
 # Login settings
