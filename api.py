@@ -30,7 +30,7 @@ app.permanent_session_lifetime = timedelta(minutes=10)
 # Create engine
 engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
 url = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql')
-engine = db.create_engine(sa_url=url)#, engine_opts=engine_options)
+engine = db.create_engine(sa_url=url, engine_opts={})
 
 # Login settings
 login_manager = LoginManager()
