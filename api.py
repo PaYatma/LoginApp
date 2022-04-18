@@ -12,13 +12,17 @@ from myforms import RegisterForm, LoginForm
 from sqlalchemy import DateTime
 import psycopg2
 import os
-import sqlalchemy
+import re
+
+DATABASE_URL = os.getenv("DATABASE_URL")  # or other relevant config var
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
 bcrypt = Bcrypt(app)
 
@@ -30,8 +34,8 @@ app.permanent_session_lifetime = timedelta(minutes=10)
 
 # Create engine
 engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
-url = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql+psycopg2')
-engine = sqlalchemy.create_engine(url) # sa_url=url, engine_opts={})
+#url = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql+psycopg2')
+engine = db.create_engine(sa_url=DATABASE_URL, engine_opts={}) # sa_url=url, engine_opts={})
 
 # Login settings
 login_manager = LoginManager()
