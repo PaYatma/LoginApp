@@ -1,1 +1,1 @@
-web: gunicorn -w 3 api:app --preload -b 0.0.0.0:5000 --timeout 120
+web: gunicorn --worker-tmp-dir /dev/shm -c gconfig.py wsgi:app
