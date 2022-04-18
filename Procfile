@@ -1,1 +1,1 @@
-web: gunicorn --worker-tmp-dir /dev/shm -c gconfig.py wsgi:app
+web: gunicorn --w 4 wsgi:app
