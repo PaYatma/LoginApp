@@ -1,7 +1,6 @@
 # Load needed packages 
 import pandas as pd
-import psycopg2
-#import mysql.connector
+import mysql.connector
 
 # Read data from "Codes/data/" folder
 mydf = pd.read_csv("data/global_tab.csv")
@@ -12,13 +11,31 @@ mydf["Note"].fillna(".", inplace=True)
 
 # Split all row in a single list
 mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
-mytuples[0]
+
+# Convert variables type in mysql
+class NumpyMySQLConverter(mysql.connector.conversion.MySQLConverter):
+    """ A mysql.connector Converter that handles Numpy types """
+
+    def _float32_to_mysql(self, value):
+        return float(value)
+
+    def _float64_to_mysql(self, value):
+        return float(value)
+
+    def _int32_to_mysql(self, value):
+        return int(value)
+
+    def _int64_to_mysql(self, value):
+        return int(value)
 
 # Connect to the DATABASE
-conn = psycopg2.connect(host="ec2-99-80-170-190.eu-west-1.compute.amazonaws.com",
-                        user="edynzmbihsrqyi",
-                        password="cebba2154ce00a491dbc5615d1023335ad8aa2b1924a0cf9f32f7c8c28ecc655",
-                        database="d9fbv65o7volfj")
+conn = mysql.connector.connect(host="eu-cdbr-west-02.cleardb.net",
+                        user="b22cde7263420f",
+                        password="4703565c",
+                        database="heroku_963b7cc12121e0d")
+
+# Add the conversion
+conn.set_converter_class(NumpyMySQLConverter)
 
 """ conn = psycopg2.connect(host="localhost",
                         user="postgres",
