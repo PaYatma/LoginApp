@@ -14,7 +14,7 @@ import psycopg2
 import os
 import re
 
-DATABASE_URL = os.getenv("DATABASE_URL")  # or other relevant config var
+DATABASE_URL = os.getenv("CLEARDB_DATABASE_URL")  # or other relevant config var
 '''if DATABASE_URL.startswith("postgres://"):
     DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
 '''
