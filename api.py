@@ -14,7 +14,7 @@ import psycopg2
 import os
 import re
 
-DATABASE_URL = os.getenv("DATABASE_URL") #.replace("?reconnect=true", "")  
+DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://") #.replace("?reconnect=true", "")  
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
