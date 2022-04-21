@@ -37,16 +37,6 @@ conn = mysql.connector.connect(host="eu-cdbr-west-02.cleardb.net",
 # Add the conversion
 conn.set_converter_class(NumpyMySQLConverter)
 
-""" conn = psycopg2.connect(host="localhost",
-                        user="postgres",
-                        password="mdclinicals",
-                        database="regulatory_docs")"""
-
-"""conn = mysql.connector.connect(host="localhost",
-                        user="root",
-                        password="12Secret27@",
-                        database="linh")"""
-
 # Create a cursor in order to execute query into the database
 mycursor = conn.cursor()
 

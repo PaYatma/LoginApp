@@ -14,11 +14,8 @@ import psycopg2
 import os
 import re
 
-DATABASE_URL = os.getenv("CLEARDB_DATABASE_URL").replace("?reconnect=true", "")  # or other relevant config var
+DATABASE_URL = os.getenv("CLEARDB_DATABASE_URL").replace("?reconnect=true", "")  
 
-'''if DATABASE_URL.startswith("postgres://"):
-    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
-'''
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
@@ -34,8 +31,7 @@ app.permanent_session_lifetime = timedelta(minutes=10)
 
 # Create engine
 engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
-#url = os.environ.get('DATABASE_URL').replace('postgres', 'postgresql+psycopg2')
-engine = db.create_engine(sa_url=DATABASE_URL, engine_opts={}) # sa_url=url, engine_opts={})
+engine = db.create_engine(sa_url=DATABASE_URL, engine_opts={})
 
 # Login settings
 login_manager = LoginManager()
