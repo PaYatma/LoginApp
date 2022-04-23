@@ -9,29 +9,38 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from myforms import RegisterForm, LoginForm
-from sqlalchemy import DateTime
+from sqlalchemy import DateTime, create_engine
 import psycopg2
+import psycopg2.extras
 import os
 import re
 
-DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://") #.replace("?reconnect=true", "")  
+from werkzeug.security import generate_password_hash, check_password_hash
+
+# DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://") #.replace("?reconnect=true", "")  
+#DATABASE_URL = 'mysql://root:mdclinicals@localhost/linh'
+
+DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'#.replace("postgres://", "postgresql://")
+
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+
+app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
 bcrypt = Bcrypt(app)
 
 db = SQLAlchemy(app)
 mail = Mail(app)
 
-app.permanent_session_lifetime = timedelta(minutes=10)
 
+conn = psycopg2.connect(DATABASE_URL)
 
 # Create engine
-engine_options = app.config['SQLALCHEMY_ENGINE_OPTIONS']
-engine = db.create_engine(sa_url=DATABASE_URL, engine_opts={})
+engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
+
 
 # Login settings
 login_manager = LoginManager()
@@ -41,11 +50,11 @@ login_manager.session_protection = "strong"
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return Users.query.get(int(user_id))
 
 
 # User creation
-class User(db.Model, UserMixin):
+class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
@@ -106,73 +115,121 @@ def gettoken(email):
 @app.route("/confirm/<token>", methods=['GET', 'POST'])
 def confirm_link(token):
     form = RegisterForm()
+    cursor = conn.cursor()
+    user_email = form.email.data
+    user_password = form.password.data
+
     s = URLSafeTimedSerializer(app.secret_key)
     try:
-        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=3600*24*360) 
-        user_exist = User.query.filter_by(email=email).first()
-        if user_exist:
-            user_exist.confirm_email = True
-            db.session.commit()
+        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600) 
+
+        cursor.execute('SELECT * FROM Users WHERE email = %s', (user_email,))
+        new_user = cursor.fetchone()
+
+
+        if new_user:
+            user_exists = Users(firstname=new_user[1],
+                                lastname=new_user[2],
+                                company=new_user[3],
+                                country=new_user[4],
+                                email=new_user[5],
+                                password=new_user[6],
+                                confirm_email=new_user[7],)
+
+            update_user = 'UPDATE Users set confirm_email = %s where email=%s'
+            cursor.execute(update_user, (True, user_password,))
+            conn.commit()            
+
     except SignatureExpired:      
         return render_template('expired.html')
+    
+    cursor.close()
 
     return redirect(url_for('login'))
+
 
 
 # Sign-up
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+
+    cursor = conn.cursor()
     form = RegisterForm()
 
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(firstname=form.firstname.data,
-                        lastname=form.lastname.data,
-                        company=form.company.data,
-                        country=form.country.data,
-                        email=form.email.data, 
-                        password=hashed_password)
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            gettoken(email=form.email.data)
+        user_email = form.email.data
+        hashed_password = bcrypt.generate_password_hash(form.password.data)#.decode('utf-8')
 
-        except:
-            flash("This email address already exists. Please, login from here.", category='info')
-            return redirect(url_for('login')) 
+        #Check if account exists using MySQL
+        cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
+        account = cursor.fetchone()
+
+        if account:
+            flash('Account already exists!')
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', form.email.data):
+            flash('Invalid email address!')
+        elif not re.match(r'[A-Za-z0-9]+', form.firstname.data):
+            flash('fisrtname must contain only characters and numbers!')
+        elif not re.match(r'[A-Za-z0-9]+', form.lastname.data):
+            flash('lastname must contain only characters and numbers!')
+        elif not re.match(r'[A-Za-z0-9]+', form.company.data):
+            flash('company must contain only characters and numbers!')
+        elif not re.match(r'[A-Za-z0-9]+', form.country.data):
+            flash('country must contain only characters and numbers!')
+        
+        else:
+            # Account doesnt exists and the form data is valid, now insert new account into user table
+            cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
+                            VALUES (%s,%s,%s,%s,%s,%s)""", (form.firstname.data, form.lastname.data, 
+                            form.company.data, form.country.data, form.email.data, hashed_password))
+            conn.commit()
+            gettoken(email=form.email.data) 
 
         return redirect(url_for('login')) 
-
+    cursor.close()
     return render_template('register.html', form=form)
 
 
 # Login
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    cursor = conn.cursor()
     form = LoginForm()
-
-    session.permanent = True        
     
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
+        #user = User.query.filter_by(email=form.email.data).first()
+        cursor.execute('SELECT * FROM users WHERE email = %s', (form.email.data,))
+        # Fetch one record and return result
+        new_user = cursor.fetchone()
+        user_password = user_exists[6]
+
+        user_exists = Users(firstname=new_user[1],
+                        lastname=new_user[2],
+                        company=new_user[3],
+                        country=new_user[4],
+                        email=new_user[5],
+                        password=new_user[6],
+                        confirm_email=new_user[7],)
     
-        if user:
-            if not user.confirm_email:
+        if user_exists:
+            if not user_exists:
                 flash('Please, confirm your email. And try again.', category='warning')
                 redirect(url_for('login'))
-            elif user.confirm_email and bcrypt.check_password_hash(user.password, form.password.data):
+            elif user_exists and bcrypt.check_password_hash(user_password, form.password.data):
                 isremember = True if request.form.get('remember') else False
                 print(isremember)
                 if isremember:
-                    login_user(user, remember=isremember, duration=timedelta(seconds=30), fresh=True)
+                    login_user(user_exists, remember=isremember, duration=timedelta(seconds=30), fresh=True)
                 else:
-                    login_user(user)
+                    login_user(user_exists)
                 return redirect(url_for('welcome'))
             else:
                 flash('This password is invalid. Please, try again.', category='error')
                 redirect(url_for('login'))
         else:
             flash('Email address unknown. Correct the email address. Or create an account.', category='warning')  
+
+    cursor.close()
 
     return render_template('login.html', form=form)
     

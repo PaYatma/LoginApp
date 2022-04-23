@@ -36,7 +36,10 @@ mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
                         password="4703565c",
                         database="heroku_963b7cc12121e0d")"""
                         
-DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://")
+# DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://")
+
+DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+
 conn = psycopg2.connect(DATABASE_URL)
 
 # Add the conversion
