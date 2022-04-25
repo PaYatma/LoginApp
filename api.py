@@ -1,7 +1,5 @@
 import datetime
-from logging.config import listen
 from datetime import timedelta
-import sqlite3
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
@@ -15,8 +13,6 @@ import psycopg2.extras
 import os
 import re
 
-from werkzeug.security import generate_password_hash, check_password_hash
-
 # DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://") #.replace("?reconnect=true", "")  
 #DATABASE_URL = 'mysql://root:mdclinicals@localhost/linh'
 
@@ -26,7 +22,7 @@ DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'#.repl
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
 app.permanent_session_lifetime = timedelta(minutes=10)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
@@ -41,18 +37,31 @@ conn = psycopg2.connect(DATABASE_URL)
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
-
 # Login settings
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
+login_manager.login_message = "Yat, essayes encore!!!"
+
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(int(user_id))
-
-
+    cursor = conn.cursor()
+    row = cursor.execute('select * from users u where id =%s',(user_id,)).fetchone()
+    if row is None:
+        return None
+    else:
+        return Users(user_id=row[0],
+                    firstname=row[1],
+                    lastname=row[2],
+                    company = row[3],
+                    country = row[4],
+                    email=row[5],
+                    password=row[6],
+                    confirm_email=row[7]
+                    )
+    
 # User creation
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -74,6 +83,7 @@ def home():
 
 # welcome page
 @app.route('/welcome', methods=['GET', 'POST'])
+@login_required
 def welcome():
     return render_template('welcome.html', firstname = current_user.firstname)
 
@@ -105,7 +115,7 @@ def gettoken(email):
     msg = Message('Confirm Email', sender='noreply.ysr@gmail.com', recipients=[email])   
     link = url_for('confirm_link', token=token, _external=True)
     msg.body = '''Please, click on this link to confirm your email: {}.
-    After 1 hour, this link will not be valid anymore.'''.format(link)
+    After 1 year, this link will not be valid anymore.'''.format(link)
     mail.send(msg)
 
     return token
@@ -116,29 +126,18 @@ def gettoken(email):
 def confirm_link(token):
     form = RegisterForm()
     cursor = conn.cursor()
-    user_email = form.email.data
-    user_password = form.password.data
-
     s = URLSafeTimedSerializer(app.secret_key)
+
     try:
-        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600) 
+        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
 
-        cursor.execute('SELECT * FROM Users WHERE email = %s', (user_email,))
-        new_user = cursor.fetchone()
+        cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
+        user_exists = cursor.fetchone()
 
-
-        if new_user:
-            user_exists = Users(firstname=new_user[1],
-                                lastname=new_user[2],
-                                company=new_user[3],
-                                country=new_user[4],
-                                email=new_user[5],
-                                password=new_user[6],
-                                confirm_email=new_user[7],)
-
-            update_user = 'UPDATE Users set confirm_email = %s where email=%s'
-            cursor.execute(update_user, (True, user_password,))
-            conn.commit()            
+        if user_exists:
+            update_user = "UPDATE users SET confirm_email = %s WHERE email= %s"
+            cursor.execute(update_user, (True, user_exists[5],))
+            conn.commit()
 
     except SignatureExpired:      
         return render_template('expired.html')
@@ -158,7 +157,7 @@ def signup():
 
     if form.validate_on_submit():
         user_email = form.email.data
-        hashed_password = bcrypt.generate_password_hash(form.password.data)#.decode('utf-8')
+        _hashed_password = bcrypt.generate_password_hash(form.password.data)#.decode('utf-8')
 
         #Check if account exists using MySQL
         cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
@@ -181,7 +180,7 @@ def signup():
             # Account doesnt exists and the form data is valid, now insert new account into user table
             cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
                             VALUES (%s,%s,%s,%s,%s,%s)""", (form.firstname.data, form.lastname.data, 
-                            form.company.data, form.country.data, form.email.data, hashed_password))
+                            form.company.data, form.country.data, form.email.data, _hashed_password))
             conn.commit()
             gettoken(email=form.email.data) 
 
@@ -200,28 +199,22 @@ def login():
         #user = User.query.filter_by(email=form.email.data).first()
         cursor.execute('SELECT * FROM users WHERE email = %s', (form.email.data,))
         # Fetch one record and return result
-        new_user = cursor.fetchone()
-        user_password = user_exists[6]
-
-        user_exists = Users(firstname=new_user[1],
-                        lastname=new_user[2],
-                        company=new_user[3],
-                        country=new_user[4],
-                        email=new_user[5],
-                        password=new_user[6],
-                        confirm_email=new_user[7],)
-    
+        user_exists = cursor.fetchone()
+        
         if user_exists:
-            if not user_exists:
+            user = Users(firstname=user_exists[1],
+                    lastname=user_exists[2],
+                    company=user_exists[3],
+                    country=user_exists[4],
+                    email=user_exists[5],
+                    password=user_exists[6],
+                    confirm_email=user_exists[7])
+
+            if not user_exists[7]:
                 flash('Please, confirm your email. And try again.', category='warning')
                 redirect(url_for('login'))
-            elif user_exists and bcrypt.check_password_hash(user_password, form.password.data):
-                isremember = True if request.form.get('remember') else False
-                print(isremember)
-                if isremember:
-                    login_user(user_exists, remember=isremember, duration=timedelta(seconds=30), fresh=True)
-                else:
-                    login_user(user_exists)
+            elif user_exists and bcrypt.check_password_hash(user_exists[6], form.password.data):
+                login_user(user)
                 return redirect(url_for('welcome'))
             else:
                 flash('This password is invalid. Please, try again.', category='error')
