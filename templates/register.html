@@ -14,12 +14,7 @@
 <body>
   
   <div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" height="60px" width="275px">
-    {%  for category, message in get_flashed_messages(with_categories=True) %}
-        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert"
-        style="text-align: center; font-style:inherit; color: crimson;">
-          {{ message}}
-        </div>
-    {% endfor %}
+
     <form method="POST" action="/signup">
       <h3>Sign Up Here</h3>
       {{form.hidden_tag()}}
@@ -31,6 +26,12 @@
       {{form.password}}
       {{form.submit}}
     </form></br>
+    {%  for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert"
+    style="text-align: center; font-style:inherit; color: crimson;">
+      {{ message}}
+    </div>
+    {% endfor %}
     <div class="text-center fs-6"> <a href="{{url_for('login')}}">Already have an account? Login</a> </div>
 </div>
 

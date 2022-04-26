@@ -13,11 +13,7 @@ import psycopg2.extras
 import os
 import re
 
-# DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://") #.replace("?reconnect=true", "")  
-#DATABASE_URL = 'mysql://root:mdclinicals@localhost/linh'
-
 DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'#.replace("postgres://", "postgresql://")
-
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -42,26 +38,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message = "Yat, essayes encore!!!"
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    cursor = conn.cursor()
-    row = cursor.execute('select * from users u where id =%s',(user_id,)).fetchone()
-    if row is None:
-        return None
-    else:
-        return Users(user_id=row[0],
-                    firstname=row[1],
-                    lastname=row[2],
-                    company = row[3],
-                    country = row[4],
-                    email=row[5],
-                    password=row[6],
-                    confirm_email=row[7]
-                    )
-    
+    return Users.query.get(user_id)
+   
 # User creation
 class Users(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -73,6 +55,22 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     confirm_email = db.Column(db.Boolean, default=False)
     created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+
+# function to create mysqk user
+def create_user(id, connexion):
+    cursor = connexion.cursor() 
+    cursor.execute('SELECT * FROM users WHERE id = %s', (id,))
+    user_exists = cursor.fetchone()
+    user = Users(id = id,
+                firstname=user_exists[1],
+                lastname=user_exists[2],
+                company=user_exists[3],
+                country=user_exists[4],
+                email=user_exists[5],
+                password=user_exists[6],
+                confirm_email=user_exists[7])
+    cursor.close()
+    return user
 
 
 # Home page
@@ -91,7 +89,6 @@ def welcome():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-
     return render_template('profile.html', 
             firstname= current_user.firstname,
             lastname = current_user.lastname,
@@ -114,8 +111,7 @@ def gettoken(email):
     token = s.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
     msg = Message('Confirm Email', sender='noreply.ysr@gmail.com', recipients=[email])   
     link = url_for('confirm_link', token=token, _external=True)
-    msg.body = '''Please, click on this link to confirm your email: {}.
-    After 1 year, this link will not be valid anymore.'''.format(link)
+    msg.body = '''Please, click on this link to confirm your email: {}.'''.format(link)
     mail.send(msg)
 
     return token
@@ -157,25 +153,20 @@ def signup():
 
     if form.validate_on_submit():
         user_email = form.email.data
-        _hashed_password = bcrypt.generate_password_hash(form.password.data)#.decode('utf-8')
+        _hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
 
+        #check email
+        regex_email = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
+        
         #Check if account exists using MySQL
         cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
         account = cursor.fetchone()
 
         if account:
-            flash('Account already exists!')
-        elif not re.match(r'[^@]+@[^@]+\.[^@]+', form.email.data):
-            flash('Invalid email address!')
-        elif not re.match(r'[A-Za-z0-9]+', form.firstname.data):
-            flash('fisrtname must contain only characters and numbers!')
-        elif not re.match(r'[A-Za-z0-9]+', form.lastname.data):
-            flash('lastname must contain only characters and numbers!')
-        elif not re.match(r'[A-Za-z0-9]+', form.company.data):
-            flash('company must contain only characters and numbers!')
-        elif not re.match(r'[A-Za-z0-9]+', form.country.data):
-            flash('country must contain only characters and numbers!')
-        
+            flash('Account already exists!', category='error')
+        elif not (re.fullmatch(regex_email, form.email.data)):
+            flash('Invalid email address!', category='error')
+            return render_template('register.html', form=form) 
         else:
             # Account doesnt exists and the form data is valid, now insert new account into user table
             cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
@@ -183,7 +174,7 @@ def signup():
                             form.company.data, form.country.data, form.email.data, _hashed_password))
             conn.commit()
             gettoken(email=form.email.data) 
-
+            return redirect(url_for('login')) 
         return redirect(url_for('login')) 
     cursor.close()
     return render_template('register.html', form=form)
@@ -202,14 +193,7 @@ def login():
         user_exists = cursor.fetchone()
         
         if user_exists:
-            user = Users(firstname=user_exists[1],
-                    lastname=user_exists[2],
-                    company=user_exists[3],
-                    country=user_exists[4],
-                    email=user_exists[5],
-                    password=user_exists[6],
-                    confirm_email=user_exists[7])
-
+            user = create_user(id=user_exists[0], connexion=conn)
             if not user_exists[7]:
                 flash('Please, confirm your email. And try again.', category='warning')
                 redirect(url_for('login'))
@@ -236,7 +220,7 @@ def logout():
 
 
 # Add my scripts
-@app.route("/api", methods=["POST","GET"])
+@app.route("/api/data", methods=["POST","GET"])
 @login_required
 def ajaxfile():
     try:
@@ -270,27 +254,27 @@ def ajaxfile():
             totalRecords = rsallcount[0]
 
             ## Total number of records with filtering
-            likeString = "%{}%".format(searchValue)
+            ILIKEString = "%{}%".format(searchValue)
 
-            cursor.execute('''SELECT count(*) as allcount from Documents WHERE Code LIKE %s
-                                     OR Study LIKE %s  OR Country LIKE %s OR Submission LIKE %s''',
-                                    (likeString, likeString, likeString, likeString))
+            cursor.execute('''SELECT count(*) as allcount from Documents WHERE Code ILIKE %s
+                                     OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString))
             rsallcount = cursor.fetchone()
             totalRecordwithFilter = rsallcount[0]
                         
 
             ## Fetch records
             if searchValue !="":
-                cursor.execute('''SELECT * FROM Documents WHERE Code LIKE %s 
-                                    OR Country LIKE %s OR Study LIKE %s 
-                                    OR Submission LIKE %s LIMIT %s OFFSET %s''', 
-                                    (likeString, likeString, likeString, likeString, rowperpage, row,))
+                cursor.execute('''SELECT * FROM Documents WHERE Code ILIKE %s 
+                                    OR Country ILIKE %s OR Study ILIKE %s 
+                                    OR Submission ILIKE %s LIMIT %s OFFSET %s''', 
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString, rowperpage, row,))
                 docs_table = cursor.fetchall()
 
             elif any(boxes_search) != "":        
-                cursor.execute('''SELECT * FROM Documents WHERE ID LIKE %s and Code LIKE %s and Country LIKE %s
-                                 and Study LIKE %s and Tag LIKE %s and Created LIKE %s and Submission LIKE %s
-                                 and Documents LIKE %s and Note LIKE %s LIMIT %s OFFSET %s''', 
+                cursor.execute('''SELECT * FROM Documents WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
+                                 and Study ILIKE %s and Tag::text ILIKE %s and Created::text ILIKE %s and Submission ILIKE %s
+                                 and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
                 (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6,
                          searchcol7, searchcol8, rowperpage, row,))
                 docs_table = cursor.fetchall()

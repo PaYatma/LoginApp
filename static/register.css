@@ -64,7 +64,7 @@ h3 {
   border-bottom: 2px solid #262626;
   outline: none;
   height: 40px;
-  color: rgb(16, 15, 15);
+  color: rgb(18, 17, 17);
   background: transparent;
   font-size: 16px;
   padding-left: 20px;
@@ -74,16 +74,13 @@ h3 {
 .loginBox input[type="text"]:hover,
 .loginBox input[type="password"]:hover {
   color: #547cf3;
-  border: 1px solid #1e14e2;
-  box-shadow: 0 0 5px rgba(46, 227, 94, 0.3), 
-              0 0 10px rgba(0, 255, 0, .2), 
-              0 0 15px rgba(0, 255, 0, .1), 
-              0 2px 0 black
+  border: 1px solid #1a3fe2;
+  box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
 }
 
 .loginBox input[type="text"]:focus,
 .loginBox input[type="password"]:focus {
-  border-bottom: 2px solid #740a8e
+  border-bottom: 2px solid #7094ef
 }
 
 .inputBox {
@@ -112,14 +109,20 @@ h3 {
   font-size: 14px;
   font-weight: bold;
   text-decoration: none;
-  text-align: center;
+  text-align: lef;
   display: block
 }
 
-a:hover {
-  color: #651ee8
+a {
+  text-align: center;
 }
 
-p {
-  color: #0000ff
+a:hover {
+  color: #4f09e7;
+  text-align: center;
+}
+
+p {color: #7979e0;
+  vertical-align: middle;
+  float:center;
 }

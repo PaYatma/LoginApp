@@ -112,9 +112,14 @@ body {
     text-align: lef;
     display: block
   }
+
+  a {
+    text-align: center;
+  }
   
   a:hover {
-    color: #4f09e7
+    color: #4f09e7;
+    text-align: center;
   }
   
   p {color: #7979e0;
