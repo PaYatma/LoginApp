@@ -5,7 +5,7 @@ import psycopg2
 
 # Connect to the DATABASE
 #DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL') #'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 conn = psycopg2.connect(DATABASE_URL)
 
 # Create a cursor in order to execute query into the database
