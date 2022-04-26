@@ -3,7 +3,7 @@ from datetime import timedelta
 from turtle import delay
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user, AnonymousUserMixin
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
@@ -13,7 +13,6 @@ import psycopg2
 import psycopg2.extras
 import os
 import re
-import time
 
 DATABASE_URL = os.getenv('DATABASE_URL') 
 
