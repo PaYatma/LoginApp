@@ -1,6 +1,5 @@
 import datetime
 from datetime import timedelta
-from turtle import delay
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
