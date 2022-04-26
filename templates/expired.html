@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="{{url_for('.static', filename='welcome.css')}}">
+    <link rel="stylesheet" href="{{url_for('.static', filename='expired.css')}}">
 
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,7 +9,7 @@
     <title>Expired!!!</title>
 </head>
 <body>
-    <div  class="centered-text" style="color: deeppink;"><h1>This link is expired. Please, <a href="{{url_for('signup')}}">signup</a> again with another email address.</h1>
+    <div  class="centered-text" id="expired_text"><h1>This link is expired. <br> Please, <a href="{{url_for('signup')}}">signup</a> again with another email address.</h1>
     </div>
 
 </body>

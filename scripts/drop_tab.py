@@ -12,14 +12,7 @@ conn = psycopg2.connect(DATABASE_URL)
 cursor = conn.cursor()
 
 # Drop the table if it already exists
-cursor.execute("DROP TABLE IF EXISTS Users")
-
-# Create a new table called Documents
-cursor.execute("""CREATE TABLE Users (ID SERIAL PRIMARY KEY,
-        firstname VARCHAR(50), lastname VARCHAR(50), company VARCHAR(50),
-        country VARCHAR(50), email VARCHAR(50) UNIQUE not null, 
-        password VARCHAR(180), confirm_email Boolean not null default False,
-        created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)""")
+cursor.execute("DROP TABLE IF EXISTS User")
 
 
 # Push (or commit) our queries into the database in order to view changes

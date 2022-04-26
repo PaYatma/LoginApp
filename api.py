@@ -1,8 +1,9 @@
 import datetime
 from datetime import timedelta
+from turtle import delay
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user, AnonymousUserMixin
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
@@ -12,8 +13,11 @@ import psycopg2
 import psycopg2.extras
 import os
 import re
+import time
 
-DATABASE_URL = os.getenv('DATABASE_URL') # 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# DATABASE_URL = os.getenv('DATABASE_URL') 
+
+DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -21,7 +25,7 @@ app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
 app.permanent_session_lifetime = timedelta(minutes=10)
-app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=3600*24*360)
+app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
 bcrypt = Bcrypt(app)
 
 db = SQLAlchemy(app)
@@ -33,12 +37,19 @@ conn = psycopg2.connect(DATABASE_URL)
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
+
+
+class Anonymous(AnonymousUserMixin):
+  def __init__(self):
+    self.firstname = 'Guest'
+
 # Login settings
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-
+login_manager.login_message = "Please, log in to acces this page."
+login_manager.anonymous_user = Anonymous
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -81,9 +92,8 @@ def home():
 
 # welcome page
 @app.route('/welcome', methods=['GET', 'POST'])
-@login_required
 def welcome():
-    return render_template('welcome.html', firstname = current_user.firstname)
+    return render_template('welcome.html', name=current_user.firstname)
 
 # Profile page
 @app.route('/profile', methods=['GET', 'POST'])
@@ -134,13 +144,14 @@ def confirm_link(token):
             update_user = "UPDATE users SET confirm_email = %s WHERE email= %s"
             cursor.execute(update_user, (True, user_exists[5],))
             conn.commit()
+            return redirect(url_for('welcome'))
 
     except SignatureExpired:      
         return render_template('expired.html')
-    
+        
     cursor.close()
 
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 
@@ -199,7 +210,7 @@ def login():
                 redirect(url_for('login'))
             elif user_exists and bcrypt.check_password_hash(user_exists[6], form.password.data):
                 login_user(user)
-                return redirect(url_for('welcome'))
+                return redirect(url_for('home'))
             else:
                 flash('This password is invalid. Please, try again.', category='error')
                 redirect(url_for('login'))
@@ -216,7 +227,7 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('home'))
 
 
 # Add my scripts

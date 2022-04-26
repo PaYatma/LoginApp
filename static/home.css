@@ -2,7 +2,7 @@ html,
 body{
   margin: 0;
   padding: 0;
-  background: url(https://cms-static.wehaacdn.com/documentmedia-com/images/7-DMS-for-Compliance.1950.jpg) no-repeat;
+  background: rgb(216, 225, 246); 
   background-size:cover;
 }
 nav{
@@ -33,6 +33,7 @@ nav a{
   font-size: large;
   color: rgb(16, 16, 16);
   margin-top: 10px;
+  text-align: center;
 }
 
 nav a:hover{
@@ -42,22 +43,25 @@ nav a:hover{
   text-align: center;
   border-radius: 15px;
 }
+
 h1{
   border-bottom: 8px solid rgb(78, 182, 209);
   font-size: 50px;
   display: inline-block;
   margin-left: 10px;
 }
+
+.text {
+  text-align: center;
+}
+
 p{
   font-size: 24px;
   margin-left: 10px;
   color: rgb(0, 0, 0);
+  text-align: center;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
-p:hover{
-  background: #57c4d0;
-  display:inline;
-}
-
 
 .current {
   color: #F8F8F8;

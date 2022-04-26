@@ -2,7 +2,7 @@ html,
 body{
   margin: 0;
   padding: 0;
-  background: rgb(161, 247, 165);
+  background: rgb(103, 104, 103);
   font-size: 24px;
 }
 nav{
@@ -43,15 +43,12 @@ nav a:hover{
   border-radius: 15px;
 }
 
-#weltext{
+#expired_text{
   text-align: center;
   padding: 300px;
 }
 
 h1 {
   text-align: center;
-}
-
-h2 {
-  text-align: center;
+  color: rgb(39, 2, 2);
 }
