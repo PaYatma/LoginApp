@@ -28,7 +28,7 @@
     </form></br>
     {%  for category, message in get_flashed_messages(with_categories=True) %}
     <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert"
-    style="text-align: center; font-style:inherit; color: crimson;">
+    style="text-align: center; font-style:inherit;">
       {{ message}}
     </div>
     {% endfor %}

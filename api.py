@@ -20,7 +20,7 @@ app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
-app.permanent_session_lifetime = timedelta(minutes=10)
+app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
 bcrypt = Bcrypt(app)
 
@@ -176,9 +176,12 @@ def signup():
                             form.company.data, form.country.data, form.email.data, _hashed_password))
             conn.commit()
             gettoken(email=form.email.data) 
-            return redirect(url_for('login')) 
+
+            flash('Please, check your email for confirmation.', category='success')
         return redirect(url_for('login')) 
+
     cursor.close()
+
     return render_template('register.html', form=form)
 
 
@@ -218,11 +221,14 @@ def login():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('home'))
+    session.pop('logged_in', None)
+    session.pop('active_user', None)
+    flash('You are logged out!', category='success')
+    return redirect(url_for('login'))
 
 
 # Add my scripts
-@app.route("/api/data", methods=["POST","GET"])
+@app.route("/api", methods=["POST","GET"])
 @login_required
 def ajaxfile():
     try:

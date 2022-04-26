@@ -43,8 +43,8 @@
       <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
     </ul>
   </nav>
-    <div class="container" id="my_tab" style="width:1400px; height:800px; padding-top: 25px;">
-          <table id="data" class="table" style="width: 100%;">
+    <div class="container" id="my_tab" style="width:1400px; height:800px; padding-top: 20px;">
+          <table id="data" class="table">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -87,7 +87,7 @@
         // DataTable
         var table = $('#data').DataTable({ 
             "autoWidth": false,
-            scrollY: "640px",
+            scrollY: "600px",
             scrollX:true,
             'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
             'dom': 'lBfrtip',
@@ -95,7 +95,7 @@
             'processing': true,
             'serverMethod': 'post',
             'ajax': {
-                'url':'/api/data'
+                'url':'/api'
                 },
             'serverSide': true,
             'columns': [

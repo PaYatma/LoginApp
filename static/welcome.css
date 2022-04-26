@@ -27,7 +27,7 @@ li{
 nav a{
   width: 160px;
   display:block;
-  padding: 10px 15px 30px;
+  padding: 20px 15px 30px;
   text-decoration: none;
   font-family: Arial;
   font-size: large;
@@ -45,7 +45,7 @@ nav a:hover{
 
 #weltext{
   text-align: center;
-  padding: 300px;
+  padding: 250px;
 }
 
 h1 {

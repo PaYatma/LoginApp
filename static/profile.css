@@ -24,7 +24,7 @@ li{
 }
 
 nav a{
-  width: 160px;
+  width: 150px;
   display:block;
   padding: 10px 10px 30px;
   text-decoration: none;
@@ -34,6 +34,8 @@ nav a{
   margin-top: 10px;
   text-align: center;
 }
+
+
 nav a:hover{
   background: rgb(121, 123, 123);
   transition: 0.5s;
