@@ -91,7 +91,7 @@ def home():
 # welcome page
 @app.route('/welcome', methods=['GET', 'POST'])
 def welcome():
-    return render_template('welcome.html', name=current_user.firstname)
+    return render_template('welcome.html', name=Anonymous)
 
 # Profile page
 @app.route('/profile', methods=['GET', 'POST'])
