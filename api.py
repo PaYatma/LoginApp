@@ -133,7 +133,7 @@ def confirm_link(token):
         user_exists = cursor.fetchone()
 
         if user_exists:
-            update_user = "UPDATE users SET confirm_email = %s WHERE email= %s"
+            update_user = '''UPDATE users SET confirm_email = %s WHERE email= %s'''
             cursor.execute(update_user, (True, user_exists[5],))
             conn.commit()
             return redirect(url_for('welcome'))
