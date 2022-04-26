@@ -29,17 +29,11 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 mail = Mail(app)
 
-
 conn = psycopg2.connect(DATABASE_URL)
 
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
-
-
-class Anonymous(AnonymousUserMixin):
-  def __init__(self):
-    self.firstname = 'Guest'
 
 # Login settings
 login_manager = LoginManager()
@@ -47,7 +41,7 @@ login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
 login_manager.login_message = "Please, log in to acces this page."
-login_manager.anonymous_user = Anonymous
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -64,6 +58,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     confirm_email = db.Column(db.Boolean, default=False)
     created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+
 
 # function to create mysqk user
 def create_user(id, connexion):
@@ -91,7 +86,7 @@ def home():
 # welcome page
 @app.route('/welcome', methods=['GET', 'POST'])
 def welcome():
-    return render_template('welcome.html', name=Anonymous)
+    return render_template('welcome.html', name='Guest')
 
 # Profile page
 @app.route('/profile', methods=['GET', 'POST'])
