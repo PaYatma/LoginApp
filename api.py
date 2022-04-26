@@ -15,6 +15,7 @@ import re
 
 DATABASE_URL = os.getenv('DATABASE_URL') 
 
+
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
