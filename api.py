@@ -13,7 +13,7 @@ import psycopg2.extras
 import os
 import re
 
-DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'#.replace("postgres://", "postgresql://")
+DATABASE_URL = os.getenv('DATABASE_URL') # 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
