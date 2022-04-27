@@ -15,7 +15,6 @@ import re
 
 DATABASE_URL = os.getenv('DATABASE_URL') 
 
-
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
@@ -169,7 +168,7 @@ def signup():
             flash('Account already exists!', category='error')
         elif not (re.fullmatch(regex_email, form.email.data)):
             flash('Invalid email address!', category='error')
-            return render_template('register.html', form=form) 
+            return render_template('register.html') 
         else:
             # Account doesnt exists and the form data is valid, now insert new account into user table
             cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
