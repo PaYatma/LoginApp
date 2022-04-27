@@ -15,6 +15,7 @@ import re
 
 DATABASE_URL = os.getenv('DATABASE_URL') 
 
+
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
@@ -281,8 +282,8 @@ def ajaxfile():
 
             elif any(boxes_search) != "":        
                 cursor.execute('''SELECT * FROM Documents WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
-                                 and Study ILIKE %s and Tag::text ILIKE %s and Created::text ILIKE %s and Submission ILIKE %s
-                                 and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
+                                 and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s 
+                                 and Tag::text ILIKE %s and Created::text ILIKE %s LIMIT %s OFFSET %s''', 
                 (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6,
                          searchcol7, searchcol8, rowperpage, row,))
                 docs_table = cursor.fetchall()
@@ -295,7 +296,6 @@ def ajaxfile():
             # Sort table
             direction = request.form.get('order[0][dir]')
             col_index = request.form.get('order[0][column]', type=int)
-            col_name = request.form.get(f'columns[{col_index}][data]')
            
             if direction == "asc":
                 docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=False)
@@ -309,11 +309,11 @@ def ajaxfile():
                     'Code':x[1],
                     'Country':x[2],
                     'Study':x[3],
-                    'Tag':x[4],
-                    'Created':x[5],
-                    'Submission':x[6],
-                    'Documents':x[7],
-                    'Note':x[8]
+                    'Submission':x[4],
+                    'Documents':x[5],
+                    'Note':x[6],
+                    'Tag':x[7],
+                    'Created':x[8]
                 })
 
   

@@ -11,6 +11,8 @@ mydf = pd.read_csv("data/global_tab.csv")
 mydf["Documents"].fillna(".", inplace=True)
 mydf["Note"].fillna(".", inplace=True)
 
+mydf = mydf[["Code", "Country", "Study", "Submission", "Documents", "Note", "Tag", "Created"]]
+
 # Split all row in a single list
 mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
 
@@ -36,9 +38,8 @@ mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
                         password="4703565c",
                         database="heroku_963b7cc12121e0d")"""
                         
-# DATABASE_URL = os.getenv("DATABASE_URL").replace("postgres://", "postgresql://")
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 conn = psycopg2.connect(DATABASE_URL)
 
@@ -52,13 +53,13 @@ mycursor = conn.cursor()
 mycursor.execute("DROP TABLE IF EXISTS Documents")
 
 # Create a new table called Documents
-mycursor.execute("CREATE TABLE Documents (ID SERIAL PRIMARY KEY," 
-        "Code VARCHAR(4), Country VARCHAR(50), Study VARCHAR(20), Tag Float(2),"
-        "Created Date, Submission VARCHAR(50), Documents Text, Note Text)")
+mycursor.execute("""CREATE TABLE Documents (ID SERIAL PRIMARY KEY, Code VARCHAR(4),
+     Country VARCHAR(50), Study VARCHAR(20), Submission VARCHAR(50), 
+        Documents Text, Note Text, Tag Float(2), Created Date)""")
 
 # Insert data into our table
-mycursor.executemany("""INSERT INTO Documents (Code, Country, Study, Tag, Created,
-                        Submission, Documents, Note) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""", mytuples)
+mycursor.executemany("""INSERT INTO Documents (Code, Country, Study, Submission, Documents, 
+                    Note, Tag, Created) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""", mytuples)
     
 # Push (or commit) our queries into the database in order to view changes
 conn.commit()
