@@ -15,8 +15,8 @@ mydf["Note"].fillna(".", inplace=True)
 # Split all row in a single list
 mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
                     
-# DATABASE_URL = os.getenv("DATABASE_URL")
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# Add connection
+DATABASE_URL = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL)
 
 # Create a cursor in order to execute query into the database

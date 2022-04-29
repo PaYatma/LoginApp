@@ -15,9 +15,7 @@ import re
 from flask_track_usage import TrackUsage
 from flask_track_usage.storage.sql import SQLStorage
 
-# DATABASE_URL = os.getenv('DATABASE_URL') 
-
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL') 
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
