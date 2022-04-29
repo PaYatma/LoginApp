@@ -16,6 +16,8 @@ email-validator = "*"
 mysqlclient = "*"
 "mysql.connector" = "*"
 pandas = "*"
+flask-track-usage = "*"
+"flask.ext" = "*"
 
 [dev-packages]
 

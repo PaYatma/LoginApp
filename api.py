@@ -12,21 +12,28 @@ import psycopg2
 import psycopg2.extras
 import os
 import re
+from flask_track_usage import TrackUsage
+from flask_track_usage.storage.sql import SQLStorage
 
-DATABASE_URL = os.getenv('DATABASE_URL') 
+# DATABASE_URL = os.getenv('DATABASE_URL') 
 
+DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
-
+app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
 app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
-bcrypt = Bcrypt(app)
 
-db = SQLAlchemy(app)
 mail = Mail(app)
+bcrypt = Bcrypt(app)
+db = SQLAlchemy(app)
+pstorage = SQLStorage(db=db)
+trk = TrackUsage(app, [pstorage])
+
 
 conn = psycopg2.connect(DATABASE_URL)
 
@@ -39,7 +46,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message = "Please, log in to acces this page."
+login_manager.login_message = ""
 
 
 @login_manager.user_loader
