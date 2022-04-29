@@ -50,9 +50,10 @@ login_manager.session_protection = "strong"
 def load_user(user_id):
     return Users.query.get(user_id)
    
-   
+
 # User creation
 class Users(db.Model, UserMixin):
+    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     firstname = db.Column(db.String(50), nullable=False)
     lastname = db.Column(db.String(50), nullable=False)
