@@ -15,7 +15,9 @@ import re
 from flask_track_usage import TrackUsage
 from flask_track_usage.storage.sql import SQLStorage
 
+# Add connection
 DATABASE_URL = os.getenv('DATABASE_URL') 
+conn = psycopg2.connect(DATABASE_URL)
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
@@ -33,8 +35,6 @@ pstorage = SQLStorage(db=db)
 trk = TrackUsage(app, [pstorage])
 
 
-conn = psycopg2.connect(DATABASE_URL)
-
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
@@ -44,12 +44,12 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message = ""
 
 
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.get(user_id)
+   
    
 # User creation
 class Users(db.Model, UserMixin):
