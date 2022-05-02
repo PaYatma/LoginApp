@@ -17,8 +17,7 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 
 
 # Add connection
-# DATABASE_URL = os.getenv('DATABASE_URL') 
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL') 
 conn = psycopg2.connect(DATABASE_URL)
 
 app = Flask(__name__)
