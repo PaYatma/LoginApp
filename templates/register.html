@@ -26,13 +26,17 @@
       {{form.password}}
       {{form.submit}}
     </form></br>
+
     {%  for category, message in get_flashed_messages(with_categories=True) %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert"
-    style="text-align: center; font-style:inherit;">
-      {{ message}}
-    </div>
+        <div class="alert alert-{{ category }} alert-dismissible fade show" 
+        role="alert" style="text-align: center; font-style:inherit;">
+          {{ message}}
+        </div>
     {% endfor %}
-    <div class="text-center fs-6"> <a href="{{url_for('login')}}">Already have an account? Login</a> </div>
+
+    <div>
+      <a href="{{url_for('login')}}">Already have an account? Login</a>
+    </div></br>
 </div>
 
 </body>

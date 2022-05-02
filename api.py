@@ -1,22 +1,24 @@
-import datetime
-from datetime import timedelta
-from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
-from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from flask_bcrypt import Bcrypt
-from flask_mail import Mail, Message
-from itsdangerous import SignatureExpired, URLSafeTimedSerializer
-from myforms import RegisterForm, LoginForm
-from sqlalchemy import DateTime, create_engine
-import psycopg2
-import psycopg2.extras
 import os
 import re
-from flask_track_usage import TrackUsage
-from flask_track_usage.storage.sql import SQLStorage
+import datetime
+import psycopg2
+import psycopg2.extras
+
+from datetime import timedelta
+from flask_bcrypt import Bcrypt
+from flask_mail import Mail, Message
+from flask_sqlalchemy import SQLAlchemy
+from myforms import RegisterForm, LoginForm
+from sqlalchemy import BOOLEAN, DateTime, Float, create_engine
+from itsdangerous import SignatureExpired, URLSafeTimedSerializer
+from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
+
+
 
 # Add connection
-DATABASE_URL = os.getenv('DATABASE_URL') 
+# DATABASE_URL = os.getenv('DATABASE_URL') 
+DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 conn = psycopg2.connect(DATABASE_URL)
 
 app = Flask(__name__)
@@ -31,9 +33,6 @@ app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
 mail = Mail(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
-pstorage = SQLStorage(db=db)
-trk = TrackUsage(app, [pstorage])
-
 
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
@@ -48,7 +47,7 @@ login_manager.session_protection = "strong"
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Users.query.get(user_id)
+    return Users.query.get(int(user_id))
    
 
 # User creation
@@ -63,6 +62,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     confirm_email = db.Column(db.Boolean, default=False)
     created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+
 
 
 # function to create mysqk user
@@ -126,12 +126,11 @@ def gettoken(email):
 
 
 # Function to confirm email address
-@app.route("/confirm/<token>", methods=['GET', 'POST'])
+@app.route("/conf/<token>", methods=['GET', 'POST'])
 def confirm_link(token):
     form = RegisterForm()
     cursor = conn.cursor()
     s = URLSafeTimedSerializer(app.secret_key)
-
     try:
         email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
 
@@ -159,23 +158,26 @@ def signup():
 
     cursor = conn.cursor()
     form = RegisterForm()
+            
+    #check email
+    regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,3}\b'
+
+    if form.email.data != None and not bool((re.fullmatch(regex_email, str(form.email.data) ))):
+        flash('Invalid email address!', category='error')
+        return render_template('register.html', form=form)
 
     if form.validate_on_submit():
         user_email = form.email.data
         _hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-
-        #check email
-        regex_email = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
         
         #Check if account exists using MySQL
         cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
         account = cursor.fetchone()
 
         if account:
-            flash('Account already exists!', category='error')
-        elif not (re.fullmatch(regex_email, form.email.data)):
-            flash('Invalid email address!', category='error')
-            return render_template('register.html') 
+            flash('Account already exists! Please, try to login.', category='error')
+            return render_template('register.html', form=form)
+
         else:
             # Account doesnt exists and the form data is valid, now insert new account into user table
             cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
@@ -185,7 +187,9 @@ def signup():
             gettoken(email=form.email.data) 
 
             flash('Please, check your email for confirmation.', category='success')
+    
         return redirect(url_for('login')) 
+    
 
     cursor.close()
 
