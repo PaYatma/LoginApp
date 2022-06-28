@@ -31,6 +31,6 @@ class LoginForm(FlaskForm):
     password = PasswordField('password', validators=[InputRequired(), Length(min=8, max=80)],
                 render_kw={"placeholder":"Password"})
 
-    remember = BooleanField('remember')
+    reset_pwd = BooleanField('reset_pwd', render_kw={"placeholder":'Forget password'})
 
     submit = SubmitField("Login")

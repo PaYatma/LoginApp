@@ -36,22 +36,9 @@ bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
 
-
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
-
-# Login settings
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
-login_manager.session_protection = "strong"
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    return Users.query.get(int(user_id))
-   
 
 # User creation
 class Users(db.Model, UserMixin):
@@ -77,7 +64,7 @@ def create_user(id, connexion):
                 firstname=user_exists[1],
                 lastname=user_exists[2],
                 company=user_exists[3],
-                country=user_exists[4],
+                country=user_exists[4], 
                 email=user_exists[5],
                 password=user_exists[6],
                 confirm_email=user_exists[7])
@@ -85,166 +72,15 @@ def create_user(id, connexion):
     return user
 
 
-# Home page
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/home', methods=['GET', 'POST'])
-def home():
-     return render_template('home.html')
-
-# welcome page
-@app.route('/welcome', methods=['GET', 'POST'])
-def welcome():
-    return render_template('welcome.html', name='Guest')
-
-# Profile page
-@app.route('/profile', methods=['GET', 'POST'])
-@login_required
-def profile():
-    return render_template('profile.html', 
-            firstname= current_user.firstname,
-            lastname = current_user.lastname,
-            company = current_user.company,
-            country = current_user.country,
-            email = current_user.email
-            )
-
-
 @app.route('/dashboard', methods=['GET', 'POST'])
-@login_required
+#@login_required
 def dashboard():
-    return render_template("index.html")
-
-
-# Function for sending email 
-def gettoken(email):
-
-    s = URLSafeTimedSerializer(app.secret_key)
-    token = s.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
-    msg = Message('Confirm Email', sender='noreply.ysr@gmail.com', recipients=[email])   
-    link = url_for('confirm_link', token=token, _external=True)
-    msg.body = '''Please, click on this link to confirm your email: {}.'''.format(link)
-    mail.send(msg)
-
-    return token
-
-
-# Function to confirm email address
-@app.route("/conf/<token>", methods=['GET', 'POST'])
-def confirm_link(token):
-    form = RegisterForm()
-    cursor = conn.cursor()
-    s = URLSafeTimedSerializer(app.secret_key)
-    try:
-        email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
-
-        cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
-        user_exists = cursor.fetchone()
-
-        if user_exists:
-            update_user = '''UPDATE users SET confirm_email = %s WHERE email= %s'''
-            cursor.execute(update_user, (True, user_exists[5],))
-            print(user_exists[6])
-            conn.commit()
-            return redirect(url_for('welcome'))
-
-    except SignatureExpired:      
-        return render_template('expired.html')
-        
-    cursor.close()
-
-    return redirect(url_for('home'))
-
-
-
-# Sign-up
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
-
-    cursor = conn.cursor()
-    form = RegisterForm()
-            
-    #check email
-    regex_email = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,3}\b'
-
-    if form.email.data != None and not bool((re.fullmatch(regex_email, str(form.email.data) ))):
-        flash('Invalid email address!', category='error')
-        return render_template('register.html', form=form)
-
-    if form.validate_on_submit():
-        user_email = form.email.data
-        _hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        
-        #Check if account exists using MySQL
-        cursor.execute('SELECT * FROM users WHERE email = %s', (user_email,))
-        account = cursor.fetchone()
-
-        if account:
-            flash('Account already exists! Please, try to login.', category='error')
-            return render_template('register.html', form=form)
-
-        else:
-            # Account doesnt exists and the form data is valid, now insert new account into user table
-            cursor.execute("""INSERT INTO users (firstname, lastname, company, country, email, password) 
-                            VALUES (%s,%s,%s,%s,%s,%s)""", (form.firstname.data, form.lastname.data, 
-                            form.company.data, form.country.data, form.email.data, _hashed_password))
-            conn.commit()
-            gettoken(email=form.email.data) 
-
-            flash('Please, check your email for confirmation.', category='success')
-    
-        return redirect(url_for('login')) 
-    
-
-    cursor.close()
-
-    return render_template('register.html', form=form)
-
-
-# Login
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    cursor = conn.cursor()
-    form = LoginForm()
-    
-    if form.validate_on_submit():
-        #user = User.query.filter_by(email=form.email.data).first()
-        cursor.execute('SELECT * FROM users WHERE email = %s', (form.email.data,))
-        # Fetch one record and return result
-        user_exists = cursor.fetchone()
-        
-        if user_exists:
-            user = create_user(id=user_exists[0], connexion=conn)
-            if not user_exists[7]:
-                flash('Please, confirm your email. And try again.', category='warning')
-                redirect(url_for('login'))
-            elif user_exists and bcrypt.check_password_hash(user_exists[6], form.password.data):
-                login_user(user)
-                return redirect(url_for('home'))
-            else:
-                flash('This password is invalid. Please, try again.', category='error')
-                redirect(url_for('login'))
-        else:
-            flash('Email address unknown. Correct the email address. Or create an account.', category='warning')  
-
-    cursor.close()
-
-    return render_template('login.html', form=form)
-    
-
-# Logout
-@app.route('/logout')
-@login_required
-def logout():
-    logout_user()
-    session.pop('logged_in', None)
-    session.pop('active_user', None)
-    flash('You are logged out!', category='success')
-    return redirect(url_for('login'))
+    return render_template("myindex.html")
 
 
 # Add my scripts
 @app.route("/api", methods=["POST","GET"])
-@login_required
+#@login_required
 def ajaxfile():
     try:
         conn = engine.raw_connection()

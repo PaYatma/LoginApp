@@ -15,7 +15,7 @@ files = list(itertools.compress(os.listdir(path), ['.xlsx' in x for x in os.list
 countries = pd.read_csv(path+"/countries.csv")[["CODE", "NAME"]]
 
 # Remove the space after the code name e.g from 'AT ' to 'AT'
-countries.CODE = [x.split(" ")[0] for x in countries.CODE]
+countries.CODE = [x.strip().upper() for x in countries.CODE]
 
 # Function to get country name from country code
 def getcountryname(code):
