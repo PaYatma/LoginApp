@@ -8,7 +8,7 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
-from myforms import RegisterForm, LoginForm
+from myforms import RegisterForm, LoginForm, ForgotForm, PasswordResetForm
 from sqlalchemy import BOOLEAN, DateTime, Float, create_engine
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
@@ -143,7 +143,6 @@ def confirm_link(token):
         if user_exists:
             update_user = '''UPDATE users SET confirm_email = %s WHERE email= %s'''
             cursor.execute(update_user, (True, user_exists[5],))
-            print(user_exists[6])
             conn.commit()
             return redirect(url_for('welcome'))
 
@@ -241,6 +240,62 @@ def logout():
     flash('You are logged out!', category='success')
     return redirect(url_for('login'))
 
+
+
+# Forgot password
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    error = None
+    message = None
+    form = ForgotForm()
+    email = form.email.data
+    cursor = conn.cursor()
+    if form.validate_on_submit():
+        cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+        user_exists = cursor.fetchone()
+        if not user_exists:
+            flash('There is no account with this email. Please, register first.', category='warning')
+            redirect(url_for('signup'))
+        else:
+            s = URLSafeTimedSerializer(app.secret_key)
+            token = s.dumps(email, salt=app.config['SECURITY_PASSWORD_SALT'])
+            msg = Message('Reset password request', sender='noreply.ysr@gmail.com', recipients=[email])   
+            link = url_for('reset_password', token=token, _external=True)
+            msg.body = '''Please, click on this link to create a new password: {}.'''.format(link)
+            mail.send(msg)
+            flash('A new link to reset your password is sent by email.', category='success')
+
+    return render_template('forgot.html', title='Forgot Password', form=form, error=error, message=message)
+
+# reset_password 
+@app.route("/reset/<token>", methods=['GET', 'POST'])
+def reset_password(token):
+    cursor = conn.cursor()
+    form = PasswordResetForm()
+    
+    s = URLSafeTimedSerializer(app.secret_key)
+    email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
+    mytoken = s.dumps(email, salt=app.secret_key)
+    
+    '''cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
+    account = cursor.fetchone()'''
+
+    if form.validate_on_submit():
+        if form.new_password.data == form.confirm_password.data:
+            
+            hashed_newpassword = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+            
+            #Check if account exists using MySQL
+            cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
+            account = cursor.fetchone()
+            print(account)
+            account[6] = hashed_newpassword
+            '''dsd'''
+            conn.commit()
+            print("OK")
+        else:
+            print("Not OK")
+    return redirect(url_for('reset_password'), token = mytoken)
 
 # Add my scripts
 @app.route("/api", methods=["POST","GET"])

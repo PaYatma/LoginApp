@@ -1,3 +1,4 @@
+import email
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField
 from wtforms.validators import InputRequired, Length, ValidationError
@@ -34,3 +35,20 @@ class LoginForm(FlaskForm):
     reset_pwd = BooleanField('reset_pwd', render_kw={"placeholder":'Forget password'})
 
     submit = SubmitField("Login")
+
+
+class ForgotForm(FlaskForm):
+    email = StringField('email', validators=[InputRequired(), Length(min=6, max=50)],
+                render_kw={"placeholder":"Enter your email address"})
+
+    submit = SubmitField("Request Password Reset")
+
+            
+class PasswordResetForm(FlaskForm):
+    new_password = PasswordField('New Password', validators=[InputRequired(), Length(min=8, max=80)],
+                render_kw={"placeholder":"New Password"})
+
+    confirm_password = PasswordField('Confirm Password', validators=[InputRequired(), Length(min=8, max=80)],
+                render_kw={"placeholder":"Confirm Password"})
+
+    submit = SubmitField("Reset password")
