@@ -1,6 +1,7 @@
 import os
 import re
 import datetime
+from colorama import Cursor
 import psycopg2
 import psycopg2.extras
 
@@ -65,7 +66,6 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     confirm_email = db.Column(db.Boolean, default=False)
     created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
-
 
 
 # function to create mysqk user
@@ -136,7 +136,6 @@ def confirm_link(token):
     s = URLSafeTimedSerializer(app.secret_key)
     try:
         email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
-
         cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
         user_exists = cursor.fetchone()
 
@@ -264,38 +263,41 @@ def forgot():
             msg.body = '''Please, click on this link to create a new password: {}.'''.format(link)
             mail.send(msg)
             flash('A new link to reset your password is sent by email.', category='success')
-
     return render_template('forgot.html', title='Forgot Password', form=form, error=error, message=message)
 
-# reset_password 
+'''# reset_password 
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_password():
+    form =  PasswordResetForm()
+    return render_template('reset_password.html', form = form)
+'''
+
+# Confirm link for reset password
 @app.route("/reset/<token>", methods=['GET', 'POST'])
 def reset_password(token):
     cursor = conn.cursor()
     form = PasswordResetForm()
-    
     s = URLSafeTimedSerializer(app.secret_key)
     email=s.loads(token, salt=app.config['SECURITY_PASSWORD_SALT'], max_age=365*24*3600)
-    mytoken = s.dumps(email, salt=app.secret_key)
-    
-    '''cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
-    account = cursor.fetchone()'''
+    mytoken = s.dumps(email, salt=app.secret_key)  
 
     if form.validate_on_submit():
-        if form.new_password.data == form.confirm_password.data:
-            
-            hashed_newpassword = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
-            
-            #Check if account exists using MySQL
-            cursor.execute('SELECT * FROM users WHERE email = %s', (email,))
-            account = cursor.fetchone()
-            print(account)
-            account[6] = hashed_newpassword
-            '''dsd'''
-            conn.commit()
-            print("OK")
+        cursor.execute('SELECT * FROM Users WHERE email = %s', (email,))
+        account = cursor.fetchone()
+        _hashed_pwrd = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+        if form.new_password.data == form.confirm_password.data: 
+            update_pwd = '''UPDATE users SET password = %s, confirm_email = %s WHERE email= %s'''
+            cursor.execute(update_pwd, (_hashed_pwrd, True, account[5],))
+            conn.commit() 
+            flash('Your password is successfully updated.', category='success')
+            redirect(url_for('login'))      
         else:
-            print("Not OK")
-    return redirect(url_for('reset_password'), token = mytoken)
+            flash('Please, correct. Passwords should be the same.', category='error')
+
+    cursor.close()
+
+    return render_template('reset_password.html', form = form, token=mytoken)
+
 
 # Add my scripts
 @app.route("/api", methods=["POST","GET"])
