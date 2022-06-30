@@ -1,7 +1,6 @@
 import os
 import re
 import datetime
-from colorama import Cursor
 import psycopg2
 import psycopg2.extras
 
@@ -10,7 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
 from myforms import RegisterForm, LoginForm, ForgotForm, PasswordResetForm
-from sqlalchemy import BOOLEAN, DateTime, Float, create_engine
+from sqlalchemy import DateTime, create_engine
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
