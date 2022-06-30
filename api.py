@@ -17,8 +17,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, log
 
 
 # Add connection
-DATABASE_URL = os.getenv('DATABASE_URL') 
-# DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# DATABASE_URL = os.getenv('DATABASE_URL') 
+DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 conn = psycopg2.connect(DATABASE_URL)
 
@@ -321,11 +321,9 @@ def ajaxfile():
             searchcol5 = "%{}%".format(request.form['columns[5][search][value]'])
             searchcol6 = "%{}%".format(request.form['columns[6][search][value]'])
             searchcol7 = "%{}%".format(request.form['columns[7][search][value]'])
-            searchcol8 = "%{}%".format(request.form['columns[8][search][value]'])
 
-            boxes_search = [searchcol0, searchcol1, searchcol2, 
-                            searchcol3, searchcol4, searchcol5,
-                            searchcol6, searchcol7, searchcol8]    
+            boxes_search = [searchcol0, searchcol1, searchcol2, searchcol3,
+                            searchcol4, searchcol5, searchcol6, searchcol7]    
         
             ## Total number of records without filtering
             cursor.execute("select count(*) from Documents")
@@ -353,9 +351,9 @@ def ajaxfile():
             elif any(boxes_search) != "":        
                 cursor.execute('''SELECT * FROM Documents WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
                                  and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s 
-                                 and Tag::text ILIKE %s and Created::text ILIKE %s LIMIT %s OFFSET %s''', 
+                                 and Created::text ILIKE %s LIMIT %s OFFSET %s''', 
                 (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6,
-                         searchcol7, searchcol8, rowperpage, row,))
+                         searchcol7, rowperpage, row,))
                 docs_table = cursor.fetchall()
                 
             else:
@@ -382,8 +380,7 @@ def ajaxfile():
                     'Submission':x[4],
                     'Documents':x[5],
                     'Note':x[6],
-                    'Tag':x[7],
-                    'Created':x[8]
+                    'Created':x[7]
                 })
 
   

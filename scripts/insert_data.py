@@ -16,6 +16,7 @@ mydf["Note"].fillna(".", inplace=True)
 mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
                     
 # Add connection
+# DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 DATABASE_URL = os.getenv("DATABASE_URL")
 conn = psycopg2.connect(DATABASE_URL)
 
@@ -28,11 +29,11 @@ mycursor.execute("DROP TABLE IF EXISTS Documents")
 # Create a new table called Documents
 mycursor.execute("""CREATE TABLE Documents (ID SERIAL PRIMARY KEY, Code VARCHAR(4),
      Country VARCHAR(50), Study VARCHAR(20), Submission VARCHAR(50), 
-        Documents Text, Note Text, Tag Float(2), Created Date)""")
+        Documents Text, Note Text, Created Date)""")
 
 # Insert data into our table
 mycursor.executemany("""INSERT INTO Documents (Code, Country, Study, Submission, Documents, 
-                    Note, Tag, Created) VALUES(%s,%s,%s,%s,%s,%s,%s,%s)""", mytuples)
+                    Note, Created) VALUES(%s,%s,%s,%s,%s,%s,%s)""", mytuples)
     
 # Push (or commit) our queries into the database in order to view changes
 conn.commit()

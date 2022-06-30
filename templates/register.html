@@ -4,6 +4,7 @@
 
   <link rel="stylesheet" href="{{url_for('.static', filename='register.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
   <meta charset="UTF-8">
@@ -35,8 +36,9 @@
     {% endfor %}
 
     <div>
-      <a href="{{url_for('login')}}">Already have an account? Login</a>
-    </div></br>
+      <a href="{{url_for('login')}}">Already have an account? Login</a></br>
+      <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+    </div>
 </div>
 
 </body>

@@ -4,6 +4,7 @@
 
   <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
   <meta charset="UTF-8">
@@ -22,11 +23,12 @@
         {{form.submit}} 
         <div>
           <a href="{{url_for('forgot')}}">Forgot password</a> 
-       </div></br>
+       </div>
       </form></br>
     <div>
-      <a href="{{url_for('signup')}}">Don't have an account? Sign up</a> 
-   </div></br>
+      <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br>
+      <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+   </div>
   </div>  
   {%  for category, message in get_flashed_messages(with_categories=True) %}
   <div class="alert alert-{{ category }} alert-dismissible fade show"

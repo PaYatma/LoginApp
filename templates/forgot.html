@@ -4,7 +4,7 @@
 
   <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,9 +26,9 @@
         {{form.hidden_tag()}}
         {{form.email}}
         {{form.submit}}   
-        <div>
-          <a href="{{url_for('login')}}">Login page</a> 
-       </div></br>
+        <div><a href="{{url_for('login')}}"><h3 style="font-family:tempus sans itc;">Login page</h3></a>
+          <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a> 
+        </div>
       </form></br>
   </div>
 

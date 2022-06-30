@@ -11,14 +11,14 @@
         <nav style=" box-shadow: 0px 2px 5px rgb(119, 119, 119)">
             <ul class="collapse narbar-collapse" id="mynavbar">
                 {% if not current_user.is_authenticated %}
-                <li><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+                <li><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i>Home</a></li>
                 <li><a href="{{url_for('login')}}"><i class="fa fa-sign-in"></i>Login</a></li>
                 <li><a href="{{url_for('signup')}}"><i class="fa fa-fw fa-user"></i>Signup</a></li>
                 {% endif %}
 
                 {% if current_user.is_authenticated %}
-                <li ><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
-                <li><a href="{{url_for('dashboard')}}"><i class="fa fa-database"></i> Database</a></li>
+                <li ><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i>Home</a></li>
+                <li><a href="{{url_for('dashboard')}}"><i class="fa fa-database"></i>Database</a></li>
                 <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>
                 <li><a href="{{url_for('logout')}}"><i class="fa fa-sign-out"></i>Logout</a></li>
                 {% endif %}

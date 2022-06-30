@@ -9,18 +9,25 @@ from  datetime import date
 path = "C:/Users/Yatma Sarr/Desktop/Linh TP/Docs"
 
 # Keep only files ending up with ".xlsx"
-files = list(itertools.compress(os.listdir(path), ['.xlsx' in x for x in os.listdir(path)]))
+files = list(itertools.compress(os.listdir(path), ['EU REGION.xlsx' in x for x in os.listdir(path)]))
 
 # Import countries name
-countries = pd.read_csv(path+"/countries.csv")[["CODE", "NAME"]]
+countries_list = pd.read_csv(path+"/countries.csv")[["CODE", "NAME"]]
 
 # Remove the space after the code name e.g from 'AT ' to 'AT'
-countries.CODE = [x.strip().upper() for x in countries.CODE]
+countries_list.CODE = [x.strip().upper() for x in countries_list.CODE]
+
+# Remove the space after the code name e.g from 'AT ' to 'AT'
+countries_list.CODE = [x.strip().upper() for x in countries_list.CODE]
+
+countries = countries_list.assign(NAME = ['Grece' if x == 'GK' else y
+                 for (x, y) in zip(countries_list.CODE, countries_list.NAME)])
+
 
 # Function to get country name from country code
 def getcountryname(code):
     try:
-        return countries.query("CODE == @code").NAME.values[0][:-1]
+        return countries.query("CODE == @code").NAME.values[0].strip()
     except:
         return "Unknown"
 
@@ -60,7 +67,8 @@ datalist = [import_tabs(path=path, filename=files[0], submission_type="Competent
 data = pd.concat(datalist)
 
 # Reorder columns
-mydata = data[['Code', 'Country', 'Study', 'Tag', 'Created', 'Submission', 'Documents', 'Note']]
+mydata = data[['Code', 'Country', 'Study', 'Submission', 'Documents', 'Note', 'Date']]
+
 
 # Save data in csv format
 mydata.to_csv(path + "/../global_tab.csv", index=False)
