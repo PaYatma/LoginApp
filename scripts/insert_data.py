@@ -4,39 +4,53 @@ import pandas as pd
 '''import mysql.connector'''
 import psycopg2
 
-# Read data from "Codes/data/" folder
-mydf = pd.read_csv("data/global_tab.csv")
 
-# Replace all missing values 'nan' in column Documents and Note by '.'
-mydf["Documents"].fillna(".", inplace=True)
-mydf["Note"].fillna(".", inplace=True)
+# Function to transform dataframe to tuples
+def create_tuples(filename:str):
+        data_imp =  pd.read_csv(filename)
 
+        # Replace all missing values 'nan' in column Documents and Note by '.'
+        data_imp["Documents"].fillna(".", inplace=True)
+        data_imp["Note"].fillna(".", inplace=True)
 
-# Split all row in a single list
-mytuples = [tuple(mydf.iloc[i]) for i in range(mydf.shape[0])]
+        # Split all row in a single list
+        mytuples = [tuple(data_imp.iloc[i]) for i in range(data_imp.shape[0])]
+
+        return mytuples
+
+# Run the function
+mytuples_Eur = create_tuples(filename="data/Tab_Eur.csv")
+mytuples_Asia = create_tuples(filename="data/Tab_Asia.csv")
                     
 # Add connection
-# DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
-DATABASE_URL = os.getenv("DATABASE_URL")
-conn = psycopg2.connect(DATABASE_URL)
+DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# DATABASE_URL = os.getenv("DATABASE_URL")
 
-# Create a cursor in order to execute query into the database
-mycursor = conn.cursor()
+# Function to create tables into the DB
+def create_tabs(DB_URL:str, tab_name:str, mytuples:list):
+        conn = psycopg2.connect(DB_URL)
 
-# Drop the table if it already exists
-mycursor.execute("DROP TABLE IF EXISTS Documents")
+        # Create a cursor in order to execute query into the database
+        mycursor = conn.cursor()
 
-# Create a new table called Documents
-mycursor.execute("""CREATE TABLE Documents (ID SERIAL PRIMARY KEY, Code VARCHAR(4),
-     Country VARCHAR(50), Study VARCHAR(20), Submission VARCHAR(50), 
-        Documents Text, Note Text, Created Date)""")
+        # Drop the table if it already exists
+        mycursor.execute("DROP TABLE IF EXISTS %s" %tab_name)
 
-# Insert data into our table
-mycursor.executemany("""INSERT INTO Documents (Code, Country, Study, Submission, Documents, 
-                    Note, Created) VALUES(%s,%s,%s,%s,%s,%s,%s)""", mytuples)
-    
-# Push (or commit) our queries into the database in order to view changes
-conn.commit()
-    
-# Close the connexion
-conn.close()
+        # Create a new table called Documents
+        mycursor.execute("""CREATE TABLE %s (ID SERIAL PRIMARY KEY, Code VARCHAR(4),
+                Country VARCHAR(50), Study VARCHAR(20), Submission VARCHAR(50), 
+                        Documents Text, Note Text, Created Date)""" %tab_name)
+
+        # Insert data into our table
+        mycursor.executemany("""INSERT INTO {} (Code, Country, Study, Submission, Documents, Note, Created) 
+                                        VALUES(%s,%s,%s,%s,%s,%s,%s)""".format(tab_name), mytuples)
+        
+        # Push (or commit) our queries into the database in order to view changes
+        conn.commit()
+        
+        # Close the connexion
+        conn.close()
+
+# Run the function 
+create_tabs(DB_URL=DATABASE_URL, tab_name='tab_Asia', mytuples=mytuples_Asia)
+create_tabs(DB_URL=DATABASE_URL, tab_name='tab_Eur', mytuples=mytuples_Eur)

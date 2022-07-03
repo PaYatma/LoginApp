@@ -9,7 +9,7 @@ from  datetime import date
 path = "C:/Users/Yatma Sarr/Desktop/Linh TP/Docs"
 
 # Keep only files ending up with ".xlsx"
-files = list(itertools.compress(os.listdir(path), ['EU REGION.xlsx' in x for x in os.listdir(path)]))
+files = list(itertools.compress(os.listdir(path), ['requirement Eur' in x for x in os.listdir(path)]))
 
 # Import countries name
 countries_list = pd.read_csv(path+"/countries.csv")[["CODE", "NAME"]]
