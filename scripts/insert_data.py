@@ -19,8 +19,11 @@ def create_tuples(filename:str):
         return mytuples
 
 # Run the function
-mytuples_Eur = create_tuples(filename="data/Tab_Eur.csv")
-mytuples_Asia = create_tuples(filename="data/Tab_Asia.csv")
+mytuples_America = create_tuples(filename="data/America.csv")
+mytuples_Asia = create_tuples(filename="data/Asia.csv")
+mytuples_Europe = create_tuples(filename="data/Europe.csv")
+mytuples_MiddleEast = create_tuples(filename="data/MiddleEast.csv")
+
                     
 # Add connection
 DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
@@ -52,5 +55,7 @@ def create_tabs(DB_URL:str, tab_name:str, mytuples:list):
         conn.close()
 
 # Run the function 
-create_tabs(DB_URL=DATABASE_URL, tab_name='tab_Asia', mytuples=mytuples_Asia)
-create_tabs(DB_URL=DATABASE_URL, tab_name='tab_Eur', mytuples=mytuples_Eur)
+create_tabs(DB_URL=DATABASE_URL, tab_name='America', mytuples=mytuples_America)
+create_tabs(DB_URL=DATABASE_URL, tab_name='Asia', mytuples=mytuples_Asia)
+create_tabs(DB_URL=DATABASE_URL, tab_name='Europe', mytuples=mytuples_Europe)
+create_tabs(DB_URL=DATABASE_URL, tab_name='MiddleEast', mytuples=mytuples_MiddleEast)

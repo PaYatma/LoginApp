@@ -1,0 +1,41 @@
+html, 
+
+ul {
+  list-style: none;
+  border-radius: 15px;
+  float:left;
+  padding: 10px;
+}
+
+li {
+  font-weight: bold; /* If you want it to be bold */
+  margin-left: 1em; /* Also needed for space (tweak if needed) */
+}
+
+li a{
+  display:block;
+  padding: 10px 15px 30px;
+  text-decoration: none;
+  font-family: Arial;
+  font-size: large;
+  color: rgb(0, 0, 0);
+  margin-top: 10px;
+  text-align: center;
+  background-color: rgb(142, 180, 246);
+  border-radius: 35px;
+}
+
+li a:hover{
+  background: rgb(121, 123, 123);
+  transition: 0.5s;
+  text-transform: uppercase;
+  text-align: center;
+  border-radius: 15px;
+}
+
+a{
+  border-bottom: 8px solid rgb(78, 182, 209);
+  font-size: 40px;
+  display: inline-block;
+  margin-left: 10px;
+}
