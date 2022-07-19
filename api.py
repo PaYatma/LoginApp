@@ -35,8 +35,6 @@ mail = Mail(app)
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 
-
-
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
@@ -46,6 +44,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
+login_manager.login_message="Please, login again."
 
 
 @login_manager.user_loader
@@ -152,7 +151,6 @@ def confirm_link(token):
     return redirect(url_for('home'))
 
 
-
 # Sign-up
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -190,7 +188,6 @@ def signup():
             flash('Please, check your email for confirmation.', category='success')
     
         return redirect(url_for('login')) 
-    
 
     cursor.close()
 
@@ -264,13 +261,6 @@ def forgot():
             flash('A new link to reset your password is sent by email.', category='success')
     return render_template('forgot.html', title='Forgot Password', form=form, error=error, message=message)
 
-'''# reset_password 
-@app.route('/reset_password', methods=['GET', 'POST'])
-def reset_password():
-    form =  PasswordResetForm()
-    return render_template('reset_password.html', form = form)
-'''
-
 # Confirm link for reset password
 @app.route("/reset/<token>", methods=['GET', 'POST'])
 def reset_password(token):
@@ -297,11 +287,12 @@ def reset_password(token):
 
     return render_template('reset_password.html', form = form, token=mytoken)
 
-
-# Add my scripts
-@app.route("/api", methods=["POST","GET"])
+#***************************************************************************
+# Add routes
+# Add America table
+@app.route("/america/", methods=["POST","GET"])
 @login_required
-def ajaxfile():
+def ajaxamerica():
     try:
         conn = engine.raw_connection()
         cursor = conn.cursor()
@@ -320,51 +311,47 @@ def ajaxfile():
             searchcol4 = "%{}%".format(request.form['columns[4][search][value]'])
             searchcol5 = "%{}%".format(request.form['columns[5][search][value]'])
             searchcol6 = "%{}%".format(request.form['columns[6][search][value]'])
-            searchcol7 = "%{}%".format(request.form['columns[7][search][value]'])
 
             boxes_search = [searchcol0, searchcol1, searchcol2, searchcol3,
-                            searchcol4, searchcol5, searchcol6, searchcol7]    
+                            searchcol4, searchcol5, searchcol6]    
         
             ## Total number of records without filtering
-            cursor.execute("select count(*) from Documents")
+            cursor.execute("select count(*) from america")
             rsallcount = cursor.fetchone()
             totalRecords = rsallcount[0]
 
             ## Total number of records with filtering
             ILIKEString = "%{}%".format(searchValue)
 
-            cursor.execute('''SELECT count(*) as allcount from Documents WHERE Code ILIKE %s
-                                     OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
+            cursor.execute('''SELECT count(*) as allcount from america WHERE Code ILIKE %s
+                                    OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
                                     (ILIKEString, ILIKEString, ILIKEString, ILIKEString))
             rsallcount = cursor.fetchone()
             totalRecordwithFilter = rsallcount[0]
                         
-
             ## Fetch records
             if searchValue !="":
-                cursor.execute('''SELECT * FROM Documents WHERE Code ILIKE %s 
+                cursor.execute('''SELECT * FROM america WHERE Code ILIKE %s 
                                     OR Country ILIKE %s OR Study ILIKE %s 
                                     OR Submission ILIKE %s LIMIT %s OFFSET %s''', 
                                     (ILIKEString, ILIKEString, ILIKEString, ILIKEString, rowperpage, row,))
                 docs_table = cursor.fetchall()
 
             elif any(boxes_search) != "":        
-                cursor.execute('''SELECT * FROM Documents WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
-                                 and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s 
-                                 and Created::text ILIKE %s LIMIT %s OFFSET %s''', 
-                (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6,
-                         searchcol7, rowperpage, row,))
+                cursor.execute('''SELECT * FROM america WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
+                                and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
+                (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6, rowperpage, row,))
                 docs_table = cursor.fetchall()
                 
             else:
-                cursor.execute('''SELECT * FROM Documents LIMIT {limit} OFFSET {offset}
+                cursor.execute('''SELECT * FROM america LIMIT {limit} OFFSET {offset}
                                     '''.format(limit=rowperpage, offset=row))
                 docs_table = cursor.fetchall()  
 
             # Sort table
             direction = request.form.get('order[0][dir]')
             col_index = request.form.get('order[0][column]', type=int)
-           
+        
             if direction == "asc":
                 docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=False)
             else:
@@ -379,11 +366,296 @@ def ajaxfile():
                     'Study':x[3],
                     'Submission':x[4],
                     'Documents':x[5],
-                    'Note':x[6],
-                    'Created':x[7]
+                    'Note':x[6]
                 })
 
-  
+            response = {
+                'draw': draw,
+                'iTotalRecords': totalRecords,
+                'iTotalDisplayRecords': totalRecordwithFilter,
+                'aaData': data,
+            }
+            return jsonify(response) 
+
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+
+
+# Add Asia table
+@app.route("/asia/", methods=["POST","GET"])
+@login_required
+def ajaxasia():
+    try:
+        conn = engine.raw_connection()
+        cursor = conn.cursor()
+
+        if request.method == 'POST':
+            draw = request.form['draw']
+            row = int(request.form['start'])
+            rowperpage = int(request.form['length'])
+            searchValue = request.form["search[value]"]
+
+            # REtreive filters
+            searchcol0 = "%{}%".format(request.form['columns[0][search][value]'])
+            searchcol1 = "%{}%".format(request.form['columns[1][search][value]'])
+            searchcol2 = "%{}%".format(request.form['columns[2][search][value]'])
+            searchcol3 = "%{}%".format(request.form['columns[3][search][value]'])
+            searchcol4 = "%{}%".format(request.form['columns[4][search][value]'])
+            searchcol5 = "%{}%".format(request.form['columns[5][search][value]'])
+            searchcol6 = "%{}%".format(request.form['columns[6][search][value]'])
+
+            boxes_search = [searchcol0, searchcol1, searchcol2, searchcol3,
+                            searchcol4, searchcol5, searchcol6]    
+        
+            ## Total number of records without filtering
+            cursor.execute("select count(*) from asia")
+            rsallcount = cursor.fetchone()
+            totalRecords = rsallcount[0]
+
+            ## Total number of records with filtering
+            ILIKEString = "%{}%".format(searchValue)
+
+            cursor.execute('''SELECT count(*) as allcount from asia WHERE Code ILIKE %s
+                                    OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString))
+            rsallcount = cursor.fetchone()
+            totalRecordwithFilter = rsallcount[0]
+                        
+            ## Fetch records
+            if searchValue !="":
+                cursor.execute('''SELECT * FROM asia WHERE Code ILIKE %s 
+                                    OR Country ILIKE %s OR Study ILIKE %s 
+                                    OR Submission ILIKE %s LIMIT %s OFFSET %s''', 
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString, rowperpage, row,))
+                docs_table = cursor.fetchall()
+
+            elif any(boxes_search) != "":        
+                cursor.execute('''SELECT * FROM asia WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
+                                and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
+                (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6, rowperpage, row,))
+                docs_table = cursor.fetchall()
+                
+            else:
+                cursor.execute('''SELECT * FROM asia LIMIT {limit} OFFSET {offset}
+                                    '''.format(limit=rowperpage, offset=row))
+                docs_table = cursor.fetchall()  
+
+            # Sort table
+            direction = request.form.get('order[0][dir]')
+            col_index = request.form.get('order[0][column]', type=int)
+        
+            if direction == "asc":
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=False)
+            else:
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=True)
+
+            data = []
+            for x in docs_table:
+                data.append({
+                    'ID':x[0],
+                    'Code':x[1],
+                    'Country':x[2],
+                    'Study':x[3],
+                    'Submission':x[4],
+                    'Documents':x[5],
+                    'Note':x[6]
+                })
+
+            response = {
+                'draw': draw,
+                'iTotalRecords': totalRecords,
+                'iTotalDisplayRecords': totalRecordwithFilter,
+                'aaData': data,
+            }
+            return jsonify(response) 
+
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+
+
+# Add Europe table
+@app.route("/europe/", methods=["POST","GET"])
+@login_required
+def ajaxeurope():
+    try:
+        conn = engine.raw_connection()
+        cursor = conn.cursor()
+
+        if request.method == 'POST':
+            draw = request.form['draw']
+            row = int(request.form['start'])
+            rowperpage = int(request.form['length'])
+            searchValue = request.form["search[value]"]
+           
+
+            # REtreive filters
+            searchcol0 = "%{}%".format(request.form['columns[0][search][value]'])
+            searchcol1 = "%{}%".format(request.form['columns[1][search][value]'])
+            searchcol2 = "%{}%".format(request.form['columns[2][search][value]'])
+            searchcol3 = "%{}%".format(request.form['columns[3][search][value]'])
+            searchcol4 = "%{}%".format(request.form['columns[4][search][value]'])
+            searchcol5 = "%{}%".format(request.form['columns[5][search][value]'])
+            searchcol6 = "%{}%".format(request.form['columns[6][search][value]'])
+
+            boxes_search = [searchcol0, searchcol1, searchcol2, searchcol3,
+                            searchcol4, searchcol5, searchcol6]    
+        
+            ## Total number of records without filtering
+            cursor.execute("select count(*) from europe")
+            rsallcount = cursor.fetchone()
+            totalRecords = rsallcount[0]
+
+            ## Total number of records with filtering
+            ILIKEString = "%{}%".format(searchValue)
+
+            cursor.execute('''SELECT count(*) as allcount from europe WHERE Code ILIKE %s
+                                    OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString))
+            rsallcount = cursor.fetchone()
+            totalRecordwithFilter = rsallcount[0]
+                        
+            ## Fetch records
+            if searchValue !="":
+                cursor.execute('''SELECT * FROM europe WHERE Code ILIKE %s 
+                                    OR Country ILIKE %s OR Study ILIKE %s 
+                                    OR Submission ILIKE %s LIMIT %s OFFSET %s''', 
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString, rowperpage, row,))
+                docs_table = cursor.fetchall()
+
+            elif any(boxes_search) != "":        
+                cursor.execute('''SELECT * FROM europe WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
+                                and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
+                            (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6, rowperpage, row,))
+                docs_table = cursor.fetchall()
+                
+            else:
+                cursor.execute('''SELECT * FROM europe LIMIT {limit} OFFSET {offset}
+                                    '''.format(limit=rowperpage, offset=row))
+                docs_table = cursor.fetchall()  
+
+            # Sort table
+            direction = request.form.get('order[0][dir]')
+            col_index = request.form.get('order[0][column]', type=int)
+        
+            if direction == "asc":
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=False)
+            else:
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=True)
+
+            data = []
+            for x in docs_table:
+                data.append({
+                    'ID':x[0],
+                    'Code':x[1],
+                    'Country':x[2],
+                    'Study':x[3],
+                    'Submission':x[4],
+                    'Documents':x[5],
+                    'Note':x[6]
+                    })
+
+            response = {
+                'draw': draw,
+                'iTotalRecords': totalRecords,
+                'iTotalDisplayRecords': totalRecordwithFilter,
+                'aaData': data,
+            }
+            return jsonify(response) 
+
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close() 
+        conn.close()
+
+
+# Add MiddleEast table
+@app.route("/middleeast/", methods=["POST","GET"])
+@login_required
+def ajaxmiddleeast():
+    try:
+        conn = engine.raw_connection()
+        cursor = conn.cursor()
+
+        if request.method == 'POST':
+            draw = request.form['draw']
+            row = int(request.form['start'])
+            rowperpage = int(request.form['length'])
+            searchValue = request.form["search[value]"]
+           
+
+            # REtreive filters
+            searchcol0 = "%{}%".format(request.form['columns[0][search][value]'])
+            searchcol1 = "%{}%".format(request.form['columns[1][search][value]'])
+            searchcol2 = "%{}%".format(request.form['columns[2][search][value]'])
+            searchcol3 = "%{}%".format(request.form['columns[3][search][value]'])
+            searchcol4 = "%{}%".format(request.form['columns[4][search][value]'])
+            searchcol5 = "%{}%".format(request.form['columns[5][search][value]'])
+            searchcol6 = "%{}%".format(request.form['columns[6][search][value]'])
+
+            boxes_search = [searchcol0, searchcol1, searchcol2, searchcol3,
+                            searchcol4, searchcol5, searchcol6]    
+        
+            ## Total number of records without filtering
+            cursor.execute("select count(*) from middleeast")
+            rsallcount = cursor.fetchone()
+            totalRecords = rsallcount[0]
+
+            ## Total number of records with filtering
+            ILIKEString = "%{}%".format(searchValue)
+
+            cursor.execute('''SELECT count(*) as allcount from middleeast WHERE Code ILIKE %s
+                                    OR Study ILIKE %s  OR Country ILIKE %s OR Submission ILIKE %s''',
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString))
+            rsallcount = cursor.fetchone()
+            totalRecordwithFilter = rsallcount[0]
+                        
+            ## Fetch records
+            if searchValue !="":
+                cursor.execute('''SELECT * FROM middleeast WHERE Code ILIKE %s 
+                                    OR Country ILIKE %s OR Study ILIKE %s 
+                                    OR Submission ILIKE %s LIMIT %s OFFSET %s''', 
+                                    (ILIKEString, ILIKEString, ILIKEString, ILIKEString, rowperpage, row,))
+                docs_table = cursor.fetchall()
+
+            elif any(boxes_search) != "":        
+                cursor.execute('''SELECT * FROM middleeast WHERE ID::text ILIKE %s and Code ILIKE %s and Country ILIKE %s
+                                and Study ILIKE %s and Submission ILIKE %s and Documents ILIKE %s and Note ILIKE %s LIMIT %s OFFSET %s''', 
+                            (searchcol0, searchcol1, searchcol2, searchcol3, searchcol4, searchcol5, searchcol6, rowperpage, row,))
+                docs_table = cursor.fetchall()
+                
+            else:
+                cursor.execute('''SELECT * FROM middleeast LIMIT {limit} OFFSET {offset}
+                                    '''.format(limit=rowperpage, offset=row))
+                docs_table = cursor.fetchall()  
+
+            # Sort table
+            direction = request.form.get('order[0][dir]')
+            col_index = request.form.get('order[0][column]', type=int)
+        
+            if direction == "asc":
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=False)
+            else:
+                docs_table = sorted(docs_table, key= lambda x: x[col_index], reverse=True)
+
+            data = []
+            for x in docs_table:
+                data.append({
+                    'ID':x[0],
+                    'Code':x[1],
+                    'Country':x[2],
+                    'Study':x[3],
+                    'Submission':x[4],
+                    'Documents':x[5],
+                    'Note':x[6]
+                    })
+
             response = {
                 'draw': draw,
                 'iTotalRecords': totalRecords,
