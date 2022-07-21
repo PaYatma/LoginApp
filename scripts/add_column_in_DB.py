@@ -3,8 +3,8 @@ import os
 import psycopg2
 
 # Add URL
-# DATABASE_URL = os.getenv('DATABASE_URL')
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL')
+# DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 
 # Connect to the DATABASE
 conn = psycopg2.connect(DATABASE_URL)

@@ -26,8 +26,8 @@ mytuples_MiddleEast = create_tuples(filename="data/MiddleEast.csv")
 
                     
 # Add connection
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
-# DATABASE_URL = os.getenv("DATABASE_URL")
+# DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # Function to create tables into the DB
 def create_tabs(DB_URL:str, tab_name:str, mytuples:list):

@@ -18,8 +18,8 @@ import uuid as uuid
 
 
 # Add connection
-# DATABASE_URL = os.getenv('DATABASE_URL') 
-DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL') 
+# DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 UPLOAD_FOLDER = "static/images/"
 conn = psycopg2.connect(DATABASE_URL)
 
