@@ -1,8 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <meta charset="utf-8">
     <title>Regulatory Documents</title>
-   
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Local style -->
+    <link rel="stylesheet" href="{{url_for('.static', filename='index.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
     <!-- tabs -->
     <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-3.5.1.js"></script>   
     <script type="text/javascript" charset="utf8" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
@@ -37,390 +44,392 @@
     <!-- Base style - compact -->
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script> 
     <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
-  
-    <!-- Local style -->
-    <link rel="stylesheet" href="{{url_for('.static', filename='index.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   </head>
+
 <body>  
-<div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
-<nav style="box-shadow: 0px 2px 5px rgb(119, 119, 119)">
-  <ul>
-    <li><a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
-    <li><a class="current" href="{{url_for('dashboard')}}"><i class="fa fa-database"></i> Database</a></li>
-    <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>    
-    <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
-  </ul>
-</nav>
+    <nav style="box-shadow: 0px 2px 5px rgb(119, 119, 119);">
+      <div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
+      <div class="logo">
+        {% if current_user.profile_pic %}
+            <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" 
+            style="width:7.5%; height: auto; border-radius: 15px; margin-left: 350px; margin-top: 1px;">
+        {% endif %}
+      </div>
+      <ul>
+        <li><a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></i>Home</a></li>
+        <li><a class="current" href="{{url_for('dashboard')}}"><i class="fa fa-database"></i> Database</a></li>
+        <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>    
+        <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
+      </ul>
+    </nav>
 
-<div>
-  <ul class="nav nav-tabs" role="tablist">
-    <li class="active" id="tab">
-        <a href="#tab-table1" data-toggle="tab">America</a>
-    </li>
-    <li id="tab">
-        <a href="#tab-table2" data-toggle="tab">Asia</a>
-    </li>
-    <li id="tab">
-        <a href="#tab-table3" data-toggle="tab">Europe</a>
-    </li>
-    <li id="tab">
-        <a href="#tab-table4" data-toggle="tab">MiddleEast & others countries</a>
-    </li>
-  </ul>
-  
-  <div class="tab-content">
-    <div class="tab-pane active" id="tab-table1" style="width:1800px; height:800px; padding-top: 20px;">
-      <table id="myTable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th>Country</th>
-                <th>Study</th>
-                <th>Submission</th>
-                <th>Documents</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        
-        <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Country</th>
-              <th>Study</th>
-              <th>Submission</th>
-              <th>Documents</th>
-              <th>Note</th>
-            </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="tab-pane" id="tab-table2" style="width:1800px; height:800px; padding-top: 20px;">
-      <table id="myTable2" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th>Country</th>
-                <th>Study</th>
-                <th>Submission</th>
-                <th>Documents</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        
-        <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Country</th>
-              <th>Study</th>
-              <th>Submission</th>
-              <th>Documents</th>
-              <th>Note</th>
-            </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="tab-pane" id="tab-table3" style="width:1800px; height:800px; padding-top: 20px;">
-      <table id="myTable3" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th>Country</th>
-                <th>Study</th>
-                <th>Submission</th>
-                <th>Documents</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        
-        <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Country</th>
-              <th>Study</th>
-              <th>Submission</th>
-              <th>Documents</th>
-              <th>Note</th>
-            </tr>
-        </tfoot>
-      </table>
-    </div>
-    <div class="tab-pane" id="tab-table4" style="width:1800px; height:800px; padding-top: 20px;">
-      <table id="myTable4" class="table table-striped table-bordered" cellspacing="0" width="100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Code</th>
-                <th>Country</th>
-                <th>Study</th>
-                <th>Submission</th>
-                <th>Documents</th>
-                <th>Note</th>
-            </tr>
-        </thead>
-        
-        <tfoot>
-            <tr>
-              <th>ID</th>
-              <th>Code</th>
-              <th>Country</th>
-              <th>Study</th>
-              <th>Submission</th>
-              <th>Documents</th>
-              <th>Note</th>
-            </tr>
-        </tfoot>
-      </table>
-    </div>
-  </div>
-</div>
-
-<script>
-     // Setup - add a text input to each footer cell
-     $('#myTable1 tfoot th').each( function (i) {
-        var title = $('#myTable1 thead th').eq( $(this).index() ).text();
-        $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-      });
-
-      $(document).ready(function() {  
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        $.fn.dataTable.tables({ visible: true, api: true}).columns.adjust();
-      });
-
-        // DataTable N°1
-        var table1 = $('#myTable1').DataTable({
-            dom: 'lBfrtip',
-            buttons: [{
-                extend: 'copyHtml5', title: 'America - Regulatory Documents'
-            }, 
-            {
-                extend: 'csvHtml5', title: 'America - Regulatory Documents'
-            },
-            {
-                extend: 'excelHtml5', title: 'America - Regulatory Documents'
-            },
-            {
-                extend: 'pdfHtml5', title: 'America - Regulatory Documents'
-            },
-            {
-                extend: 'print', title: 'America - Regulatory Documents'
-            }
-          ],
-            "autoWidth": false,
-            scrollY: "650px",
-            scrollX:true,
-            paging:true,
-            fixedColumns: true,
-            'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],
-            'processing': false,
-            'serverMethod': 'post',
-            'ajax': {
-                'url':'/america/'
-                },
-            'serverSide': true,
-            'columns': [
-                {data:'ID'},
-                {data:'Code'},
-                {data:'Country'},
-                {data:'Study'},
-                {data:'Submission'},
-                {data:'Documents', orderable:false},
-                {data:'Note', orderable:false},
-                ],
-            });
-
-    // Filter event handler
-    $( table1.table().container() ).on( 'keyup', 'tfoot input', function () {
-        table1
-            .column( $(this).data('index') )
-            .search( this.value )
-            .draw();
-    } );
-  
-    //**********************************************************************************
-    // DataTable N°2
-     // Setup - add a text input to each footer cell
-     $('#myTable2 tfoot th').each( function (i) {
-        var title = $('#myTable2 thead th').eq( $(this).index() ).text();
-        $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-      } );
-
-        // Apply a search to the second table for the demo
-        var table2 = $('#myTable2').DataTable({ 
-            "autoWidth": false,
-            scrollY: "650px",
-            scrollX:true,
-            paging: true,
-            fixedColumns: true,
-            'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
-            dom: 'lBfrtip',
-            buttons: [{
-                        extend: 'copyHtml5', title: 'Asia - Regulatory Documents'
-                    }, 
-                    {
-                        extend: 'csvHtml5', title: 'Asia - Regulatory Documents'
-                    },
-                    {
-                        extend: 'excelHtml5', title: 'Asia - Regulatory Documents'
-                    },
-                    {
-                        extend: 'pdfHtml5', title: 'Asia - Regulatory Documents'
-                    },
-                    {
-                        extend: 'print', title: 'Asia - Regulatory Documents'
-                    }
-                    ],
-            'processing': false,
-            'serverMethod': 'post',
-            'ajax': {
-                'url':'/asia/'
-                },
-            'serverSide': true,
-            'columns': [
-                {data:'ID'},
-                {data:'Code'},
-                {data:'Country'},
-                {data:'Study'},
-                {data:'Submission'},
-                {data:'Documents', orderable:false},
-                {data:'Note', orderable:false},
-                ],
-            });
-
-    // Filter event handler
-    $( table2.table().container() ).on( 'keyup', 'tfoot input', function () {
-          table2
-            .column( $(this).data('index') )
-            .search( this.value )
-            .draw();
-    } );
-
-    //**********************************************************************************
-    // DataTable N°3
-     // Setup - add a text input to each footer cell
-     $('#myTable3 tfoot th').each( function (i) {
-        var title = $('#myTable3 thead th').eq( $(this).index() ).text();
-        $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-      } );
-
-        // Apply a search to the second table for the demo
-        var table3 = $('#myTable3').DataTable({ 
-            "autoWidth": false,
-            scrollY: "650px",
-            scrollX:true,
-            paging: true,
-            fixedColumns: true,
-            'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
-            'dom': 'lBfrtip',
-            buttons: [{
-                      extend: 'copyHtml5', title: 'Europe - Regulatory Documents'
-                  }, 
-                  {
-                      extend: 'csvHtml5', title: 'Europe - Regulatory Documents'
-                  },
-                  {
-                      extend: 'excelHtml5', title: 'Europe - Regulatory Documents'
-                  },
-                  {
-                      extend: 'pdfHtml5', title: 'Europe - Regulatory Documents'
-                  },
-                  {
-                      extend: 'print', title: 'Europe - Regulatory Documents'
-                  }
-                  ],
-            'processing': false,
-            'serverMethod': 'post',
-            'ajax': {
-                'url':'/europe/'
-                },
-            'serverSide': true,
-            'columns': [
-                {data:'ID'},
-                {data:'Code'},
-                {data:'Country'},
-                {data:'Study'},
-                {data:'Submission'},
-                {data:'Documents', orderable:false},
-                {data:'Note', orderable:false},
-                ],
-            });
-
-    // Filter event handler
-    $( table3.table().container() ).on( 'keyup', 'tfoot input', function () {
-          table3
-            .column( $(this).data('index') )
-            .search( this.value )
-            .draw();
-    } );
+    <div>
+      <ul class="nav nav-tabs" role="tablist">
+        <li class="active" id="tab">
+            <a href="#tab-table1" data-toggle="tab">America</a>
+        </li>
+        <li id="tab">
+            <a href="#tab-table2" data-toggle="tab">Asia</a>
+        </li>
+        <li id="tab">
+            <a href="#tab-table3" data-toggle="tab">Europe</a>
+        </li>
+        <li id="tab">
+            <a href="#tab-table4" data-toggle="tab">MiddleEast & others countries</a>
+        </li>
+      </ul>
+      
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-table1" style="width:1400px; height:800px; padding-top: 5px;">
+          <table id="myTable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Country</th>
+                    <th>Study</th>
+                    <th>Submission</th>
+                    <th>Documents</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
             
-  });        
+            <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Code</th>
+                  <th>Country</th>
+                  <th>Study</th>
+                  <th>Submission</th>
+                  <th>Documents</th>
+                  <th>Note</th>
+                </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab-table2" style="width:1400px; height:800px; padding-top: 5px;">
+          <table id="myTable2" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Country</th>
+                    <th>Study</th>
+                    <th>Submission</th>
+                    <th>Documents</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Code</th>
+                  <th>Country</th>
+                  <th>Study</th>
+                  <th>Submission</th>
+                  <th>Documents</th>
+                  <th>Note</th>
+                </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab-table3" style="width:1400px; height:800px; padding-top: 5px;">
+          <table id="myTable3" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Country</th>
+                    <th>Study</th>
+                    <th>Submission</th>
+                    <th>Documents</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Code</th>
+                  <th>Country</th>
+                  <th>Study</th>
+                  <th>Submission</th>
+                  <th>Documents</th>
+                  <th>Note</th>
+                </tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="tab-pane" id="tab-table4" style="width:1400px; height:800px; padding-top: 5px;">
+          <table id="myTable4" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Country</th>
+                    <th>Study</th>
+                    <th>Submission</th>
+                    <th>Documents</th>
+                    <th>Note</th>
+                </tr>
+            </thead>
+            
+            <tfoot>
+                <tr>
+                  <th>ID</th>
+                  <th>Code</th>
+                  <th>Country</th>
+                  <th>Study</th>
+                  <th>Submission</th>
+                  <th>Documents</th>
+                  <th>Note</th>
+                </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+ 
+    <script>
+        // Setup - add a text input to each footer cell
+        $('#myTable1 tfoot th').each( function (i) {
+            var title = $('#myTable1 thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+          });
 
-  //**********************************************************************************
-    // DataTable N°4
-     // Setup - add a text input to each footer cell
-     $('#myTable4 tfoot th').each( function (i) {
-        var title = $('#myTable4 thead th').eq( $(this).index() ).text();
-        $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
-      } );
+          $(document).ready(function() {  
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+            $.fn.dataTable.tables({ visible: true, api: true}).columns.adjust();
+          });
 
-        // Apply a search to the second table for the demo
-        var table4 = $('#myTable4').DataTable({ 
-            "autoWidth": false,
-            scrollY: "650px",
-            scrollX:true,
-            paging: true,
-            fixedColumns: true,
-            'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
-            'dom': 'lBfrtip',
-            buttons: [{
-                      extend: 'copyHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
-                  }, 
-                  {
-                      extend: 'csvHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
-                  },
-                  {
-                      extend: 'excelHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
-                  },
-                  {
-                      extend: 'pdfHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
-                  },
-                  {
-                      extend: 'print', title: 'MiddleEast and others countries - Regulatory Documents'
-                  }
-                  ],
-            'processing': false,
-            'serverMethod': 'post',
-            'ajax': {
-                'url':'/middleeast/'
+            // DataTable N°1
+            var table1 = $('#myTable1').DataTable({
+                dom: 'lBfrtip',
+                buttons: [{
+                    extend: 'copyHtml5', title: 'America - Regulatory Documents'
+                }, 
+                {
+                    extend: 'csvHtml5', title: 'America - Regulatory Documents'
                 },
-            'serverSide': true,
-            'columns': [
-                {data:'ID'},
-                {data:'Code'},
-                {data:'Country'},
-                {data:'Study'},
-                {data:'Submission'},
-                {data:'Documents', orderable:false},
-                {data:'Note', orderable:false},
-                ],
-            });
+                {
+                    extend: 'excelHtml5', title: 'America - Regulatory Documents'
+                },
+                {
+                    extend: 'pdfHtml5', title: 'America - Regulatory Documents'
+                },
+                {
+                    extend: 'print', title: 'America - Regulatory Documents'
+                }
+              ],
+                "autoWidth": false,
+                scrollY: "650px",
+                scrollX:true,
+                paging:true,
+                fixedColumns: true,
+                'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],
+                'processing': false,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'/america/'
+                    },
+                'serverSide': true,
+                'columns': [
+                    {data:'ID'},
+                    {data:'Code'},
+                    {data:'Country'},
+                    {data:'Study'},
+                    {data:'Submission'},
+                    {data:'Documents', orderable:false},
+                    {data:'Note', orderable:false},
+                    ],
+                });
 
-    // Filter event handler
-    $( table4.table().container() ).on( 'keyup', 'tfoot input', function () {
-          table4
-            .column( $(this).data('index') )
-            .search( this.value )
-            .draw();
-    } );
+        // Filter event handler
+        $( table1.table().container() ).on( 'keyup', 'tfoot input', function () {
+            table1
+                .column( $(this).data('index') )
+                .search( this.value )
+                .draw();
+        } );
+      
+        //**********************************************************************************
+        // DataTable N°2
+        // Setup - add a text input to each footer cell
+        $('#myTable2 tfoot th').each( function (i) {
+            var title = $('#myTable2 thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+          } );
 
-  </script>
+            // Apply a search to the second table for the demo
+            var table2 = $('#myTable2').DataTable({ 
+                "autoWidth": false,
+                scrollY: "650px",
+                scrollX:true,
+                paging: true,
+                fixedColumns: true,
+                'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
+                dom: 'lBfrtip',
+                buttons: [{
+                            extend: 'copyHtml5', title: 'Asia - Regulatory Documents'
+                        }, 
+                        {
+                            extend: 'csvHtml5', title: 'Asia - Regulatory Documents'
+                        },
+                        {
+                            extend: 'excelHtml5', title: 'Asia - Regulatory Documents'
+                        },
+                        {
+                            extend: 'pdfHtml5', title: 'Asia - Regulatory Documents'
+                        },
+                        {
+                            extend: 'print', title: 'Asia - Regulatory Documents'
+                        }
+                        ],
+                'processing': false,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'/asia/'
+                    },
+                'serverSide': true,
+                'columns': [
+                    {data:'ID'},
+                    {data:'Code'},
+                    {data:'Country'},
+                    {data:'Study'},
+                    {data:'Submission'},
+                    {data:'Documents', orderable:false},
+                    {data:'Note', orderable:false},
+                    ],
+                });
+
+        // Filter event handler
+        $( table2.table().container() ).on( 'keyup', 'tfoot input', function () {
+              table2
+                .column( $(this).data('index') )
+                .search( this.value )
+                .draw();
+        } );
+
+        //**********************************************************************************
+        // DataTable N°3
+        // Setup - add a text input to each footer cell
+        $('#myTable3 tfoot th').each( function (i) {
+            var title = $('#myTable3 thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+          } );
+
+            // Apply a search to the second table for the demo
+            var table3 = $('#myTable3').DataTable({ 
+                "autoWidth": false,
+                scrollY: "650px",
+                scrollX:true,
+                paging: true,
+                fixedColumns: true,
+                'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
+                'dom': 'lBfrtip',
+                buttons: [{
+                          extend: 'copyHtml5', title: 'Europe - Regulatory Documents'
+                      }, 
+                      {
+                          extend: 'csvHtml5', title: 'Europe - Regulatory Documents'
+                      },
+                      {
+                          extend: 'excelHtml5', title: 'Europe - Regulatory Documents'
+                      },
+                      {
+                          extend: 'pdfHtml5', title: 'Europe - Regulatory Documents'
+                      },
+                      {
+                          extend: 'print', title: 'Europe - Regulatory Documents'
+                      }
+                      ],
+                'processing': false,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'/europe/'
+                    },
+                'serverSide': true,
+                'columns': [
+                    {data:'ID'},
+                    {data:'Code'},
+                    {data:'Country'},
+                    {data:'Study'},
+                    {data:'Submission'},
+                    {data:'Documents', orderable:false},
+                    {data:'Note', orderable:false},
+                    ],
+                });
+
+        // Filter event handler
+        $( table3.table().container() ).on( 'keyup', 'tfoot input', function () {
+              table3
+                .column( $(this).data('index') )
+                .search( this.value )
+                .draw();
+        } );
+                
+      });        
+
+      //**********************************************************************************
+        // DataTable N°4
+        // Setup - add a text input to each footer cell
+        $('#myTable4 tfoot th').each( function (i) {
+            var title = $('#myTable4 thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
+          } );
+
+            // Apply a search to the second table for the demo
+            var table4 = $('#myTable4').DataTable({ 
+                "autoWidth": false,
+                scrollY: "650px",
+                scrollX:true,
+                paging: true,
+                fixedColumns: true,
+                'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],  // 32 bytes integer => the higest integer of our machine
+                'dom': 'lBfrtip',
+                buttons: [{
+                          extend: 'copyHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
+                      }, 
+                      {
+                          extend: 'csvHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
+                      },
+                      {
+                          extend: 'excelHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
+                      },
+                      {
+                          extend: 'pdfHtml5', title: 'MiddleEast and others countries - Regulatory Documents'
+                      },
+                      {
+                          extend: 'print', title: 'MiddleEast and others countries - Regulatory Documents'
+                      }
+                      ],
+                'processing': false,
+                'serverMethod': 'post',
+                'ajax': {
+                    'url':'/middleeast/'
+                    },
+                'serverSide': true,
+                'columns': [
+                    {data:'ID'},
+                    {data:'Code'},
+                    {data:'Country'},
+                    {data:'Study'},
+                    {data:'Submission'},
+                    {data:'Documents', orderable:false},
+                    {data:'Note', orderable:false},
+                    ],
+                });
+
+        // Filter event handler
+        $( table4.table().container() ).on( 'keyup', 'tfoot input', function () {
+              table4
+                .column( $(this).data('index') )
+                .search( this.value )
+                .draw();
+        } );
+    </script>
 </body>
 </html>
 

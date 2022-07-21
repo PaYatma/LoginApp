@@ -8,6 +8,7 @@
 
   <link rel="stylesheet" href="{{url_for('.static', filename='profile.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 </head>
 
 <body> 
@@ -20,16 +21,29 @@
       <li><a href="{{url_for('logout')}}"><i class="fa fa-fw fa-sign-out"></i>Logout</a></li>
     </ul>
   </nav>
+  
+  <div class="upload-button" style="font-size: 16pt; font-family: Verdana, Geneva, Tahoma, sans-serif;" > 
+    <form method="POST" action="/profile" enctype="multipart/form-data">
+      {{form.hidden_tag()}}
+      {{form.profile_pic.label(class="form-label")}}</br>
+      {{form.profile_pic(class="form-control", value=current_user.id)}}
+      {{form.submit(class="btn btn-primary")}}    
+    </form></br>
+  </div>
+  <div class="card" style="height:auto;">
+    {% if current_user.profile_pic %}
+    <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" 
+    style="width:120%; height: auto; border-radius: 15px; box-shadow: 10px 10px 5px rgb(190, 221, 247);">
+    {% else %}
+    <img src= "{{url_for('static', filename='images/default_profile.png')}}" style="width:120%; height: auto; border-radius: 15px;">
+    {% endif %}
 
-  <div class="card">
-    <img src="https://w7.pngwing.com/pngs/247/564/png-transparent-computer-icons-user-profile-user-avatar-blue-heroes-electric-blue.png" alt="John" style="width:80%">
     <h1>{{firstname}} {{lastname}}</h1>
     <p> Company: {{company}}</p>
     <p> Country: {{country}}</p>
-    <a href="#"><i class="fa fa-dribbble"></i></a>
-    <a href="#"><i class="fa fa-twitter"></i></a>
-    <a href="#"><i class="fa fa-linkedin"></i></a>
-    <a href="#"><i class="fa fa-facebook"></i></a>
+    <a href="https://twitter.com/MD_Clinicals"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/yatma-sarr-b072b74a/"><i class="fa fa-linkedin"></i></a>
+    <a href="https://www.facebook.com/md.clinicalssa.7"><i class="fa fa-facebook"></i></a>
     <p class="button" title="Please contact Yatma SARR at yatma27@gmail.com"> Help ???</p>
   </div>
 

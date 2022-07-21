@@ -1,11 +1,9 @@
-import email
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, validators, BooleanField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import InputRequired, Length, ValidationError
 from wtforms import StringField, PasswordField
 from wtforms.validators import InputRequired, Email, Length
-
-
+from flask_wtf.file import FileField
 
 # Registration
 class RegisterForm(FlaskForm):
@@ -37,13 +35,20 @@ class LoginForm(FlaskForm):
     submit = SubmitField("Login")
 
 
+# Profile
+class ProfileForm(FlaskForm):
+    profile_pic = FileField(label="Upload your profile picture")
+    submit = SubmitField("Submit")
+
+
+# Forgot password
 class ForgotForm(FlaskForm):
     email = StringField('email', validators=[InputRequired(), Length(min=6, max=50)],
                 render_kw={"placeholder":"Enter your email address"})
 
     submit = SubmitField("Request Password Reset")
 
-            
+# Reset password
 class PasswordResetForm(FlaskForm):
     new_password = PasswordField('New Password', validators=[InputRequired(), Length(min=8, max=80)],
                 render_kw={"placeholder":"New Password"})

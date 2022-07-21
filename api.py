@@ -8,18 +8,19 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
-from myforms import RegisterForm, LoginForm, ForgotForm, PasswordResetForm
+from myforms import RegisterForm, LoginForm, ProfileForm, ForgotForm, PasswordResetForm
 from sqlalchemy import DateTime, create_engine
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-
+from werkzeug.utils import secure_filename
+import uuid as uuid
 
 
 # Add connection
 # DATABASE_URL = os.getenv('DATABASE_URL') 
-DATABASE_URL =  'postgres://postgres:mdclinicals@localhost/regulatory_docs'
-
+DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+UPLOAD_FOLDER = "static/images/"
 conn = psycopg2.connect(DATABASE_URL)
 
 app = Flask(__name__)
@@ -28,6 +29,7 @@ app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
 
@@ -64,6 +66,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(120), nullable=False)
     confirm_email = db.Column(db.Boolean, default=False)
     created_date = db.Column(DateTime, default=datetime.datetime.utcnow)
+    profile_pic = db.Column(db.String(), nullable=True)
 
 
 # function to create mysqk user
@@ -98,13 +101,35 @@ def welcome():
 @app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    form = ProfileForm()
+    cursor = conn.cursor()
+
+    if request.method == 'POST':
+        my_img = request.files['profile_pic']
+  
+        # Grab Image name
+        pic_filename = secure_filename(my_img.filename)
+
+        # Set UUID
+        pic_name = str(uuid.uuid1()) + "_" + pic_filename
+
+        # Save the image
+        name_to_upld = my_img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+
+        # Add the image to the database
+        img_to_upld = '''UPDATE users SET profile_pic = %s WHERE id= %s'''
+        cursor.execute(img_to_upld, (pic_name, current_user.id,))
+        conn.commit()
+        return redirect(url_for('profile'))
+       
+
     return render_template('profile.html', 
             firstname= current_user.firstname,
             lastname = current_user.lastname,
             company = current_user.company,
             country = current_user.country,
-            email = current_user.email
-            )
+            email = current_user.email,
+            form = form)
 
 
 @app.route('/dashboard', methods=['GET', 'POST'])
@@ -234,7 +259,6 @@ def logout():
     session.pop('active_user', None)
     flash('You are logged out!', category='success')
     return redirect(url_for('login'))
-
 
 
 # Forgot password
