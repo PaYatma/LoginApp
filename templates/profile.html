@@ -33,9 +33,9 @@
   <div class="card" style="height:auto;">
     {% if current_user.profile_pic %}
     <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" 
-    style="width:120%; height: auto; border-radius: 15px; box-shadow: 10px 10px 5px rgb(190, 221, 247);">
+    style="width:100%; height: auto; border-radius: 15px; box-shadow: 10px 10px 5px rgb(190, 221, 247);">
     {% else %}
-    <img src= "{{url_for('static', filename='images/default_profile.png')}}" style="width:120%; height: auto; border-radius: 15px;">
+    <img src= "{{url_for('static', filename='images/my_default_profile.png')}}" style="width:100%; height: auto; border-radius: 15px;">
     {% endif %}
 
     <h1>{{firstname}} {{lastname}}</h1>

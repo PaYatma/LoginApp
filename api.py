@@ -1,9 +1,12 @@
+from ctypes import resize
 import os
 import re
 import datetime
+import uuid as uuid
 import psycopg2
 import psycopg2.extras
 
+from PIL import Image
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
@@ -14,12 +17,11 @@ from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
-import uuid as uuid
 
 
 # Add connection
-DATABASE_URL = os.getenv('DATABASE_URL') 
-# DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# DATABASE_URL = os.getenv('DATABASE_URL') 
+DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 UPLOAD_FOLDER = "static/images/"
 conn = psycopg2.connect(DATABASE_URL)
 
@@ -27,11 +29,11 @@ app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
 app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=30)
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
 mail = Mail(app)
 bcrypt = Bcrypt(app)
@@ -40,14 +42,11 @@ db = SQLAlchemy(app)
 # Create engine
 engine = create_engine(DATABASE_URL.replace("postgres://", "postgresql://"))
 
-
 # Login settings
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message="Please, login again."
-
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -113,8 +112,13 @@ def profile():
         # Set UUID
         pic_name = str(uuid.uuid1()) + "_" + pic_filename
 
+        # Resize image before to save it
+        resizing = (256, 256)
+        img = Image.open(my_img)
+        img.thumbnail(resizing)
+
         # Save the image
-        name_to_upld = my_img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+        name_to_upld = img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
 
         # Add the image to the database
         img_to_upld = '''UPDATE users SET profile_pic = %s WHERE id= %s'''

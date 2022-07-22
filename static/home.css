@@ -17,6 +17,7 @@ nav{
   margin-top: 15px;
 }
 
+
 nav ul{
   padding: 0;
   list-style: none;
@@ -26,7 +27,6 @@ nav ul{
 nav ul li{
   float:left;
 }
-
 
 nav ul li a{
   width: 150px;
