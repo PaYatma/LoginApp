@@ -1,3 +1,4 @@
+from ctypes import resize
 import os
 import re
 import datetime
@@ -46,7 +47,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message_category="warning"
+login_manager.login_message_category = "warning"
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -112,13 +113,8 @@ def profile():
         # Set UUID
         pic_name = str(uuid.uuid1()) + "_" + pic_filename
 
-        # Resize image before to save it
-        resizing = (256, 256)
-        img = Image.open(my_img)
-        img.thumbnail(resizing)
-
         # Save the image
-        name_to_upld = img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+        name_to_upld = my_img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
 
         # Add the image to the database
         img_to_upld = '''UPDATE users SET profile_pic = %s WHERE id= %s'''
