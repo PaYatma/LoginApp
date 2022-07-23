@@ -1,4 +1,3 @@
-from ctypes import resize
 import os
 import re
 import datetime
@@ -6,7 +5,6 @@ import uuid as uuid
 import psycopg2
 import psycopg2.extras
 
-from PIL import Image
 from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
