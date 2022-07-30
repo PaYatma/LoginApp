@@ -1,20 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{% block content %}
 
-  <link rel="stylesheet" href="{{url_for('.static', filename='register.css')}}">
-  <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('.static', filename='register.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register page</title>
-</head>
-<body>
-  
-  <div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" height="60px" width="275px">
+<div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" height="60px" width="260px">
 
     <form method="POST" action="/signup">
       <h3>Sign Up Here</h3>
@@ -41,5 +32,4 @@
     </div>
 </div>
 
-</body>
-</html>
+{% endblock %}

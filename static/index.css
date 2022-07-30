@@ -1,85 +1,35 @@
 html,
 body{
-  margin: 0;
-  padding: 0;
-  background: rgb(255, 255, 255);
+  background:rgb(255, 255, 255); 
 }
-nav{
-  width: 100%;
-  height: 100px;
-  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
-  overflow: auto;
-}
-
-.logo img{
-  position: absolute;
-  margin-top: 15px;
-}
-
-nav ul{
-  padding: 0;
-  list-style: none;
-  margin-left: 750px;
-}
-
-nav ul li{
-  float: left;
-}
-
-nav ul li a{
-  width: 150px;
-  margin-top: 10px;
-  display:block;
-  padding: 10px 10px 20px;
-  text-decoration: none;
-  font-family: Arial;
-  font-size: large;
-  color: rgb(16, 16, 16);
-  text-align: center;
-}
-
-nav ul li a:hover{
-  background: rgb(74, 79, 83);
-  transition: 0.5s;
-  text-transform: uppercase;
-  text-align: center;
-  border-radius: 15px;
-  color: rgb(177, 202, 227);
-}
-
-.current {
-  color: #F8F8F8;
-  background-color: rgb(30, 139, 167);;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 10px 10px 10px rgb(60, 59, 59);
-}
-
 
 
 #tab a{
   text-decoration: none;
   font-family: Arial;
   font-size: large;
-  color: rgb(102, 106, 248);
+  color: rgb(43, 43, 45);
   text-align: center;
   border-radius: 25px;
+  margin: 15px;
 }
+
+.nav-tabs {
+  border: none;
+  border-radius: 15px;
+}
+
 
 .nav-tabs .active{
-  color: rgb(172, 211, 250);
-  box-shadow: 5px 5px 10px;
-  border-radius: 25px;
-  margin-bottom: 10px;
-  margin-top: 5px;
-}
-
-
-#tab a:hover{
-  background: rgb(184, 193, 201);
-  transition: 0.5s;
-  text-align: center;
   border-radius: 15px;
-  color: rgb(0, 0, 0);
-  box-shadow: 10px 10px 20px;
+  margin-bottom: 10px;
+  text-align: center;
+  border: solid rgb(129, 74, 200);
+  background-color: rgb(152, 152, 241);
+  box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+							0 -0.25rem 1.5rem rgb(95, 123, 210) inset,
+							0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+							0 0.25rem 0.5rem 0 rgb(33, 62, 211) inset;
 }
+
+

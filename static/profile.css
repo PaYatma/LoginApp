@@ -1,54 +1,16 @@
 html, 
 body{
-  margin: 0;
-  padding: 0;
-  background: rgb(216, 225, 246);
-}
-nav{
-  width: 100%;
-  height: 100px;
-  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
-  overflow: auto;
+ background: rgb(216, 225, 246); 
 }
 
-.logo img{
-  position: absolute;
-  margin-top: 15px;
-}
-
-nav ul{
-  padding: 0;
-  list-style: none;
-  margin-left: 750px;
-}
-
-nav ul li{
-  float:left;
-}
-
-nav ul li a{
-  width: 150px;
-  display:block;
-  padding: 10px 10px 20px;
-  text-decoration: none;
-  font-family: Arial;
-  font-size: large;
-  color: rgb(16, 16, 16);
-  text-align: center;
-}
-
-
-nav a:hover{
-  background: rgb(121, 123, 123);
-  transition: 0.5s;
-  text-transform: uppercase;
-  text-align: center;
-  border-radius: 15px;
+#groupcards{
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .card {
     box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
-    max-width: 250px;
+    max-width: 500px;
     margin: auto;
     padding: 100px;
     text-align: center;
@@ -62,8 +24,9 @@ nav a:hover{
     outline: 0;
     display: inline-block;
     padding: 8px;
-    color: rgb(251, 246, 246);
-    background-color: #000;
+    color: rgb(21, 21, 31);
+    background-color: rgb(166, 181, 240);
+    border-radius: 15px;
     text-align: center;
     cursor: pointer;
     width: 100%;
@@ -71,7 +34,8 @@ nav a:hover{
   }
  
   .button:hover{
-    background-color: rgb(57, 93, 237);
+    background-color: rgb(115, 136, 221);
+    border-radius: 15px;
   }
 
   a {
@@ -88,27 +52,19 @@ nav a:hover{
       font-size: 24px;
   }
 
-.current {
-  color: #F8F8F8;
-  background-color: rgb(30, 139, 167);;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 10px 10px 10px rgb(60, 59, 59);
-}
-
 
 .upload-button input[type="file"]{
-  border: none;
+  width: auto;
+  border: 1px solid #a2aef3;;
   outline: none;
   padding: 15px;
-  height: 25px;
   font-size: 16px;
   margin-top: 5px;
-  border-radius: 10px;
+  border-radius: 15px;
   cursor: pointer;
   background-color: rgb(170, 201, 224);
-  color: rgb(6, 7, 7);
 }
+
 
 .upload-button input[type="submit"]{
   border: 1px solid #1d3df7;

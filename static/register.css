@@ -33,11 +33,13 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   width: 350px;
-  min-height: 200px;
-  background: #e2e6f3;
+  min-height: auto;
+  background: #e2e7fc;
   border-radius: 10px;
   padding: 40px;
-  box-sizing: border-box
+  box-sizing: border-box;
+  box-shadow: 10px 15px 20px;
+  color: #3a5aeb;
 }
 
 .user {
@@ -55,7 +57,7 @@ h3 {
 
 .loginBox input {
   width: 100%;
-  margin-bottom: 20px
+  margin-bottom: auto;
 }
 
 .loginBox input[type="text"],
@@ -101,7 +103,8 @@ h3 {
   background: #59238F;
   color: #fff;
   border-radius: 20px;
-  cursor: pointer
+  cursor: pointer;
+  margin-top: 20px;
 }
 
 .loginBox a {

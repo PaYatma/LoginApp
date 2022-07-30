@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+  <div class="upload-button" style="font-size: 16pt; font-family: Verdana, Geneva, Tahoma, sans-serif;" > 
+
+  </div>
+  <div class="card" style="height:auto;">
+
+    <img src= "{{url_for('static', filename='images/my_default_profile.png')}}" style="width:20%; height: auto; border-radius: 15px;">
+ 
+    <h1>{{firstname}} {{lastname}}</h1>
+    <p> Company: {{company}}</p>
+    <p> Country: {{country}}</p>
+    <a href="https://twitter.com/MD_Clinicals"><i class="fa fa-twitter"></i></a>
+    <a href="https://www.linkedin.com/in/yatma-sarr-b072b74a/"><i class="fa fa-linkedin"></i></a>
+    <a href="https://www.facebook.com/md.clinicalssa.7"><i class="fa fa-facebook"></i></a>
+    <p class="button" title="Please contact Yatma SARR at yatma27@gmail.com"> Help ???</p>
+    
+  </div>
+
+{% endblock %}

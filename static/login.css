@@ -1,3 +1,4 @@
+html,
 body {
     margin: 0;
     padding: 0;
@@ -19,7 +20,6 @@ body {
   ) {
     body {
         background-size: cover;
-        : fixed
     }
   }
   
@@ -40,11 +40,6 @@ body {
     box-sizing: border-box
   }
   
-  .user {
-    margin: 0 auto;
-    display: block;
-    margin-bottom: 20px
-  }
   
   h3 {
     margin: 0;

@@ -1,46 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Home</title>
-    <link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
+{% extends 'base.html' %}
+
+{% block content %}
+    
+<link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
+
     <div class="container">
-        <nav style="box-shadow: 0px 2px 5px rgb(119, 119, 119)">
-            <div class="logo"><a href="#"><img src="../static/logo.png" width="300" height="60"></a></div>
-            <div class="logo">
-                {% if current_user.profile_pic %}
-                    <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" 
-                    style="width: 100px; height: 95px; border-radius: 15px; margin-left: 350px; margin-top: 2px;">
-                {% endif %}
-            </div>
-            <ul class="collapse narbar-collapse">
-                {% if not current_user.is_authenticated %}
-                <li><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i>Home</a></li>
-                <li><a href="{{url_for('login')}}"><i class="fa fa-sign-in"></i>Login</a></li>
-                <li><a href="{{url_for('signup')}}"><i class="fa fa-fw fa-user"></i>Signup</a></li>
-                {% endif %}
 
-                {% if current_user.is_authenticated %}
-                <li ><a class="current" href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i>Home</a></li>
-                <li><a href="{{url_for('dashboard')}}"><i class="fa fa-database"></i>Database</a></li>
-                <li><a href="{{url_for('profile')}}"><i class="fa fa-fw fa-user"></i>Profile</a></li>
-                <li><a href="{{url_for('logout')}}"><i class="fa fa-sign-out"></i>Logout</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+        <div class="container">
+            <div class="text" id="mytext"><h2>Regulatory Documents in Medical Devices</h2></div> 
+            <br>
+        <p> 
+            The MD Clinicals Database is a digital repository that has been in operation since 2022 the documents 
+            and acts as a search tool for employees and clients. It contains detailed information about
+            that must be submitted in order to begin pre- and/or post-market clinical trials of
+            Medical Devices. </br>
+            It preserves information for the EU, Southeast Asia, and America, and we hope to expand to all
+            territories in the future. One of our missions is to ensure that data is collected, stored,
+            and used in a fair, transparent, lawful, limited-purpose, and accurate manner.
+        </p>
 
-        <div class="text" id="mytext"><h1>Regulatory Documents in Medical Devices</h1><br></div>
-    <p> The MD Clinicals Database is a digital repository that has been in operation since 2022 the documents </p>
-    <p> and acts as a search tool for employees and clients. It contains detailed information about</p>
-    <p> that must be submitted in order to begin pre- and/or post-market clinical trials of</p>
-    <p> Medical Devices.</p>
-    <p> It preserves information for the EU, Southeast Asia, and America, and we hope to expand to all</p>
-    <p> territories in the future. One of our missions is to ensure that data is collected, stored,</p>
-    <p> and used in a fair, transparent, lawful, limited-purpose, and accurate manner.</p>
-
-   
     </div>
-</body>
-</html>
+
+{% endblock %}

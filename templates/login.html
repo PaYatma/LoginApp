@@ -1,43 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{% block content %}
 
-  <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
-  <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login page</title>
-</head>
-<body>
+<div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" style="margin-bottom: 10px;" height="60px" width="260px">
 
-  <div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" height="60px" width="275px">
-
-    <form method="POST" action="/login">
-        {{form.hidden_tag()}}
-        {{form.email}}
-        {{form.password}}
-        {{form.submit}} 
-        <div>
-          <a href="{{url_for('forgot')}}">Forgot password</a> 
-       </div>
-      </form></br>
+  <form method="POST" action="/login">
+    {{form.hidden_tag()}}
+    {{form.email}}
+    {{form.password}}
+    {{form.submit}} 
     <div>
-      <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br>
-      <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
-   </div>
-  </div>  
-  {%  for category, message in get_flashed_messages(with_categories=True) %}
-  <div class="alert alert-{{ category }} alert-dismissible fade show"
-   role="alert" style="text-align: center; font-style:inherit;">
-    {{ message}}
-  </div>
+      <a href="{{url_for('forgot')}}">Forgot password</a> 
+    </div>
+</form></br>
+
+<div>
+  <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br>
+  <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+</div>
+</div>
+  
+{%  for category, message in get_flashed_messages(with_categories=True) %}
+<div class="alert alert-{{ category }} alert-dismissible fade show"
+role="alert" style="text-align: center; font-style:inherit;">
+  {{ message}}
+</div>
 {% endfor %}
 
-</body>
-</html>
-
+{% endblock %}
 

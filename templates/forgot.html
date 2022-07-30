@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% extends 'base.html' %}
+{% block content %}
 
   <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forgot password</title>
-</head>
-<body>
 
   {%  for category, message in get_flashed_messages(with_categories=True) %}
   <div class="alert alert-{{ category }} alert-dismissible fade show"
@@ -20,8 +12,8 @@
   </div>
   {% endfor %}
 
-  <div class="loginBox"><h2 id="resetpwd" style="position:center;">Forgot password</h2></br>
-    <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" height="60px" width="275px">
+  <div class="loginBox"><h2 id="resetpwd" style="position:center;">Forgot password</h2>
+    <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" style="margin-bottom: 10px;" height="60px" width="260px">
     <form method="POST" action="{{url_for('forgot')}}">
         {{form.hidden_tag()}}
         {{form.email}}
@@ -32,7 +24,6 @@
       </form></br>
   </div>
 
-</body>
-</html>
+  {% endblock %}
 
 

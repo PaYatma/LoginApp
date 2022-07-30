@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="{{url_for('.static', filename='navbar.css')}}">
+
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="{{url_for('home')}}"><img src="../static/logo.png" width="300" height="60"></a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+
+          {% if not current_user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('home')}}"><i class="fa-solid fa-house-chimney"></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('login')}}">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('signup')}}">SignUp</a>
+          </li>
+          {% endif %}
+
+          {% if current_user.is_authenticated %}
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{{url_for('home')}}"><i class="fa-solid fa-house-chimney"></i>Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('dashboard')}}">Database</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('profile')}}">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
+          </li>
+          {% endif %}
+
+        </ul>
+      </div>
+    </div>
+  </nav>
