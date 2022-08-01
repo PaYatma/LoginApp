@@ -88,6 +88,12 @@ def create_user(id, connexion):
 
 
 # Home page
+@app.route('/zero', methods=['GET', 'POST'])
+def zero():
+     return render_template('zero.html')
+
+
+# Home page
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/home', methods=['GET', 'POST'])
 def home():
@@ -333,7 +339,7 @@ def ajaxamerica():
             rowperpage = int(request.form['length'])
             searchValue = request.form["search[value]"]
 
-            # REtreive filters
+            # Retreive filters
             searchcol0 = "%{}%".format(request.form['columns[0][search][value]'])
             searchcol1 = "%{}%".format(request.form['columns[1][search][value]'])
             searchcol2 = "%{}%".format(request.form['columns[2][search][value]'])

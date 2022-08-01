@@ -1,6 +1,7 @@
 nav{
 background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
 overflow: auto;
+position:relative;
 }
 
 .logo img{
