@@ -6,16 +6,10 @@
   {% endblock %}
 </head>
 
-<div class="container-fluid"></div>
+<div class="container-fluid">
   <nav class="navbar navbar-expand-md fixed-top">
       <a class="navbar-brand" href="{{url_for('home')}}"><img src="../static/logo.png" width="300px" style="margin-top:-15px;"></a>
       
-      <div class="profile_img">
-        {% if current_user.profile_pic %}
-            <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" style="width: 35%; border-radius: 50%;">
-        {% endif %}
-      </div>
-
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -48,8 +42,14 @@
             <a class="nav-link" href="{{url_for('logout')}}">Logout</a>
           </li>
           {% endif %}
-
         </ul>
-      </div>
-    </div>
+
+        <div class="col-md-3 offset-md-3">
+          {% if current_user.profile_pic %}
+          <a href="{{url_for('profile')}}">
+              <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" class="img_profil">
+          </a>
+          {% endif %}
+        </div>
   </nav>
+</div>

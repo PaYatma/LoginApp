@@ -14,12 +14,6 @@ float:left;
     background-color: aliceblue;
 } 
 
-nav ul li > .active a {
-    color: aqua;
-    font-style: italic;
-    background-color: chartreuse;    
-  }
-
 nav ul li a{
     width: 150px;
     display:block;
@@ -40,3 +34,8 @@ nav ul li a:hover{
     text-decoration: underline;
 }
 
+.img_profil{
+    float: right;
+    width: 15%;
+    border-radius: 50%;
+}

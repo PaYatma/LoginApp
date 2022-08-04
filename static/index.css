@@ -19,6 +19,7 @@ body{
 
 .tab-pane .active{
   position:relative;
+  opacity: 60%;
   background-color: rgb(153, 159, 182);
   border-radius: 15px;
 }
@@ -33,7 +34,6 @@ body{
 }
 
 .tab-pane a:hover{
-  font-size: larger;
   margin: 5px;
   border-radius: 15px;
 }
@@ -43,6 +43,7 @@ body{
 .nav-tabs .active{
   border-radius: 25px;
   text-align: center;
+  margin-bottom: 5px;
   border: solid rgb(129, 74, 200);
   background-color: rgb(152, 152, 241);
   box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
@@ -62,7 +63,4 @@ body{
 }
 
 
-.nav {
-  border-radius: 25px;
-}
 

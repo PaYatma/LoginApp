@@ -3,13 +3,17 @@ body{
  background: rgb(245, 249, 250); 
 }
 
+.container{
+  margin-top: 60px;
+}
+
 .card {
     box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
     max-width: 500px;
     margin: auto;
     padding: 100px;
     text-align: center;
-    padding-top: 20px;
+    padding-top: 10px;
     background-color: aliceblue;
   }
 
@@ -57,12 +61,12 @@ body{
 
 .upload-button input[type="file"]{
   width: auto;
-  border: 1px solid #a2aef3;;
   outline: none;
   padding: 4px;
+  cursor: pointer;
   font-size: 16px;
   border-radius: 15px;
-  cursor: pointer;
+  border: 1px solid #a2aef3;;
   background-color: rgb(170, 201, 224);
 }
 
