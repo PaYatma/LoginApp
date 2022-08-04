@@ -3,15 +3,45 @@ body{
   background:rgb(255, 255, 255); 
 }
 
-.nav-tabs {
+.container{
+  margin-top:30px;
+}
+
+.nav-tabs{
   border: none;
-  border-radius: 25px;
+  height: 60px;
+}
+
+.tab-pane button{
+  border-radius: 15px;
+  box-shadow: 0px 5px 10px rgb(186, 218, 243);
+}
+
+.tab-pane .active{
+  position:relative;
+  background-color: rgb(153, 159, 182);
+  border-radius: 15px;
+}
+
+.tab-pane a{
+  font-size: larger;
+  margin: 5px;
+  font-weight: bold;
+  border-radius: 15px;
+  background-color: rgb(232, 235, 236);
+  box-shadow: 5px 10px 10px rgb(213, 213, 214);
+}
+
+.tab-pane a:hover{
+  font-size: larger;
+  margin: 5px;
+  border-radius: 15px;
 }
 
 
+
 .nav-tabs .active{
-  border-radius: 15px;
-  margin-bottom: 10px;
+  border-radius: 25px;
   text-align: center;
   border: solid rgb(129, 74, 200);
   background-color: rgb(152, 152, 241);
@@ -22,12 +52,17 @@ body{
 }
 
 #tab a{
+  margin: 5px;
   text-decoration: none;
   font-family: Arial;
-  font-size: large;
+  font-size:15px;
   color: rgb(43, 43, 45);
   text-align: center;
+  border-radius: 20px;
+}
+
+
+.nav {
   border-radius: 25px;
-  margin: 5px;
 }
 

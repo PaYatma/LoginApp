@@ -2,7 +2,7 @@ html,
 body {
     margin: 0;
     padding: 0;
-    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
+    background: url("../static/mars2.gif") no-repeat;
     height: 100vh;
     font-family: sans-serif;
     background-size: cover;
@@ -57,7 +57,8 @@ body {
 
   .loginBox input {
     width: 100%;
-    margin-bottom: 20px
+    margin-top: 40px;
+    margin-bottom: 15px
   }
   
   .loginBox input[type="text"],
@@ -127,4 +128,8 @@ body {
   p {color: #7979e0;
     vertical-align: middle;
     float:center;
+  }
+
+  .alert{
+    margin-top: 60px;
   }

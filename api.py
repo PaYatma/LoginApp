@@ -31,7 +31,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.permanent_session_lifetime = timedelta(minutes=15)
-app.config['REMEMBER_COOKIE_DURATION'] = timedelta(minutes=2)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
 # Login settings

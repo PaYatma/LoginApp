@@ -1,11 +1,6 @@
 html, 
 body{
- background: rgb(216, 225, 246); 
-}
-
-#groupcards{
-  display: inline-block;
-  vertical-align: middle;
+ background: rgb(245, 249, 250); 
 }
 
 .card {
@@ -14,29 +9,35 @@ body{
     margin: auto;
     padding: 100px;
     text-align: center;
-    padding-top: 25px;
+    padding-top: 20px;
     background-color: aliceblue;
-    border-radius: 15px;
   }
 
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: rgb(21, 21, 31);
-    background-color: rgb(166, 181, 240);
-    border-radius: 15px;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-    font-size: 18px;
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+    border-radius: 20px;
   }
- 
-  .button:hover{
-    background-color: rgb(115, 136, 221);
-    border-radius: 15px;
-  }
+
+.button {
+  border: none;
+  display: inline-block;
+  padding: 8px;
+  color: rgb(21, 21, 31);
+  background-color: rgb(166, 181, 240);
+  border-radius: 15px;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 20px;
+}
+
+.button:hover{
+  background-color: rgb(115, 136, 221);
+  border-radius: 15px;
+}
 
   a {
     text-decoration: none;
@@ -46,6 +47,7 @@ body{
 
   h1{
     font-size: 36px;
+    text-decoration: underline;
   }
 
   p{
@@ -57,9 +59,8 @@ body{
   width: auto;
   border: 1px solid #a2aef3;;
   outline: none;
-  padding: 15px;
+  padding: 4px;
   font-size: 16px;
-  margin-top: 5px;
   border-radius: 15px;
   cursor: pointer;
   background-color: rgb(170, 201, 224);
@@ -73,11 +74,11 @@ body{
   text-align: justify;
   font: bold;
   border-radius: 10px;
-  margin-top: 2px;
+  margin-top: 5px;
   margin-left: 10px;
   cursor: pointer;
   color: rgb(6, 7, 7);
-  line-height: 2.5rem;
+  line-height: 2.rem;
 	font-size: 1.3rem;
 	font-weight: 600;
   background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);

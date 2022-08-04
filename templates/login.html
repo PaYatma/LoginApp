@@ -1,10 +1,15 @@
+<!doctype html>
+<head>
+  {% block styles %}
+  <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
+  <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  {% endblock %}
+</head>
+
 {% extends 'base.html' %}
+{% block title %}Login{% endblock %}
 {% block content %}
-
-<link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
-<link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 
 <div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" style="margin-bottom: 10px;" height="60px" width="260px">
 
@@ -13,23 +18,21 @@
     {{form.email}}
     {{form.password}}
     {{form.submit}} 
-    <div>
-      <a href="{{url_for('forgot')}}">Forgot password</a> 
-    </div>
-</form></br>
+    <div><a href="{{url_for('forgot')}}">Forgot password</a></div>
+  </form> 
 
-<div>
-  <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br>
-  <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
-</div>
+  <div>
+    <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br> 
+    <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+  </div>
 </div>
   
-{%  for category, message in get_flashed_messages(with_categories=True) %}
-<div class="alert alert-{{ category }} alert-dismissible fade show"
-role="alert" style="text-align: center; font-style:inherit;">
-  {{ message}}
-</div>
-{% endfor %}
+  {%  for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show"
+    role="alert" style="text-align: center; font-style:inherit;">
+      {{ message}}
+    </div>
+  {% endfor %}
 
 {% endblock %}
 

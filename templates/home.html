@@ -1,22 +1,33 @@
-{% extends 'base.html' %}
-{% block content %}
-    
-<link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
+<!doctype html>
+<!-- ********************************************************************************************************************************-->
+<!-- All dependencies for Home -->
+<!-- ********************************************************************************************************************************-->
+<head>
+    {% block styles %}
+    <link rel="stylesheet" href="{{url_for('.static', filename='home.css')}}">
+    {% endblock %}
+</head>
 
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+   
     <div class="container">
 
-        <div class="container">
-            <div class="text" id="mytext"><h2>Regulatory Documents in Medical Devices</h2></div> 
-            <br>
-        <p> 
-            The MD Clinicals Database is a digital repository that has been in operation since 2022 the documents 
-            and acts as a search tool for employees and clients. It contains detailed information about
-            that must be submitted in order to begin pre- and/or post-market clinical trials of
-            Medical Devices. </br>
-            It preserves information for the EU, Southeast Asia, and America, and we hope to expand to all
-            territories in the future. One of our missions is to ensure that data is collected, stored,
-            and used in a fair, transparent, lawful, limited-purpose, and accurate manner.
-        </p>
+        <div class="container" style="padding: 80px;">
+            <div class="text"><h3>Regulatory Documents in Medical Devices</h3></div></br>
+
+            <div class="text-black-50">
+                <p> 
+                    The MD Clinicals Database is a digital repository that has been in operation since 2022 the documents 
+                    and acts as a search tool for employees and clients. It contains detailed information about
+                    that must be submitted in order to begin pre- and/or post-market clinical trials of
+                    Medical Devices. </br>
+                    It preserves information for the EU, Southeast Asia, and America, and we hope to expand to all
+                    territories in the future. One of our missions is to ensure that data is collected, stored,
+                    and used in a fair, transparent, lawful, limited-purpose, and accurate manner.
+                </p>
+            </div>
 
     </div>
 

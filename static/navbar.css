@@ -1,39 +1,42 @@
 nav{
-background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/30122016_JOB5054F_Lever_Brenva-1920.jpg) no-repeat;
+display: flex;
+width: 100%;
 overflow: auto;
-position:relative;
-}
-
-.logo img{
-position:absolute;
-margin-top: 15px;
-}
-
-nav ul{
-padding: 0;
-list-style: none;
+position: sticky;
+background-color: rgb(170, 201, 224);
 }
 
 nav ul li{
 float:left;
 }
 
+.navbar-toggler{
+    background-color: aliceblue;
+} 
+
+nav ul li > .active a {
+    color: aqua;
+    font-style: italic;
+    background-color: chartreuse;    
+  }
+
 nav ul li a{
     width: 150px;
     display:block;
-    margin: top 10px;
     padding: 10px 10px 20px;
     text-decoration: none;
     font-family: Arial;
-    font-size: large;
-    color: rgb(16, 16, 16);
     text-align: center;
+    font-size: 40px;
 }
+
 
 nav ul li a:hover{
     background: rgb(121, 123, 123);
-    transition: 0.5s;
+    transition: 0.25s;
     text-transform: uppercase;
     text-align: center;
     border-radius: 15px;
+    text-decoration: underline;
 }
+

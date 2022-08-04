@@ -2,26 +2,26 @@ html,
 body{
   margin: 0;
   padding: 0;
-  background: rgb(216, 225, 246); 
   background-size:cover;
 }
 
-
-h1{
-  border-bottom: 8px solid rgb(78, 182, 209);
-  font-size: 50px;
-  display: inline-block;
-  margin-left: 10px;
+.container{
+  background-color: rgb(237, 244, 244);
+  height: auto;
+  margin: auto;
+  border-radius: 15px;
 }
 
-.text {
+h3{
+  text-decoration: underline;
   text-align: center;
 }
+
 
 p{
   font-size: 24px;
   margin-left: 10px;
   color: rgb(0, 0, 0);
-  text-align: center;
+  text-align:justify;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
