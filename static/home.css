@@ -6,10 +6,12 @@ body{
 }
 
 .container{
-  background-color: rgb(237, 244, 244);
+  min-width: 30rem;
+  max-width: 60rem;
   height: auto;
   margin: auto;
   border-radius: 15px;
+  background-color: rgb(237, 244, 244);
 }
 
 h3{

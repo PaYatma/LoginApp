@@ -4,60 +4,61 @@ body{
 }
 
 .container{
-  margin-top: 60px;
+  min-width: 300px;
 }
 
 .card {
-    box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
-    max-width: 500px;
-    margin: auto;
-    padding: 100px;
-    text-align: center;
-    padding-top: 10px;
-    background-color: aliceblue;
+  max-width: 500px;
+  margin: auto;
+  padding: auto;
+  text-align: center;
+  padding-top: 10px;
+  background-color: aliceblue;
+  box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
   }
 
 .center {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 75%;
-    border-radius: 20px;
+  min-width: 180px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 75%;
+  border-radius: 20px;
   }
 
 .button {
   border: none;
-  display: inline-block;
   padding: 8px;
   color: rgb(21, 21, 31);
-  background-color: rgb(166, 181, 240);
   border-radius: 15px;
   text-align: center;
   cursor: pointer;
-  width: 100%;
-  font-size: 20px;
+  max-width: 100%;
+  display: inline-block;
+  background-color: rgb(166, 181, 240);
 }
 
 .button:hover{
-  background-color: rgb(115, 136, 221);
   border-radius: 15px;
+  background-color: rgb(115, 136, 221);
 }
 
-  a {
-    text-decoration: none;
+a {
+  text-decoration: none;
+  font-size: 24px;
+  color: black;
+}
+
+h1{
+  min-width: 150px;
+  font-size: 36px;
+  text-decoration: underline;
+}
+
+p{
     font-size: 24px;
-    color: black;
-  }
-
-  h1{
-    font-size: 36px;
-    text-decoration: underline;
-  }
-
-  p{
-      font-size: 24px;
-  }
-
+    min-width: 250px;
+}
 
 .upload-button input[type="file"]{
   width: auto;

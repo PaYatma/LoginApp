@@ -10,11 +10,8 @@ body {
     background-position: center;
     overflow: hidden
   }
-  
-  .loginBox {
-    margin-top: 10px
-  }
-  
+
+
   @media screen and (max-width: 600px;
   
   ) {
@@ -28,16 +25,15 @@ body {
   }
   
   .loginBox {
-    position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 350px;
+    max-width: 400px;
     min-height: 200px;
     background: #e2e6f3;
     border-radius: 10px;
-    padding: 40px;
-    box-sizing: border-box
+    position: absolute;
+    transform: translate(-50%, -50%);
+    align-items: center;
   }
   
   
@@ -113,7 +109,7 @@ body {
     font-weight: bold;
     text-decoration: none;
     text-align: lef;
-    display: block
+    display: block;
   }
 
   a {
@@ -131,5 +127,5 @@ body {
   }
 
   .alert{
-    margin-top: 60px;
+    margin-top: 50px;
   }

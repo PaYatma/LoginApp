@@ -10,11 +10,11 @@
 
     <!-- tabs -->
     <script type="text/javascript" charset="utf8" src="//code.jquery.com/jquery-3.5.1.js"></script>   
-    <script type="text/javascript" charset="utf8" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>   
-    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap.min.js"></script>   
-
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>   
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.1.3/css/bootstrap.min.css">
+    
     <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/dataTables.bootstrap.min.css">
 
     <!-- Table filter -->
@@ -35,7 +35,6 @@
   
   {% endblock%}
 </head> 
-
 
 {% extends 'base.html' %}
 {% block title %}Dashboard{% endblock %}
@@ -242,6 +241,7 @@
         $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
       } );
 
+      
         // Apply a search to the second table for the demo
         var table2 = $('#myTable2').DataTable({ 
             "autoWidth": false,

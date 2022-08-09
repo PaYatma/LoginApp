@@ -33,6 +33,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
+
 # Login settings
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -147,6 +148,29 @@ def profile():
 @login_required
 def dashboard():
     return render_template("index.html")
+
+# #####################################################
+# Add datatables separetely depending on continent
+# #####################################################
+@app.route('/tab_america/', methods=['GET', 'POST'])
+@login_required
+def america():
+    return render_template("america.html")
+
+@app.route('/tab_asia/', methods=['GET', 'POST'])
+@login_required
+def asia():
+    return render_template("asia.html")
+
+@app.route('/tab_europe/', methods=['GET', 'POST'])
+@login_required
+def europe():
+    return render_template("europe.html")
+
+@app.route('/middleeast/', methods=['GET', 'POST'])
+@login_required
+def middle_east():
+    return render_template("middle_east.html")
 
 
 # Function for sending email 
@@ -611,7 +635,7 @@ def ajaxeurope():
 
 
 # Add MiddleEast table
-@app.route("/middleeast/", methods=["POST","GET"])
+@app.route("/middle_east/", methods=["POST","GET"])
 @login_required
 def ajaxmiddleeast():
     try:

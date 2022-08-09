@@ -11,14 +11,16 @@
 {% block title %}Login{% endblock %}
 {% block content %}
 
-<div class="loginBox"> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" style="margin-bottom: 10px;" height="60px" width="260px">
+<div class="loginBox" style="padding: 80px;"s> <img class="user" src="https://www.md-clinicals.com/assets/img/logo.png" style="margin-bottom: 10px;" height="60px" width="260px">
 
   <form method="POST" action="/login">
     {{form.hidden_tag()}}
     {{form.email}}
     {{form.password}}
     {{form.submit}} 
-    <div><a href="{{url_for('forgot')}}">Forgot password</a></div>
+    <div>
+      <a href="{{url_for('forgot')}}">Forgot password</a>
+    </div>
   </form> 
 
   <div>

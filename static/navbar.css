@@ -1,7 +1,6 @@
 nav{
 display: flex;
-width: 100%;
-overflow: auto;
+max-width: 100%;
 position: sticky;
 background-color: rgb(170, 201, 224);
 }
@@ -14,8 +13,21 @@ float:left;
     background-color: aliceblue;
 } 
 
+.navbar-collapse{
+    display:inline-block;
+}
+
+.navbar-nav > .active > a{
+    background-color: aqua;
+    color: red;
+}
+
+.logo_mdc{
+    max-width:300px;
+    margin-top:-15px;
+}
+
 nav ul li a{
-    width: 150px;
     display:block;
     padding: 10px 10px 20px;
     text-decoration: none;
@@ -24,18 +36,51 @@ nav ul li a{
     font-size: 40px;
 }
 
+.navbar-collapse ul li a{
+    float: left;
+    display: block;
+    margin-left: 15px;
+}
 
 nav ul li a:hover{
     background: rgb(121, 123, 123);
-    transition: 0.25s;
-    text-transform: uppercase;
+    transition: 0.05s;
     text-align: center;
     border-radius: 15px;
     text-decoration: underline;
 }
 
-.img_profil{
+
+.img_profile{
+    max-width: 5%;
+    min-width: 60px;
     float: right;
-    width: 15%;
-    border-radius: 50%;
+    margin-right: auto;
+    margin-left: auto;
+
 }
+
+#leave{
+    float: right;
+}
+
+.dropdown{
+    position:relative;
+    display:grid;
+    grid-template-columns: repeat(2, max-content);
+
+}
+
+.dropdown-menu {
+    min-height:45px;
+    position: absolute;
+    z-index: 9999;
+
+    background-color:rgb(203, 226, 248);
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu a {
+    font-size: 14pt;
+}
+
