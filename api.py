@@ -143,34 +143,13 @@ def profile():
             email = current_user.email,
             form = form)
 
-
+# #########################################################
+# Datatable
+# #########################################################
 @app.route('/dashboard', methods=['GET', 'POST'])
 @login_required
 def dashboard():
     return render_template("index.html")
-
-# #####################################################
-# Add datatables separetely depending on continent
-# #####################################################
-@app.route('/tab_america/', methods=['GET', 'POST'])
-@login_required
-def america():
-    return render_template("america.html")
-
-@app.route('/tab_asia/', methods=['GET', 'POST'])
-@login_required
-def asia():
-    return render_template("asia.html")
-
-@app.route('/tab_europe/', methods=['GET', 'POST'])
-@login_required
-def europe():
-    return render_template("europe.html")
-
-@app.route('/middleeast/', methods=['GET', 'POST'])
-@login_required
-def middle_east():
-    return render_template("middle_east.html")
 
 
 # Function for sending email 

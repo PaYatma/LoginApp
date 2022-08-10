@@ -4,6 +4,7 @@
   {% block styles %}
   <link rel="stylesheet" href="{{url_for('.static', filename='register.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   {% endblock %}
 </head>
@@ -34,8 +35,8 @@
     {% endfor %}
 
     <div>
-      <a href="{{url_for('login')}}">Already have an account? Login</a></br>
-      <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+      <a href="{{url_for('login')}}">Already have an account? Login <i class="bi bi-box-arrow-in-right" style="font-size:20px;"></i></a></br>
+      <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home" style="font-size:26px;"></i></a>
     </div>
 </div>
 

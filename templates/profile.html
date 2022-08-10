@@ -13,7 +13,7 @@
 {% block title %}Profile{% endblock %}
 {% block content %}
 
-  <div class="container"  style="padding: 80px;">
+  <div class="container" style="padding: 80px;">
     <div class="upload-button col-6 col-md-4" style="font-size: 16pt; font-family: Verdana, Geneva, Tahoma, sans-serif;" > 
       <form method="POST" action="/profile" enctype="multipart/form-data">
         {{form.hidden_tag()}}
@@ -25,7 +25,7 @@
 
     <div class="card">
       {% if current_user.profile_pic %}
-      <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" class="center" 
+      <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" class="center img-fluid img-thumbnail" 
       style="box-shadow: 10px 10px 5px rgb(190, 221, 247);">
       {% else %}
       <img src= "{{url_for('static', filename='images/my_default_profile.png')}}" class="center">

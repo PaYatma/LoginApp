@@ -17,9 +17,9 @@ float:left;
     display:inline-block;
 }
 
-.navbar-nav > .active > a{
-    background-color: aqua;
-    color: red;
+#thenav .nav-link .active{
+    background-color: red;
+    color: blue;
 }
 
 .logo_mdc{

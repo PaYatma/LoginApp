@@ -3,6 +3,7 @@
   {% block styles %}
   <link rel="stylesheet" href="{{url_for('.static', filename='login.css')}}">
   <link rel="stylesheet" href="{{url_for('.static', filename='flashes.css')}}">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   {% endblock %}
 </head>
@@ -19,20 +20,20 @@
     {{form.password}}
     {{form.submit}} 
     <div>
-      <a href="{{url_for('forgot')}}">Forgot password</a>
+      <a href="{{url_for('forgot')}}">Forgot password? <i class="bi bi-lock-fill" style="font-size:18px;"></i></a>
     </div>
   </form> 
-
+  </br>
   <div>
-    <a href="{{url_for('signup')}}">Don't have an account? Sign up</a></br> 
-    <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home"></i></a>
+    <a href="{{url_for('signup')}}">Don't have an account? Sign up. </i><i class="bi bi-pencil-square" style="font-size:20px;"></i></a></br> 
+    <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home" style="font-size:26px;"></i></a>
   </div>
 </div>
   
   {%  for category, message in get_flashed_messages(with_categories=True) %}
     <div class="alert alert-{{ category }} alert-dismissible fade show"
-    role="alert" style="text-align: center; font-style:inherit;">
-      {{ message}}
+      role="alert" style="text-align: center; font-style:inherit;">
+        {{ message}}
     </div>
   {% endfor %}
 

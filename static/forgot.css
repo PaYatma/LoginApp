@@ -4,6 +4,7 @@ body {
     padding: 0;
     background: url("../static/mars2.gif") no-repeat;
     height: 100vh;
+    max-width: 100%;
     font-family: sans-serif;
     background-size: cover;
     background-repeat: no-repeat;
@@ -27,13 +28,13 @@ body {
   .loginBox {
     top: 50%;
     left: 50%;
-    max-width: 400px;
+    padding: 30px;
+    max-width: 350px;
     min-height: 200px;
     background: #e2e6f3;
     border-radius: 10px;
     position: absolute;
     transform: translate(-50%, -50%);
-    align-items: center;
   }
   
   
@@ -46,6 +47,7 @@ body {
   
   h2 {
     margin: 0;
+    padding: 0 0 20px;
     color: #59238F;
     text-align: center
   }
@@ -56,8 +58,7 @@ body {
     margin-bottom: 15px
   }
   
-  .loginBox input[type="text"],
-  .loginBox input[type="password"] {
+  .loginBox input[type="text"]{
     border: none;
     border-bottom: 2px solid #262626;
     outline: none;
@@ -65,7 +66,7 @@ body {
     color: rgb(18, 17, 17);
     background: transparent;
     font-size: 16px;
-    padding-left: 5px;
+    padding-left: 20px;
     border-radius: 3px;
   }
   
@@ -99,7 +100,7 @@ body {
     background: #59238F;
     color: #fff;
     border-radius: 20px;
-    cursor: pointer
+    cursor: pointer;
   }
   
   .loginBox a {
