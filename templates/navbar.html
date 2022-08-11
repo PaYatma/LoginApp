@@ -4,12 +4,13 @@
   <link rel="stylesheet" href="{{url_for('.static', filename='navbar.css')}}">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
   {% endblock %}
+  
 </head>
 
 {% block content %}
 
 <div class="container">
-  <nav id="thenav" class="navbar navbar-expand-md mdb fixed-top scrolling-navbar">
+  <nav id="nav_bar" class="navbar navbar-expand-md mdb fixed-top scrolling-navbar">
       <a class="navbar-brand" href="{{url_for('home')}}"><img src="../static/logo.png" class="logo_mdc"></a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,7 +18,7 @@
       <div class="navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           {% if not current_user.is_authenticated %}
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="{{url_for('home')}}"><i class="bi bi-house-fill"></i> Home</a>
           </li>
           <li class="nav-item">
@@ -29,7 +30,7 @@
           {% endif %}
 
           {% if current_user.is_authenticated %}
-          <li class="nav-item active">
+          <li class="nav-item">
             <a class="nav-link" href="{{url_for('home')}}"><i class="bi bi-house-fill"></i> Home</a>
           </li>
           <li class="nav-item">
@@ -47,24 +48,15 @@
           </div>  
         {% endif %}
 
-        <ul class="nav navbar-nav navbar-right">             
+        <ul class="navbar-nav navbar-right">             
           <li>
             <a class="nav-link" href="{{url_for('logout')}}"><button type="submit" class="btn btn-danger"><i class="bi bi-box-arrow-right"></i> Logout</button></a>
           </li>
         </ul>
         {% endif %}
+      </div>
   </nav>
 </div>
 
-
-<script>
-  $(document).ready(function() {
-    $('.nav-item').click(function(e) {
-      e.preventDefault();
-      $('.nav-item').removeClass('active');
-      $(this).addClass('active');
-    });
-  });
-</script>
 
 {% endblock %}

@@ -17,7 +17,7 @@ float:left;
     display:inline-block;
 }
 
-#thenav .nav-link .active{
+.nav-link .active{
     background-color: red;
     color: blue;
 }

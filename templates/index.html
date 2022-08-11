@@ -182,57 +182,58 @@
     //**********************************************************************************
     // DataTable N°1
     // Setup - add a text input to each footer cell
+    $(document).ready(function() {  
+        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        $.fn.dataTable.tables({ visible: true, api: true}).columns.adjust();
+      });
+
     $('#myTable1 tfoot th').each( function (i) {
         var title = $('#myTable1 thead th').eq( $(this).index() ).text();
         $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
       });
 
-      $(document).ready(function() {  
-        $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        $.fn.dataTable.tables({ visible: true, api: true}).columns.adjust();
-      });
 
-        // DataTable N°1
-        var table1 = $('#myTable1').DataTable({
-            dom: 'Blfrtip',
-            buttons: [{
-                extend: 'copyHtml5', title: 'America - Regulatory Documents'
-            }, 
-            {
-                extend: 'csvHtml5', title: 'America - Regulatory Documents'
+    // DataTable N°1
+    var table1 = $('#myTable1').DataTable({
+        dom: 'Blfrtip',
+        buttons: [{
+            extend: 'copyHtml5', title: 'America - Regulatory Documents'
+        }, 
+        {
+            extend: 'csvHtml5', title: 'America - Regulatory Documents'
+        },
+        {
+            extend: 'excelHtml5', title: 'America - Regulatory Documents'
+        },
+        {
+            extend: 'pdfHtml5', title: 'America - Regulatory Documents'
+        },
+        {
+            extend: 'print', title: 'America - Regulatory Documents'
+        }
+      ],
+        "autoWidth": false,
+        scrollY: "600px",
+        scrollX:true,
+        paging:true,
+        fixedColumns: true,
+        'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],
+        'processing': false,
+        'serverMethod': 'post',
+        'ajax': {
+            'url':'/america/'
             },
-            {
-                extend: 'excelHtml5', title: 'America - Regulatory Documents'
-            },
-            {
-                extend: 'pdfHtml5', title: 'America - Regulatory Documents'
-            },
-            {
-                extend: 'print', title: 'America - Regulatory Documents'
-            }
-          ],
-            "autoWidth": false,
-            scrollY: "600px",
-            scrollX:true,
-            paging:true,
-            fixedColumns: true,
-            'lengthMenu': [[10, 25, 50, 75, 100, 2**32], [10, 25, 50, 75, 100, "All"]],
-            'processing': false,
-            'serverMethod': 'post',
-            'ajax': {
-                'url':'/america/'
-                },
-            'serverSide': true,
-            'columns': [
-                {data:'ID'},
-                {data:'Code'},
-                {data:'Country'},
-                {data:'Study'},
-                {data:'Submission'},
-                {data:'Documents', orderable:false},
-                {data:'Note', orderable:false},
-                ],
-            });
+        'serverSide': true,
+        'columns': [
+            {data:'ID'},
+            {data:'Code'},
+            {data:'Country'},
+            {data:'Study'},
+            {data:'Submission'},
+            {data:'Documents', orderable:false},
+            {data:'Note', orderable:false},
+            ],
+        });
 
     // Filter event handler
     $( table1.table().container() ).on( 'keyup', 'tfoot input', function () {
@@ -250,7 +251,7 @@
         $(this).html( '<input type="text" placeholder="'+title+'" data-index="'+i+'" />' );
       } );
 
-      
+    
         // Apply a search to the second table for the demo
         var table2 = $('#myTable2').DataTable({ 
             "autoWidth": false,
@@ -417,8 +418,8 @@
             .column( $(this).data('index') )
             .search( this.value )
             .draw();
-    } );
-
+    });
+  
   </script>
  
 {% endblock %}
