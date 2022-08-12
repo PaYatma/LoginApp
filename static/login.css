@@ -125,6 +125,7 @@ body {
     float:center;
   }
 
-  .alert{
+  #log_flashes{
     margin-top: 50px;
+    position: relative;
   }

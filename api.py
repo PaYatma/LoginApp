@@ -39,9 +39,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = "login"
 login_manager.session_protection = "strong"
-login_manager.login_message_category = "warning"
-login_manager.refresh_view='login'
-login_manager.needs_refresh_message='You need to login again.'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -113,26 +110,30 @@ def profile():
 
     if request.method == 'POST':
         my_img = request.files['profile_pic']
-  
-        # Grab Image name
-        pic_filename = secure_filename(my_img.filename)
 
-        # Set UUID
-        pic_name = str(uuid.uuid1()) + "_" + pic_filename
+        if my_img:
+            # Grab Image name
+            pic_filename = secure_filename(my_img.filename)
 
-        # Resize image before to save it
-        resizing = (256, 256)
-        img = Image.open(my_img)
-        img.thumbnail(resizing)
+            # Set UUID
+            pic_name = str(uuid.uuid1()) + "_" + pic_filename
 
-        # Save the image
-        name_to_upld = img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+            '''# Resize image before to save it
+            resizing = (256, 256)
+            img = Image.open(my_img)
+            img.thumbnail(resizing)'''
 
-        # Add the image to the database
-        img_to_upld = '''UPDATE users SET profile_pic = %s WHERE id= %s'''
-        cursor.execute(img_to_upld, (pic_name, current_user.id,))
-        conn.commit()
-        return redirect(url_for('profile'))
+            # Save the image
+            name_to_upld = my_img.save(os.path.join(app.config['UPLOAD_FOLDER'], pic_name))
+
+            # Add the image to the database
+            img_to_upld = '''UPDATE users SET profile_pic = %s WHERE id= %s'''
+            cursor.execute(img_to_upld, (pic_name, current_user.id,))
+            conn.commit()
+            return redirect(url_for('profile'))
+        else:
+                flash('Please, select a new image and try again.', category='info')
+                redirect(url_for('profile'))
        
 
     return render_template('profile.html', 

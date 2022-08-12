@@ -130,3 +130,8 @@ p {color: #7979e0;
   vertical-align: middle;
   float:center;
 }
+
+#signup_flashes{
+  margin-top: 50px;
+  position: relative;
+}

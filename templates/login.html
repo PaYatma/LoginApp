@@ -29,13 +29,14 @@
     <a href="{{url_for('home')}}"><i class="fa fa-fw fa-home" style="font-size:26px;"></i></a>
   </div>
 </div>
-  
+
   {%  for category, message in get_flashed_messages(with_categories=True) %}
-    <div class="alert alert-{{ category }} alert-dismissible fade show"
-      role="alert" style="text-align: center; font-style:inherit;">
+    <div class="alert-{{ category }} alert-dismissible fade show"
+      role="alert" style="text-align: center; font-style:inherit;" id="log_flashes">
         {{ message}}
     </div>
   {% endfor %}
+
 
 {% endblock %}
 

@@ -14,6 +14,16 @@
 {% block content %}
 
   <div class="container" style="padding: 80px;">
+
+    
+    {%  for category, message in get_flashed_messages(with_categories=True) %}
+    <div class="alert alert-{{ category }} alert-dismissible fade show"
+      role="alert" style="text-align: center; font-style:inherit;">
+        {{ message}}
+    </div>
+    {% endfor %}
+    
+    
     <div class="upload-button col-6 col-md-4" style="font-size: 16pt; font-family: Verdana, Geneva, Tahoma, sans-serif;" > 
       <form method="POST" action="/profile" enctype="multipart/form-data">
         {{form.hidden_tag()}}
@@ -41,7 +51,6 @@
         <p class="button" title="Please contact Yatma SARR at yatma27@gmail.com"> Help ???</p>
       </div>
     </div>
-
   </div>
   
 {% endblock %}
