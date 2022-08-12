@@ -14,13 +14,13 @@ from myforms import RegisterForm, LoginForm, ProfileForm, ForgotForm, PasswordRe
 from sqlalchemy import DateTime, create_engine
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
-from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, fresh_login_required, current_user
+from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from werkzeug.utils import secure_filename
 
 
 # Add connection
-# DATABASE_URL = os.getenv('DATABASE_URL') 
-DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+DATABASE_URL = os.getenv('DATABASE_URL') 
+# DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 UPLOAD_FOLDER = "static/images/"
 conn = psycopg2.connect(DATABASE_URL)
 
