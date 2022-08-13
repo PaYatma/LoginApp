@@ -10,22 +10,16 @@ body {
   overflow: hidden
 }
 
-.loginBox {
-  margin-top: 10px
-}
 
 @media screen and (max-width: 600px;
 
 ) {
   body {
       background-size: cover;
-      : fixed
+      :
   }
 }
 
-#particles-js {
-  height: 100%
-}
 
 .loginBox {
   position: absolute;
@@ -41,6 +35,7 @@ body {
   box-sizing: border-box;
   box-shadow: 10px 15px 20px;
   color: #3a5aeb;
+  margin-top: 80px;
 }
 
 .user {
