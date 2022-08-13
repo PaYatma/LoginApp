@@ -15,7 +15,6 @@
 
   <div class="container" style="padding: 80px;">
 
-    
     {%  for category, message in get_flashed_messages(with_categories=True) %}
     <div class="alert alert-{{ category }} alert-dismissible fade show"
       role="alert" style="text-align: center; font-style:inherit;">
@@ -36,7 +35,7 @@
     <div class="card">
       {% if current_user.profile_pic %}
       <img src= "{{url_for('static', filename='images/' + current_user.profile_pic)}}" class="center img-fluid img-thumbnail" 
-      style="box-shadow: 10px 10px 5px rgb(190, 221, 247);">
+      style="box-shadow: 5px 5px 10px rgb(190, 221, 247);">
       {% else %}
       <img src= "{{url_for('static', filename='images/my_default_profile.png')}}" class="center">
       {% endif %}
