@@ -4,7 +4,10 @@ body{
 }
 
 .container{
-  min-width: 500px;
+  min-width: 30rem;
+  max-width: 60rem;
+  height: auto;
+  margin: auto;
 }
 
 .card {

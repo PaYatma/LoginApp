@@ -1,23 +1,10 @@
 body {
   margin: 0;
-  padding: 0;
-  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
   height: 100vh;
-  font-family: sans-serif;
+  width: 100%;
+  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
   background-size: cover;
-  background-repeat: no-repeat;
   background-position: center;
-  overflow: hidden
-}
-
-
-@media screen and (max-width: 600px;
-
-) {
-  body {
-      background-size: cover;
-      :
-  }
 }
 
 

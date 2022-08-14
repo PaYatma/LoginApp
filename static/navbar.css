@@ -1,7 +1,7 @@
 nav{
 display: flex;
 max-width: 100%;
-position: sticky;
+position: relative;
 background-color: rgb(170, 201, 224);
 }
 
@@ -113,9 +113,3 @@ nav ul li a:hover{
     margin-left: auto;
 
 }
-
-#leave{
-    float: right;
-}
-
-
