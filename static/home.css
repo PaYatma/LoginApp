@@ -1,17 +1,13 @@
-html, 
-body{
-  margin: 0;
-  padding: 0;
-  background-size:cover;
+html,
+body {
+    margin: 0;
+    padding: 0;
 }
 
+
 .container{
-  min-width: 30rem;
-  max-width: 60rem;
-  height: auto;
-  margin: auto;
   border-radius: 15px;
-  background-color: rgb(237, 244, 244);
+  background-color: rgb(212, 247, 247);
 }
 
 h3{
@@ -26,4 +22,26 @@ p{
   color: rgb(0, 0, 0);
   text-align:justify;
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+
+/* Define   */
+
+/* desktop:1200px */
+/* laptop:1024px */
+/* tablet:768px */
+/* ipad-mini:703px */
+/* iphone6+:414px */
+/* iphone 5S:320px */
+
+@media screen and (max-width:1200px) and (min-width:1024px) {
+  .container{
+    min-width: 15rem;
+    max-width: 30rem;
+    height: auto;
+    margin: auto;
+    border-radius: 25px;
+    background-color: rgb(82, 184, 184);
+  } 
+  
 }

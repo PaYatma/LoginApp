@@ -1,8 +1,8 @@
 import os
 import re
+import psycopg2
 import datetime
 import uuid as uuid
-import psycopg2
 import psycopg2.extras
 
 # from PIL import Image
@@ -10,26 +10,26 @@ from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_mail import Mail, Message
 from flask_sqlalchemy import SQLAlchemy
-from myforms import RegisterForm, LoginForm, ProfileForm, ForgotForm, PasswordResetForm
+from werkzeug.utils import secure_filename
 from sqlalchemy import DateTime, create_engine
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
+from myforms import RegisterForm, LoginForm, ProfileForm, ForgotForm, PasswordResetForm
 from flask import Flask, flash, redirect, render_template, url_for, session, request, jsonify 
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
-from werkzeug.utils import secure_filename
 
 
 # Add connection
-DATABASE_URL = os.getenv('DATABASE_URL') 
-# DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
+# DATABASE_URL = os.getenv('DATABASE_URL') 
+DATABASE_URL = 'postgres://postgres:mdclinicals@localhost/regulatory_docs'
 UPLOAD_FOLDER = "static/images/"
 conn = psycopg2.connect(DATABASE_URL)
 
 app = Flask(__name__)
 app.config.from_pyfile('config.cfg')
-app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['TRACK_USAGE_USE_FREEGEOIP'] = True
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECURITY_PASSWORD_SALT'] = 'confirm-email'
 app.permanent_session_lifetime = timedelta(minutes=15)
 app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL.replace("postgres://", "postgresql://")
 
@@ -711,4 +711,4 @@ def ajaxmiddleeast():
 
 
 if __name__=='__main__':
-    app.run()
+    app.run(debug=True)

@@ -11,8 +11,18 @@ float:left;
 
 .navbar-toggler{
     border: 0;
+    margin: 5px;
     background-color: aliceblue;
 } 
+
+nav ul li a:hover{
+    transform: rotate(45%);
+    border-radius: 15px;
+    max-width: 125px;
+    text-align: center;
+    text-decoration: underline;
+    background: rgb(109, 201, 250);
+}
 
 .navbar-toggler:focus,
 .navbar-toggler:active,
@@ -71,45 +81,149 @@ float:left;
     display:inline-block;
 }
 
-.nav-link .active{
-    background-color: red;
-    color: blue;
+
+/* desktop:1200px */
+@media screen and (min-width:1200px) {
+    nav{
+        max-height: 95px;
+    }
+    .logo_mdc{
+        max-width:380px;
+        margin:10px;
+    }
+    .img_profile{
+        max-width: 135px;
+        float: right;
+        margin-left: 180px;
+    }    
+
+    .navbar-collapse ul li a{
+        float: left;
+        display: block;
+        margin: 5px;
+        font-size: 19px;
+    }
+
+  }
+
+/* laptop:1024px */
+@media screen and (max-width:1200px) and (min-width:1024px) {
+    nav{
+        height: 105px;
+    }
+    .logo_mdc{
+        max-width:290px;
+        margin:10px;
+    }
+    .img_profile{
+        max-width: 120px;
+        float: right;
+        margin-left: 150px;
+    }    
+    .navbar-collapse ul li a{
+        float: left;
+        display: block;
+        margin: 3px;
+        font-size: 18px;
+    }
+  }
+
+/* tablet:768px */
+@media screen and (max-width:1024px) and (min-width:768px) {
+    nav{
+        height: 95px;
+    }
+    .logo_mdc{
+        max-width:240px;
+        min-height: 65px;
+        margin-top:10px;
+    }
+
+    .img_profile{
+        min-width: 90px;
+        max-width: 95px;
+        float: right;
+        margin-left: 50px;
+    }    
+    .navbar-collapse ul li a{
+        float: left;
+        display: inline;
+        margin: 0px;
+        font-size: 18px;
+    }
+    .btn.btn-danger{
+        margin: 2px;
+        font-size: 8pt;
+        min-width: 40px;
+        max-width: 60px;
+        min-height: 30px;
+        max-height: 40px;
+        font-size:5.5pt;
+        
+    }
+
+  }
+
+/* ipad-mini:703px */
+@media screen and (max-width:768px) and (min-width:480px) {
+    .logo_mdc{
+        max-width:290px;
+        margin-top:5px;
+    }
+    .navbar-collapse ul li a{
+        margin-left: 5px;
+        font-size: 15px;
+    }
+    .btn.btn-danger{
+        margin: 2px;
+        min-width: 40px;
+        max-width: 70px;
+        font-size: 8pt;
+        text-align: center;
+        align-items: center;
+    }
+
+    .img_profile{
+        min-width: 80px;
+        max-width: 105px;
+        float: right;
+        margin-left: 20px;
+        margin-right: 5px;
+    }   
 }
 
-.logo_mdc{
-    max-width:300px;
-    margin-top:-15px;
+/* iphone6+:414px */
+@media screen and (max-width:480px) and (min-width:414px) {
+    .logo_mdc{
+        max-width:290px;
+        margin-top:5px;
+    }
+    .navbar-collapse ul li a{
+        margin: 5px;
+        font-size: 15px;
+    }
+    .img_profile{
+        min-width: 75px;
+        max-width: 90px;
+        float: right;
+        margin: 2px;
+    }   
 }
 
-nav ul li a{
-    display:block;
-    padding: 10px 10px 20px;
-    text-decoration: none;
-    font-family: Arial;
-    text-align: center;
-    font-size: 40px;
-}
-
-.navbar-collapse ul li a{
-    float: left;
-    display: block;
-    margin-left: 15px;
-}
-
-nav ul li a:hover{
-    background: rgb(121, 123, 123);
-    transition: 0.05s;
-    text-align: center;
-    border-radius: 15px;
-    text-decoration: underline;
-}
-
-
-.img_profile{
-    max-width: 5%;
-    min-width: 60px;
-    float: right;
-    margin-right: auto;
-    margin-left: auto;
-
+/* iphone 5S:320px */
+@media screen and (max-width:414px) {
+    .logo_mdc{
+        max-width:270px;
+        margin-top:5px;
+    }
+    .navbar-collapse ul li a{
+        margin-left: 5px;
+        font-size: 15px;
+    }
+    .img_profile{
+        min-width: 75px;
+        max-width: 90px;
+        float: right;
+        margin: 2px;
+    }   
 }
