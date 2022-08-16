@@ -4,44 +4,111 @@ body {
     padding: 0;
 }
 
-
-.container{
-  border-radius: 15px;
-  background-color: rgb(212, 247, 247);
-}
-
 h3{
-  text-decoration: underline;
+  min-width: 250px;
   text-align: center;
+  text-decoration: underline;
 }
-
-
-p{
-  font-size: 24px;
-  margin-left: 10px;
-  color: rgb(0, 0, 0);
-  text-align:justify;
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-}
-
-
-/* Define   */
 
 /* desktop:1200px */
-/* laptop:1024px */
-/* tablet:768px */
-/* ipad-mini:703px */
-/* iphone6+:414px */
-/* iphone 5S:320px */
+@media screen and (min-width:1200px) {
+  .container{
+    border-radius: 25px;
+    background-color: rgb(92, 244, 244);
+  } 
 
+  
+  p{
+    font-size: 20pt;
+    margin: 1px;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+}
+
+/* laptop:1024px */
 @media screen and (max-width:1200px) and (min-width:1024px) {
   .container{
-    min-width: 15rem;
-    max-width: 30rem;
-    height: auto;
-    margin: auto;
     border-radius: 25px;
-    background-color: rgb(82, 184, 184);
+    background-color: rgb(184, 222, 250);
   } 
   
+  p{
+    font-size: 18pt;
+    margin-left: 10px;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+}
+
+/* tablet:768px */
+@media screen and (max-width:1024px) and (min-width:768px) {
+  .container{
+    border-radius: 25px;
+    background-color: rgb(126, 195, 245);
+  } 
+  
+  p{
+    font-size: 16pt;
+    margin: -20px;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+}
+
+/* Ipad:480px */
+@media screen and (max-width:768px) and (min-width:480px) {
+  .container{
+    border-radius: 25px;
+    background-color: rgb(126, 245, 168);
+  } 
+
+  p{
+    font-size: 15pt;
+    margin: -20px;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+}
+
+/* iphone 6+:414px */
+@media screen and (max-width:480px) and (min-width:414px) {
+  .container{
+    border-radius: 20px;
+    background-color: rgb(126, 245, 209);
+  } 
+  
+  p{
+    min-width: 290px;
+    font-size: 13pt;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
+}
+
+/* iphone 5S:320px */
+@media screen and (max-width:414px) {
+  .container{
+    border-radius: 20px;
+    background-color: rgb(25, 147, 229);
+  } 
+  
+  p{
+    font-size: 11pt;
+    color: rgb(0, 0, 0);
+    text-align:justify;
+    min-width: 250px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  }
+
 }

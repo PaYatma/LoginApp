@@ -4,11 +4,253 @@ body{
 }
 
 .container{
-  min-width: 30rem;
-  max-width: 60rem;
-  height: auto;
-  margin: auto;
+  border-radius: 25px;
+  background-color: rgb(226, 244, 250);
+} 
+
+
+/* desktop:1200px */
+@media screen and (min-width:1200px) {
+
+    
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 200px;
+    max-width: 400px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    min-width: 300px;
+    max-width: 700px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    font-size: 16px;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
+
+  label{
+    font-size: 16pt;
+  }
+
+  .card {
+    margin: auto;
+    padding: auto;
+    text-align: center;
+    padding-top: 10px;
+    max-width: 500px;
+    background-color: rgb(155, 204, 247);
+    box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
+    }
+
+  .center {
+    margin: auto;
+    width: 300px;
+    border-radius: 25px;
+    }
+
+  a {
+    text-decoration: none;
+    font-size: 24px;
+    color: black;
+  }
+
+  h1{
+    font-size: 36px;
+    text-decoration: underline;
+  }
+
+  p{
+      font-size: 24px;
+  }
+
 }
+
+
+/* laptop:1024px */
+@media screen and (max-width:1200px) and (min-width:1024px) {
+ 
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 200px;
+    max-width: 400px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    width: 320px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 550;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
+
+  label{
+    font-size: 14pt;
+  }
+  .card {
+    margin: auto;
+    padding: auto;
+    text-align: center;
+    padding-top: 10px;
+    max-width: 450px;
+    background-color: rgb(155, 204, 247);
+    box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
+    }
+
+  .center {
+    margin: auto;
+    width: 290px;
+    border-radius: 25px;
+    }
+
+  a {
+    text-decoration: none;
+    font-size: 20px;
+    color: black;
+  }
+
+  h1{
+    font-size: 30px;
+    text-decoration: underline;
+  }
+
+  p{
+      font-size: 20px;
+  }
+
+}
+
+
+/* tablet:768px */
+@media screen and (max-width:1024px) and (min-width:768px) {
+
+  
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 200px;
+    max-width: 400px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    width: 300px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 550;
+    min-width: 90px;
+    max-width: 120px;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
 
 .card {
   margin: auto;
@@ -16,80 +258,319 @@ body{
   text-align: center;
   padding-top: 10px;
   max-width: 400px;
-  background-color: aliceblue;
+  background-color: rgb(155, 204, 247);
   box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
   }
 
 .center {
-  display: block;
-  width: 300px;
   margin: auto;
-  border-radius: 20px;
+  width: 250px;
+  border-radius: 25px;
   }
-
-.button {
-  border: none;
-  padding: 8px;
-  color: rgb(21, 21, 31);
-  border-radius: 15px;
-  text-align: center;
-  cursor: pointer;
-  min-width: 200px;
-  max-width: 400px;
-  display: inline-block;
-  background-color: rgb(166, 181, 240);
-}
-
-.button:hover{
-  border-radius: 15px;
-  background-color: rgb(115, 136, 221);
-}
 
 a {
   text-decoration: none;
-  font-size: 24px;
+  font-size: 18px;
   color: black;
 }
 
 h1{
-  font-size: 36px;
+  font-size: 26px;
   text-decoration: underline;
 }
 
 p{
-    font-size: 24px;
+    font-size: 18px;
 }
 
-.upload-button input[type="file"]{
-  width: auto;
-  outline: none;
-  padding: 4px;
-  cursor: pointer;
+label{
+  font-size: 14pt;
+  width: 250px;
+}
+
+}
+
+/* Ipad:480px */
+@media screen and (max-width:768px) and (min-width:480px) {
+
+  
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 200px;
+    max-width: 400px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    width: 300px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 550;
+    min-width: 90px;
+    max-width: 120px;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
+
+.card {
+  margin: auto;
+  padding: auto;
+  text-align: center;
+  padding-top: 10px;
+  max-width: 400px;
+  background-color: rgb(155, 204, 247);
+  box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
+  }
+
+.center {
+  margin: auto;
+  width: 200px;
+  border-radius: 25px;
+  }
+
+a {
+  text-decoration: none;
   font-size: 16px;
-  border-radius: 15px;
-  border: 1px solid #a2aef3;;
-  background-color: rgb(170, 201, 224);
+  color: black;
+}
+
+h1{
+  text-decoration: underline;
+}
+
+p{
+    font-size: 16px;
+}
+
+label{
+  margin-top: 40px;
+  font-size: 14pt;
+  width: 250px;
+}
+
 }
 
 
-.upload-button input[type="submit"]{
-  border: 1px solid #1d3df7;
-  outline: none;
+/* Iphone 6+:414px */
+@media screen and (max-width:480px) and (min-width:414px) {
+
+  
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 200px;
+    max-width: 400px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    width: 300px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 550;
+    min-width: 90px;
+    max-width: 120px;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
+
+.card {
+  margin: auto;
+  padding: auto;
+  text-align: center;
+  width: 300px;
+  padding-top: 10px;
+  background-color: rgb(155, 204, 247);
+  box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
+  }
+
+.center {
+  margin: auto;
+  width: 180px;
+  border-radius: 25px;
+  }
+
+a {
+  text-decoration: none;
   font-size: 16px;
-  text-align: justify;
-  font: bold;
-  border-radius: 10px;
-  margin-top: 5px;
-  margin-left: 10px;
-  cursor: pointer;
-  color: rgb(6, 7, 7);
-  line-height: 2.rem;
-	font-size: 1.3rem;
-	font-weight: 600;
-  background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
-  box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
-							0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
-							0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
-							0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  color: black;
 }
 
+h1{
+  text-decoration: underline;
+}
+
+p{
+    font-size: 16px;
+}
+
+label{
+  font-size: 14pt;
+  width: 250px;
+}
+
+}
+
+
+
+/* Iphone 6+:414px */
+@media screen and (max-width:414px) {
+
+  .button {
+    border: none;
+    padding: 8px;
+    color: rgb(21, 21, 31);
+    border-radius: 15px;
+    text-align: center;
+    cursor: pointer;
+    min-width: 150px;
+    max-width: 300px;
+    display: inline-block;
+    background-color: rgb(166, 181, 240);
+  }
+
+  .button:hover{
+    border-radius: 15px;
+    background-color: rgb(115, 136, 221);
+  }
+
+
+  .upload-button input[type="file"]{
+    width: 280px;
+    outline: none;
+    padding: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 15px;
+    border: 1px solid #a2aef3;;
+    background-color: rgb(170, 201, 224);
+  }
+
+
+  .upload-button input[type="submit"]{
+    border: 1px solid #1d3df7;
+    outline: none;
+    text-align: justify;
+    font: bold;
+    border-radius: 10px;
+    margin-top: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+    color: rgb(6, 7, 7);
+    line-height: 2.rem;
+    font-size: 1.3rem;
+    font-weight: 550;
+    min-width: 90px;
+    max-width: 120px;
+    background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
+    box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
+                0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
+                0 0.75rem 0.5rem rgba(35, 4, 237, 0.4) inset,
+                0 0.25rem 0.5rem 0 rgba(180, 70, 207, 1) inset;
+  }
+
+.card {
+  margin: auto;
+  padding: auto;
+  width: 300px;
+  text-align: center;
+  padding-top: 10px;
+  background-color: rgb(155, 204, 247);
+  box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
+  }
+
+.center {
+  margin: auto;
+  width: 150px;
+  border-radius: 25px;
+  }
+
+a {
+  text-decoration: none;
+  font-size: 16px;
+  color: black;
+}
+
+h1{
+  text-decoration: underline;
+}
+
+p{
+    font-size: 16px;
+}
+
+label{
+  font-size: 14pt;
+  width: 250px;
+}
+
+}

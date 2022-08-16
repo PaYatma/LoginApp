@@ -88,20 +88,31 @@ nav ul li a:hover{
         max-height: 95px;
     }
     .logo_mdc{
-        max-width:380px;
+        max-width:300px;
         margin:10px;
     }
     .img_profile{
-        max-width: 135px;
         float: right;
-        margin-left: 180px;
+        min-width: 115px;
+        max-width: 120px;
+        margin-left: 500px;
+        padding: 20px;
     }    
 
     .navbar-collapse ul li a{
         float: left;
-        display: block;
-        margin: 5px;
+        display:block;
+        margin: 1px;
         font-size: 19px;
+    }
+
+    .btn.btn-danger{
+        font-size: 8pt;
+        min-width: 70px;
+        max-width: 80px;
+        min-height: 38px;
+        max-height: 40px;
+        font-size: 8pt;
     }
 
   }
@@ -112,19 +123,30 @@ nav ul li a:hover{
         height: 105px;
     }
     .logo_mdc{
-        max-width:290px;
+        max-width:300px;
         margin:10px;
     }
     .img_profile{
+        min-width: 110px;
         max-width: 120px;
         float: right;
-        margin-left: 150px;
+        margin-left: 220px;
+        padding: 15px;
     }    
     .navbar-collapse ul li a{
         float: left;
         display: block;
         margin: 3px;
         font-size: 18px;
+    }
+    .btn.btn-danger{
+        font-size: 8pt;
+        min-width: 70px;
+        max-width: 80px;
+        min-height: 38px;
+        max-height: 40px;
+        font-size:8pt;
+        
     }
   }
 
@@ -134,31 +156,32 @@ nav ul li a:hover{
         height: 95px;
     }
     .logo_mdc{
-        max-width:240px;
-        min-height: 65px;
-        margin-top:10px;
+        min-width: 150px;
+        max-width: 230px;
+        margin-top: 10px;
     }
 
     .img_profile{
-        min-width: 90px;
-        max-width: 95px;
+        min-width: 100px;
+        max-width: 105px;
         float: right;
-        margin-left: 50px;
+        margin-left: 240px;
+        padding: 15px;
     }    
     .navbar-collapse ul li a{
         float: left;
         display: inline;
-        margin: 0px;
-        font-size: 18px;
+        margin: 2px;
+        font-size: 17px;
     }
     .btn.btn-danger{
-        margin: 2px;
+        margin: 1px;
         font-size: 8pt;
         min-width: 40px;
-        max-width: 60px;
+        max-width: 50px;
         min-height: 30px;
         max-height: 40px;
-        font-size:5.5pt;
+        font-size:6pt;
         
     }
 
@@ -213,6 +236,7 @@ nav ul li a:hover{
 /* iphone 5S:320px */
 @media screen and (max-width:414px) {
     .logo_mdc{
+        min-width:220px;
         max-width:270px;
         margin-top:5px;
     }
