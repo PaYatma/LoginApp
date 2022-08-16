@@ -1,119 +1,776 @@
-body {
-  margin: 0;
-  height: 100vh;
-  width: 100%;
-  background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
-  background-size: cover;
-  background-position: center;
+/* desktop:1200px */
+@media screen and (min-width:1200px) {
+
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .user{
+    height:60px;
+    width:260px;
+  }
+
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 400px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 40px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
+
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
+
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
+
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
+
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 90px;
+    position: relative;
+  }
+
 }
 
 
-.loginBox {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 400px;
-  min-width: 250px;
-  min-height: auto;
-  background: #e2e7fc;
-  border-radius: 10px;
-  padding: 40px;
-  box-sizing: border-box;
-  box-shadow: 10px 15px 20px;
-  color: #3a5aeb;
-  margin-top: 80px;
+/* laptop:1024px */
+@media screen and (max-width:1200px) and (min-width:1024px) {
+
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .user{
+    height:60px;
+    width:260px;
+  }
+
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 380px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
+
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
+
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
+
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
+
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 95px;
+    position: relative;
+  }
+
 }
 
-.user {
-  margin: auto;
-  display: block;
-  margin-bottom: 20px
+/* tablet:768px */
+@media screen and (max-width:1024px) and (min-width:768px) {
+
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .user{
+    height:60px;
+    width:260px;
+  }
+
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 380px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
+
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
+
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
+
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
+
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 95px;
+    position: relative;
+  }
+
 }
 
-h3 {
-  margin: 0;
-  padding: 0 0 20px;
-  color: #59238F;
-  text-align: center
+/* Ipad-mini:713px */
+@media screen and (max-width:768px) and (min-width:480px) {
+
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .user{
+    height:60px;
+    width:260px;
+  }
+
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 380px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
+
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
+
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
+
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
+
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 95px;
+    position: relative;
+  }
+
 }
 
-.loginBox input {
-  width: 100%;
-  margin-bottom: auto;
+
+/* iphone6+:414px */
+@media screen and (max-width:480px) and (min-width:414px) {
+
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .user{
+    height:60px;
+    width:260px;
+  }
+
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 380px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
+
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
+
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
+
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
+
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
+
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
+
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 95px;
+    position: relative;
+  }
+
 }
 
-.loginBox input[type="text"],
-.loginBox input[type="password"] {
-  border: none;
-  border-bottom: 2px solid #262626;
-  outline: none;
-  height: 40px;
-  color: rgb(18, 17, 17);
-  background: transparent;
-  font-size: 16px;
-  padding-left: 20px;
-  border-radius: 3px;
-}
 
-.loginBox input[type="text"]:hover,
-.loginBox input[type="password"]:hover {
-  color: #547cf3;
-  border: 1px solid #1a3fe2;
-  box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
-}
+/* iphone 5S: */
+@media screen and (max-width:414px) {
 
-.loginBox input[type="text"]:focus,
-.loginBox input[type="password"]:focus {
-  border-bottom: 2px solid #7094ef
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    background: url(https://jeromeobiols.com/wordpress/wp-content/uploads/photo-montagne-vallee-blanche-chamonix-mont-blanc.jpg) no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
 
-.inputBox {
-  position: relative
-}
+  .user{
+    height:60px;
+    width:260px;
+  }
 
-.inputBox span {
-  position: absolute;
-  top: 10px;
-  color: #262626
-}
+  .loginBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 380px;
+    min-width: 250px;
+    min-height: auto;
+    background: #e2e7fc;
+    border-radius: 10px;
+    padding: 30px;
+    box-sizing: border-box;
+    box-shadow: 10px 15px 20px;
+    color: #3a5aeb;
+    margin-top: 80px;
+  }
 
-.loginBox input[type="submit"] {
-  border: none;
-  outline: none;
-  height: 40px;
-  font-size: 16px;
-  background: #59238F;
-  color: #fff;
-  border-radius: 20px;
-  cursor: pointer;
-  margin-top: 20px;
-}
+  .user {
+    margin: auto;
+    display: block;
+    margin-bottom: 20px
+  }
 
-.loginBox a {
-  color: #262626;
-  font-size: 14px;
-  font-weight: bold;
-  text-decoration: none;
-  text-align: lef;
-  display: block
-}
+  h3 {
+    margin: 0;
+    padding: 0 0 20px;
+    color: #59238F;
+    text-align: center
+  }
 
-a {
-  text-align: center;
-}
+  .loginBox input {
+    width: 100%;
+    margin-bottom: auto;
+  }
 
-a:hover {
-  color: #4f09e7;
-  text-align: center;
-}
+  .loginBox input[type="text"],
+  .loginBox input[type="password"] {
+    border: none;
+    border-bottom: 2px solid #262626;
+    outline: none;
+    height: 40px;
+    color: rgb(18, 17, 17);
+    background: transparent;
+    font-size: 16px;
+    padding-left: 20px;
+    border-radius: 3px;
+  }
 
-p {color: #7979e0;
-  vertical-align: middle;
-  float:center;
-}
+  .loginBox input[type="text"]:hover,
+  .loginBox input[type="password"]:hover {
+    color: #547cf3;
+    border: 1px solid #1a3fe2;
+    box-shadow: 0 0 5px rgba(32, 149, 245, 0.3), 0 0 10px rgba(0, 255, 0, .2), 0 0 15px rgba(0, 255, 0, .1), 0 2px 0 black
+  }
 
-#signup_flashes{
-  margin-top: 50px;
-  position: relative;
+  .loginBox input[type="text"]:focus,
+  .loginBox input[type="password"]:focus {
+    border-bottom: 2px solid #7094ef
+  }
+
+  .inputBox {
+    position: relative
+  }
+
+  .inputBox span {
+    position: absolute;
+    top: 10px;
+    color: #262626
+  }
+
+  .loginBox input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    font-size: 16px;
+    background: #59238F;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+
+  .loginBox a {
+    color: #262626;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: lef;
+    display: block
+  }
+
+  a {
+    text-align: center;
+  }
+
+  a:hover {
+    color: #4f09e7;
+    text-align: center;
+  }
+
+  p {color: #7979e0;
+    vertical-align: middle;
+    float:center;
+  }
+
+  #signup_flashes{
+    margin-top: 95px;
+    position: relative;
+  }
+
 }

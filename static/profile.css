@@ -4,6 +4,7 @@ body{
 }
 
 .container{
+  min-width: 350px;
   border-radius: 25px;
   background-color: rgb(226, 244, 250);
 } 
@@ -484,7 +485,7 @@ label{
 
 /* Iphone 6+:414px */
 @media screen and (max-width:414px) {
-
+  
   .button {
     border: none;
     padding: 8px;
@@ -492,9 +493,8 @@ label{
     border-radius: 15px;
     text-align: center;
     cursor: pointer;
-    min-width: 150px;
-    max-width: 300px;
-    display: inline-block;
+    min-width: 100px;
+    max-width: 200px;
     background-color: rgb(166, 181, 240);
   }
 
@@ -505,11 +505,11 @@ label{
 
 
   .upload-button input[type="file"]{
-    width: 280px;
+    width: 240px;
     outline: none;
     padding: 4px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 12px;
     border-radius: 15px;
     border: 1px solid #a2aef3;;
     background-color: rgb(170, 201, 224);
@@ -527,10 +527,9 @@ label{
     cursor: pointer;
     color: rgb(6, 7, 7);
     line-height: 2.rem;
-    font-size: 1.3rem;
+    font-size: 1.rem;
     font-weight: 550;
-    min-width: 90px;
-    max-width: 120px;
+    max-width: 90px;
     background-image: linear-gradient(-180deg, #18ac87 0%, #07e2e2 100%);
     box-shadow: 0 1rem 1.25rem 0 rgba(22,75,195,0.50),
                 0 -0.25rem 1.5rem rgba(110, 15, 155, 1) inset,
@@ -539,10 +538,12 @@ label{
   }
 
 .card {
-  margin: auto;
-  padding: auto;
-  width: 300px;
+  margin: 0 auto;
+  padding: 0 auto;
+  min-width: 240px;
+  max-width: 270px;
   text-align: center;
+  margin-left: 5px;
   padding-top: 10px;
   background-color: rgb(155, 204, 247);
   box-shadow: 15px 15px 10px 0 rgba(64, 181, 232, 0.2);
@@ -551,12 +552,13 @@ label{
 .center {
   margin: auto;
   width: 150px;
+  min-width: 100px;
   border-radius: 25px;
   }
 
 a {
   text-decoration: none;
-  font-size: 16px;
+  font-size: 18px;
   color: black;
 }
 
@@ -565,11 +567,12 @@ h1{
 }
 
 p{
-    font-size: 16px;
+    font-size: 14px;
 }
 
 label{
-  font-size: 14pt;
+  margin-top: 15px;
+  font-size: 12pt;
   width: 250px;
 }
 
